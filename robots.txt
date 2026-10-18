@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maleekskies.vercel.app/sitemap.xml
