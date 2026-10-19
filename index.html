@@ -67,8 +67,7 @@
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Outfit:wght@300;400;500&display=swap">
-<link rel="stylesheet" href="https://db.onlinewebfonts.com/c/e55e9079ee863276569c8a68d776ef04?family=Futura+Md+BT+Medium">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500&display=swap">
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -965,72 +964,72 @@
   }
   .contact-cta button.btn-secondary:hover{background:transparent;color:var(--cyan-bright);border-color:var(--cyan-bright);}
 
-  /* ===== NX SECTIONS: video hero (top), key benefits (middle), closing (bottom) ===== */
-  .nx-glass{background:rgba(255,255,255,0.01);background-blend-mode:luminosity;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:none;box-shadow:inset 0 1px 1px rgba(255,255,255,0.1);position:relative;overflow:hidden;}
-  .nx-glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;}
-  @keyframes nx-rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-  .nx-rise{animation:nx-rise .8s ease-out both;}
-  .nx-rise-2{animation:nx-rise .8s ease-out .2s both;}
-  .nx-rise-3{animation:nx-rise .8s ease-out .4s both;}
+  /* ===== NX SECTIONS: video hero (top), key benefits (middle), ask (bottom). Everything flows; nothing is fixed-height or clipped. ===== */
+  .nx-glass{background:rgba(255,255,255,0.04);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:inset 0 1px 1px rgba(255,255,255,0.18);position:relative;}
   .nx-video{display:block;width:100%;height:100%;object-fit:cover;}
+  @keyframes nx-rise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  .nx-rise{animation:nx-rise .8s ease-out both;}
 
-  /* top hero: contained card, not full screen */
-  .nx-hero{padding:0;position:relative;isolation:isolate;overflow:hidden;width:calc(100% - 24px);max-width:1280px;margin:88px auto 0;border-radius:28px;background:hsl(201 100% 13%);color:#fff;}
-  .nx-hero .nx-video{position:absolute;inset:0;z-index:0;}
-  .nx-hero-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:clamp(380px,56vh,520px);padding:clamp(48px,8vw,88px) clamp(18px,4vw,40px);}
-  .nx-hero h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(2.3rem,5.6vw,4.7rem);line-height:.98;letter-spacing:-0.03em;max-width:17ch;color:#fff;}
-  .nx-hero h1 em{font-style:normal;color:hsl(240 4% 66%);}
-  .nx-hero p{font-family:'Inter',sans-serif;color:hsl(240 4% 66%);font-size:clamp(.95rem,1.5vw,1.1rem);line-height:1.65;max-width:40rem;margin-top:clamp(18px,2.6vw,28px);}
-  .nx-cta{display:inline-block;color:#fff;border-radius:999px;font-family:'Inter',sans-serif;font-size:clamp(.9rem,1.3vw,1rem);padding:clamp(13px,1.6vw,18px) clamp(30px,4.6vw,52px);margin-top:clamp(22px,3.2vw,34px);cursor:pointer;transition:transform .25s ease;}
-  .nx-cta:hover{transform:scale(1.03);}
+  /* top: full-screen video, no text */
+  .nx-hero{padding:0;position:relative;width:100%;height:100vh;height:100svh;min-height:380px;background:hsl(201 100% 13%);overflow:hidden;border-radius:0 0 28px 28px;}
+  .nx-hero .nx-video{position:absolute;inset:0;}
+  .nx-scroll{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;}
+  .nx-scroll svg{width:18px;height:18px;animation:nx-bob 1.8s ease-in-out infinite;}
+  @keyframes nx-bob{0%,100%{transform:translateY(-2px);}50%{transform:translateY(3px);}}
 
-  /* key benefits: middle */
-  .nx-ben{padding:clamp(44px,7vw,84px) 0;font-family:'Futura Md BT Medium','Space Grotesk',system-ui,sans-serif;}
-  .nx-ben h2{font-family:inherit;font-weight:400;font-size:clamp(1.8rem,4.2vw,2.9rem);letter-spacing:-0.04em;text-align:center;margin-bottom:clamp(26px,4.5vw,50px);color:var(--text);}
-  .nx-grid{display:grid;grid-template-columns:1fr;gap:12px;}
-  .nx-card{position:relative;height:clamp(290px,34vw,350px);border-radius:16px;background:#0a0a0a;color:#fff;overflow:hidden;border:1px solid var(--line);}
-  .nx-card.pad{padding:clamp(22px,2.4vw,30px);}
-  .nx-card.col{display:flex;flex-direction:column;}
-  .nx-blob{position:absolute;border-radius:50%;background:#1e3a8a;filter:blur(64px);opacity:.4;pointer-events:none;}
-  .nx-b1{top:50%;transform:translateY(-50%);left:-300px;width:420px;height:420px;}
-  .nx-b3{top:-110px;right:-110px;width:220px;height:220px;}
-  .nx-c{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;}
-  .nx-card h3{font-family:inherit;font-weight:400;font-size:clamp(1.15rem,2vw,1.5rem);line-height:1.2;letter-spacing:-0.01em;color:#fff;}
-  .nx-card p{font-size:clamp(.8rem,1vw,.875rem);line-height:1.65;color:rgba(255,255,255,.7);font-weight:300;font-family:'Inter',sans-serif;max-width:300px;}
-  .nx-p-mid{margin-top:clamp(28px,4.4vw,64px);}
-  .nx-p-end{margin-top:auto;}
-  .nx-vid{position:relative;width:100%;height:72%;overflow:hidden;}
-  .nx-vid::after{content:'';position:absolute;left:0;right:0;bottom:0;height:7rem;background:linear-gradient(to bottom,transparent,#0a0a0a);pointer-events:none;}
-  .nx-cap{flex:1;display:flex;align-items:center;padding:clamp(18px,2.4vw,28px) clamp(22px,2.4vw,30px);}
-  @media (min-width:768px){.nx-grid{grid-template-columns:repeat(3,1fr);gap:16px;}}
+  /* middle: key benefits */
+  .nx-ben{padding:clamp(44px,7vw,84px) 0;}
+  .nx-ben h2{font-weight:600;font-size:clamp(1.8rem,4.2vw,2.9rem);letter-spacing:-0.03em;text-align:center;margin-bottom:clamp(24px,4.5vw,48px);color:var(--text);}
+  .nx-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;}
+  @media (min-width:800px){.nx-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}}
+  .nx-card{position:relative;isolation:isolate;display:flex;flex-direction:column;min-height:300px;border-radius:16px;background:#0a0a0a;color:#fff;overflow:hidden;border:1px solid var(--line);}
+  .nx-blob{position:absolute;z-index:-1;border-radius:50%;background:#1e3a8a;filter:blur(64px);opacity:.45;pointer-events:none;}
+  .nx-b1{left:-170px;top:30%;width:340px;height:340px;}
+  .nx-b3{right:-90px;top:-90px;width:240px;height:240px;}
+  .nx-text{padding:clamp(22px,2.4vw,30px);display:flex;flex-direction:column;flex:1;gap:clamp(22px,3vw,40px);}
+  .nx-card h3{font-size:clamp(1.15rem,1.9vw,1.45rem);font-weight:500;line-height:1.22;letter-spacing:-0.015em;color:#fff;}
+  .nx-card p{font-size:.88rem;line-height:1.65;color:rgba(255,255,255,.72);font-weight:400;}
+  .nx-text p.end{margin-top:auto;}
+  .nx-vid{position:relative;flex:1 1 auto;min-height:190px;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,rgba(30,58,138,.55),#0a0a0a 70%);}
+  .nx-vid .nx-video{position:absolute;inset:0;}
+  .nx-vid::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6rem;background:linear-gradient(to bottom,transparent,#0a0a0a);pointer-events:none;}
+  .nx-cap{padding:6px clamp(22px,2.4vw,30px) clamp(22px,2.4vw,30px);}
 
-  /* bottom closing: light, contained */
-  .nx-end{padding:0;position:relative;isolation:isolate;overflow:hidden;width:calc(100% - 24px);max-width:1280px;margin:clamp(36px,6vw,72px) auto 32px;border-radius:28px;background:#EDEEF5;color:#1a1a1a;font-family:'Inter',sans-serif;min-height:clamp(440px,62vh,580px);}
+  /* bottom: ask me anything, light card, all in normal flow */
+  .nx-end{padding:0;position:relative;overflow:hidden;width:calc(100% - 24px);max-width:1280px;margin:clamp(36px,6vw,72px) auto 32px;border-radius:28px;background:#EDEEF5;color:#1a1a1a;font-family:'Inter',sans-serif;}
   .nx-end ::selection{background:#9fff00;color:#000;}
-  .nx-end-media{position:absolute;left:0;right:0;bottom:0;height:62%;z-index:0;pointer-events:none;}
-  .nx-end-media::before{content:'';position:absolute;top:0;left:0;right:0;height:96px;background:linear-gradient(to bottom,#EDEEF5,transparent);z-index:1;}
-  .nx-end-inner{position:relative;z-index:2;padding:clamp(40px,6vw,72px) clamp(20px,5vw,64px) 0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:16px;}
-  .nx-end-col{grid-column:1/-1;}
-  @media (min-width:900px){.nx-end-col{grid-column:2/12;}}
-  .nx-end h2{font-family:'Outfit',sans-serif;font-weight:400;font-size:clamp(1.65rem,4.6vw,3.5rem);line-height:1.1;letter-spacing:-0.03em;color:#8e8e8e;}
+  .nx-end-inner{padding:clamp(36px,6vw,72px) clamp(18px,5vw,64px) clamp(18px,3vw,28px);max-width:980px;margin:0 auto;}
+  .nx-end h2{font-family:'Outfit','Space Grotesk',sans-serif;font-weight:400;font-size:clamp(1.5rem,4vw,3rem);line-height:1.12;letter-spacing:-0.03em;color:#8e8e8e;}
   .nx-end h2 b{font-weight:400;color:#1a1a1a;}
   .nx-eye{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;width:clamp(34px,4.4vw,62px);height:.58em;border:2px solid #1a1a1a;border-radius:999px;margin:0 .06em;}
   .nx-eye i{width:8px;height:8px;border-radius:50%;background:#000;display:block;}
-  .nx-ask{display:flex;align-items:center;width:100%;max-width:420px;margin-top:clamp(20px,3vw,32px);background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:6px;padding:4px 4px 4px 16px;box-shadow:0 1px 2px rgba(0,0,0,.06);}
-  .nx-ask input{flex:1;min-width:0;background:transparent;border:0;outline:0;font:inherit;font-size:.9rem;color:#1a1a1a;}
+  .nx-ask{display:flex;align-items:center;width:100%;max-width:520px;margin-top:clamp(20px,3vw,30px);background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:8px;padding:4px 4px 4px 16px;box-shadow:0 1px 2px rgba(0,0,0,.06);}
+  .nx-ask input{flex:1;min-width:0;background:transparent;border:0;outline:0;font:inherit;font-size:.95rem;color:#1a1a1a;}
   .nx-ask input::placeholder{color:#8e8e8e;}
-  .nx-ask button{flex:none;width:36px;height:36px;border-radius:50%;border:0;background:#1a1a1a;color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s;}
+  .nx-ask button{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:#1a1a1a;color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s;}
   .nx-ask button:hover,.nx-ask button:focus-visible{background:#9fff00;color:#000;}
-  .nx-edge{position:absolute;z-index:3;font-size:12px;letter-spacing:.02em;color:#1a1a1a;}
-  .nx-edge.bl{left:clamp(16px,3vw,28px);bottom:16px;}
-  .nx-edge.br{right:clamp(16px,3vw,28px);bottom:16px;text-align:right;}
-  .nx-edge.mr{right:clamp(14px,2.4vw,24px);top:50%;transform:translateY(-50%);padding:8px 16px;border-radius:999px;display:none;}
-  .nx-edge.mr .nx-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#9fff00;box-shadow:0 0 0 2px rgba(26,26,26,.85);margin-right:8px;}
-  @media (min-width:900px){.nx-edge.mr{display:inline-block;}}
-  @media (max-width:560px){.nx-edge.br{max-width:52%;}}
-  .hero{padding-top:64px;}
-  @media (max-width:860px){.hero{padding-top:36px;}}
-  @media (prefers-reduced-motion: reduce){.nx-rise,.nx-rise-2,.nx-rise-3{animation:none;}}
+  .nx-ask button[disabled]{opacity:.5;cursor:wait;}
+  .nx-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .nx-chips button{font:inherit;font-size:.8rem;color:#1a1a1a;background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.08);border-radius:999px;padding:7px 14px;cursor:pointer;transition:background .2s;}
+  .nx-chips button:hover{background:#fff;}
+  .nx-chat{margin-top:18px;max-width:620px;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px;}
+  .nx-chat[hidden]{display:none;}
+  .nx-msg{font-size:.92rem;line-height:1.6;padding:10px 14px;border-radius:14px;max-width:92%;white-space:pre-wrap;overflow-wrap:anywhere;}
+  .nx-msg.u{align-self:flex-end;background:#1a1a1a;color:#fff;border-bottom-right-radius:4px;}
+  .nx-msg.a{align-self:flex-start;background:#fff;color:#1a1a1a;border:1px solid rgba(0,0,0,.06);border-bottom-left-radius:4px;}
+  .nx-msg a{text-decoration:underline;}
+  .nx-dots{display:inline-flex;gap:4px;align-items:center;height:1.2em;}
+  .nx-dots i{width:6px;height:6px;border-radius:50%;background:#8e8e8e;animation:nx-blink 1.2s infinite ease-in-out;}
+  .nx-dots i:nth-child(2){animation-delay:.15s;}.nx-dots i:nth-child(3){animation-delay:.3s;}
+  @keyframes nx-blink{0%,80%,100%{opacity:.25;}40%{opacity:1;}}
+  .nx-end-media{position:relative;width:100%;aspect-ratio:16/6;min-height:170px;max-height:340px;background:linear-gradient(#EDEEF5,#dfe3f2);overflow:hidden;}
+  .nx-end-media .nx-video{position:absolute;inset:0;}
+  .nx-end-media::before{content:'';position:absolute;top:0;left:0;right:0;height:90px;background:linear-gradient(to bottom,#EDEEF5,transparent);z-index:1;pointer-events:none;}
+  .nx-end-foot{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:14px clamp(16px,3vw,28px);font-size:12px;letter-spacing:.02em;color:#1a1a1a;background:#EDEEF5;}
+  .nx-end-foot .pill{padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.7);}
+  .nx-end-foot .nx-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#9fff00;box-shadow:0 0 0 2px rgba(26,26,26,.85);margin-right:8px;}
+  @media (max-width:560px){.nx-end-foot{justify-content:center;text-align:center;}}
+  @media (prefers-reduced-motion: reduce){.nx-rise,.nx-scroll svg,.nx-dots i{animation:none;}}
 </style>
 </head>
 <body>
@@ -1080,13 +1079,9 @@
 </header>
 
 <div id="main-content">
-<section class="nx-hero" aria-label="Introduction">
-  <video class="nx-video" autoplay loop muted playsinline preload="metadata" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4"></video>
-  <div class="nx-hero-inner">
-    <h1 class="nx-rise">Where <em>ideas</em> rise <em>through clean code and quiet craft.</em></h1>
-    <p class="nx-rise-2">Full stack development, AI automation and software testing for people who care about products that work and words that make sense.</p>
-    <a href="#built" class="nx-cta nx-glass nx-rise-3">See my work</a>
-  </div>
+<section class="nx-hero" aria-label="Intro">
+  <video class="nx-video" autoplay loop muted playsinline preload="auto" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4"></video>
+  <a href="#about" class="nx-scroll nx-glass" aria-label="Scroll down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
 </section>
 
 <section class="hero wrap">
@@ -1103,7 +1098,7 @@
   <div class="portrait-wrap hero-curtain d6">
     <div class="portrait-frame">
       <div class="portrait-glow"></div>
-      <img src="images/hero.jpg" alt="Portrait of maleekskies" fetchpriority="high">
+      <img src="./hero.jpg" alt="Portrait of maleekskies" fetchpriority="high">
     </div>
   </div>
 </section>
@@ -1239,22 +1234,22 @@
   <div class="wrap">
     <h2>Key Benefits</h2>
     <div class="nx-grid">
-      <article class="nx-card pad">
+      <article class="nx-card">
         <div class="nx-blob nx-b1"></div>
-        <div class="nx-c">
+        <div class="nx-text">
           <h3>Full Stack<br>Built End to End</h3>
-          <p class="nx-p-mid">From first commit to live link: clean front ends, solid back ends and the deployment work in between, so the product ships and stays up.</p>
+          <p>From first commit to live link: clean front ends, solid back ends and the deployment work in between, so the product ships and stays up.</p>
         </div>
       </article>
-      <article class="nx-card col">
+      <article class="nx-card">
         <div class="nx-vid"><video class="nx-video" autoplay loop muted playsinline preload="none" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4" type="video/mp4"></video></div>
         <div class="nx-cap"><h3>AI Automation<br>That Saves Hours</h3></div>
       </article>
-      <article class="nx-card pad">
+      <article class="nx-card">
         <div class="nx-blob nx-b3"></div>
-        <div class="nx-c">
+        <div class="nx-text">
           <h3>Tested, Documented<br>and Dependable</h3>
-          <p class="nx-p-end">Software testing and QA catch failures before users do, and clear writing makes sure what I build is understood by the people who need it.</p>
+          <p class="end">Software testing and QA catch failures before users do, and clear writing makes sure what I build is understood by the people who need it.</p>
         </div>
       </article>
     </div>
@@ -1398,18 +1393,26 @@
   </div>
 </section>
 
-<section class="nx-end" aria-label="Start a conversation">
-  <div class="nx-end-media"><video class="nx-video" autoplay loop muted playsinline preload="none" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260603_132049_036591b8-6e92-4760-b94c-a7ea6eef315c.mp4" type="video/mp4"></video></div>
-  <div class="nx-end-inner"><div class="nx-end-col">
-    <h2 class="nx-rise"><b>Got a project in mind?</b> Tell me what you need and I'll help you build, automate and test your <span class="nx-eye" aria-hidden="true"><i></i></span> idea.</h2>
-    <form class="nx-ask nx-rise-2" id="nxAsk" autocomplete="off">
-      <input type="text" id="nxAskInput" placeholder="Ask me anything..." aria-label="Ask me anything">
-      <button type="submit" aria-label="Send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+<section class="nx-end" id="ask" aria-label="Ask me anything">
+  <div class="nx-end-inner">
+    <h2><b>Got a project in mind?</b> Ask my assistant anything about my work, or tell me about your <span class="nx-eye" aria-hidden="true"><i></i></span> idea.</h2>
+    <form class="nx-ask" id="nxAsk" autocomplete="off">
+      <input type="text" id="nxAskInput" maxlength="400" placeholder="Ask me anything..." aria-label="Ask me anything">
+      <button type="submit" id="nxAskBtn" aria-label="Send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </form>
-  </div></div>
-  <span class="nx-edge mr nx-glass"><span class="nx-dot"></span>Open to work · remote</span>
-  <span class="nx-edge bl">2026</span>
-  <span class="nx-edge br">full stack · ai automation · qa</span>
+    <div class="nx-chips" id="nxChips">
+      <button type="button">What do you build?</button>
+      <button type="button">Are you available for work?</button>
+      <button type="button">Which project should I look at first?</button>
+    </div>
+    <div class="nx-chat" id="nxChat" role="log" aria-live="polite" hidden></div>
+  </div>
+  <div class="nx-end-media"><video class="nx-video" autoplay loop muted playsinline preload="none" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260603_132049_036591b8-6e92-4760-b94c-a7ea6eef315c.mp4" type="video/mp4"></video></div>
+  <div class="nx-end-foot">
+    <span>2026</span>
+    <span class="pill"><span class="nx-dot"></span>Open to work · remote</span>
+    <span>full stack · ai automation · qa</span>
+  </div>
 </section>
 </div>
 <div class="page-view" id="writing-view">
@@ -1513,14 +1516,14 @@
       <div class="flow-legend"><span class="lg-code">Workflow logic</span><span class="lg-ai">Local AI</span></div>
 
       <figure class="cs-shot cs-shot-wide">
-        <div class="cs-shot-scroll"><img src="images/mk-n8n-workflow.png" width="990" height="181" loading="lazy" alt="The n8n workflow for the MK system, from the Google Sheets trigger through the Ollama reply, Gmail and Telegram, the wait, and the follow-up"></div>
+        <div class="cs-shot-scroll"><img src="./mk-n8n-workflow.png" width="990" height="181" loading="lazy" alt="The n8n workflow for the MK system, from the Google Sheets trigger through the Ollama reply, Gmail and Telegram, the wait, and the follow-up"></div>
         <p class="cs-shot-hint">Swipe sideways to see the whole workflow.</p>
         <figcaption>The full n8n workflow</figcaption>
       </figure>
 
       <!-- SCREENSHOTS: when you have them, add the files to the images folder and drop them in here, for example:
       <div class="cs-shots">
-        <figure class="cs-shot"><img src="images/mk-telegram-alert.png" alt="Telegram notification for a new lead"><figcaption>Instant lead alert in Telegram</figcaption></figure>
+        <figure class="cs-shot"><img src="./mk-telegram-alert.png" alt="Telegram notification for a new lead"><figcaption>Instant lead alert in Telegram</figcaption></figure>
       </div>
       Blur or replace any real names, phone numbers, or emails first. -->
 
@@ -1586,9 +1589,9 @@
 
       <!-- SCREENSHOTS: when you have them, add the files to the images folder, then drop them in here, for example:
       <div class="cs-shots">
-        <figure class="cs-shot"><img src="images/skies-n8n-canvas.png" alt="n8n workflow canvas for the Skies Realty pipeline"><figcaption>The full n8n workflow</figcaption></figure>
-        <figure class="cs-shot"><img src="images/skies-telegram-alert.png" alt="Telegram priority alert for a new lead"><figcaption>Priority alert in Telegram</figcaption></figure>
-        <figure class="cs-shot"><img src="images/skies-crm-sheet.png" alt="Google Sheets CRM with the AI Summary column"><figcaption>The CRM view with AI summaries</figcaption></figure>
+        <figure class="cs-shot"><img src="./skies-n8n-canvas.png" alt="n8n workflow canvas for the Skies Realty pipeline"><figcaption>The full n8n workflow</figcaption></figure>
+        <figure class="cs-shot"><img src="./skies-telegram-alert.png" alt="Telegram priority alert for a new lead"><figcaption>Priority alert in Telegram</figcaption></figure>
+        <figure class="cs-shot"><img src="./skies-crm-sheet.png" alt="Google Sheets CRM with the AI Summary column"><figcaption>The CRM view with AI summaries</figcaption></figure>
       </div>
       Blur or replace any real names, phone numbers, or emails first. -->
 
@@ -1664,7 +1667,7 @@
         <li class="n-io"><b>Kit</b><span>CV and cover letter</span></li>
       </ol>
       <div class="flow-legend"><span class="lg-code">Keywords narrow it down</span><span class="lg-ai">The LLM judges the fit</span></div>
-      <div class="cs-shots cs-shots-cap"><figure class="cs-shot"><img src="images/huntboard-inbox.jpg" alt="Inbox: roles scored against your CV and preferences" loading="lazy"><figcaption>Inbox: roles scored against your CV and preferences</figcaption></figure><figure class="cs-shot"><img src="images/huntboard-kit.jpg" alt="Kit overview: why it matches and gaps to address" loading="lazy"><figcaption>Kit overview: why it matches and gaps to address</figcaption></figure></div>
+      <div class="cs-shots cs-shots-cap"><figure class="cs-shot"><img src="./huntboard-inbox.jpg" alt="Inbox: roles scored against your CV and preferences" loading="lazy"><figcaption>Inbox: roles scored against your CV and preferences</figcaption></figure><figure class="cs-shot"><img src="./huntboard-kit.jpg" alt="Kit overview: why it matches and gaps to address" loading="lazy"><figcaption>Kit overview: why it matches and gaps to address</figcaption></figure></div>
       <div class="cs-cols">
         <div>
           <h4>The problem</h4>
@@ -1720,7 +1723,7 @@
         <li class="n-io"><b>Multiplayer</b><span>Glicko-2 ratings</span></li>
       </ol>
       <div class="flow-legend"><span class="lg-code">Coach rules run in code</span></div>
-      <div class="cs-shots cs-shots-cap"><figure class="cs-shot"><img src="images/chesshatch-lessons.jpg" alt="Beginner lesson path" loading="lazy"><figcaption>Beginner lesson path</figcaption></figure><figure class="cs-shot"><img src="images/chesshatch-tactics.jpg" alt="Intermediate tactics: 10 series, 50 lessons" loading="lazy"><figcaption>Intermediate tactics: 10 series, 50 lessons</figcaption></figure><figure class="cs-shot"><img src="images/chesshatch-bots.jpg" alt="Nine bot levels with progression" loading="lazy"><figcaption>Nine bot levels with progression</figcaption></figure></div>
+      <div class="cs-shots cs-shots-cap"><figure class="cs-shot"><img src="./chesshatch-lessons.jpg" alt="Beginner lesson path" loading="lazy"><figcaption>Beginner lesson path</figcaption></figure><figure class="cs-shot"><img src="./chesshatch-tactics.jpg" alt="Intermediate tactics: 10 series, 50 lessons" loading="lazy"><figcaption>Intermediate tactics: 10 series, 50 lessons</figcaption></figure><figure class="cs-shot"><img src="./chesshatch-bots.jpg" alt="Nine bot levels with progression" loading="lazy"><figcaption>Nine bot levels with progression</figcaption></figure></div>
       <div class="cs-cols">
         <div>
           <h4>The problem</h4>
@@ -2504,28 +2507,28 @@
     const GALLERY = {
       huntboard: [
         ['cover', 'Job detail with the match breakdown'],
-        ['images/huntboard-inbox.jpg', 'Inbox: roles scored against your CV and preferences'],
-        ['images/huntboard-kit.jpg', 'Kit overview: why it matches and gaps to address']
+        ['./huntboard-inbox.jpg', 'Inbox: roles scored against your CV and preferences'],
+        ['./huntboard-kit.jpg', 'Kit overview: why it matches and gaps to address']
       ],
       chesshatch: [
         ['cover', 'Landing page: choose where to start'],
-        ['images/chesshatch-lessons.jpg', 'Beginner lesson path'],
-        ['images/chesshatch-tactics.jpg', 'Intermediate tactics: 10 series, 50 lessons'],
-        ['images/chesshatch-bots.jpg', 'Nine bot levels with progression']
+        ['./chesshatch-lessons.jpg', 'Beginner lesson path'],
+        ['./chesshatch-tactics.jpg', 'Intermediate tactics: 10 series, 50 lessons'],
+        ['./chesshatch-bots.jpg', 'Nine bot levels with progression']
       ],
       auditlynx: [
         ['cover', 'Module 01: Security Headers & Config Checker'],
-        ['images/auditlynx-modules.jpg', 'The five analysis modules']
+        ['./auditlynx-modules.jpg', 'The five analysis modules']
       ],
       oz: [
         ['cover', 'Our Craft section'],
-        ['images/oz-home.jpg', 'Home page: handcrafted for a perfect fit'],
-        ['images/oz-collection.jpg', 'Featured collection with search and filters'],
-        ['images/oz-product.jpg', 'Product page: colour, size, and WhatsApp order']
+        ['./oz-home.jpg', 'Home page: handcrafted for a perfect fit'],
+        ['./oz-collection.jpg', 'Featured collection with search and filters'],
+        ['./oz-product.jpg', 'Product page: colour, size, and WhatsApp order']
       ],
       vault01: [
-        ['images/vault01-mint.jpg', 'Genesis Collection mint page'],
-        ['images/vault01-previews.jpg', 'Watch previews: Onyx, Rose, Green, Steel']
+        ['./vault01-mint.jpg', 'Genesis Collection mint page'],
+        ['./vault01-previews.jpg', 'Watch previews: Onyx, Rose, Green, Steel']
       ]
     };
 
@@ -2915,17 +2918,48 @@
   if(reduce){vids.forEach(function(v){v.removeAttribute('autoplay');v.pause();});}
   else if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){
-      var v=e.target; if(e.isIntersecting){var p=v.play(); if(p&&p.catch)p.catch(function(){});} else v.pause();
-    });},{rootMargin:'120px'});
+      var v=e.target;
+      if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){});}else v.pause();
+    });},{rootMargin:'160px'});
     vids.forEach(function(v){io.observe(v);});
   }
-  var f=document.getElementById('nxAsk');
-  if(f){f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var q=(document.getElementById('nxAskInput').value||'').trim();
-    var body=q?encodeURIComponent(q):'';
-    window.location.href='mailto:maleekskies@gmail.com?subject='+encodeURIComponent('Project inquiry')+(body?'&body='+body:'');
-  });}
+
+  /* Ask me anything: chat with the assistant at /api/ask */
+  var form=document.getElementById('nxAsk'),input=document.getElementById('nxAskInput'),
+      btn=document.getElementById('nxAskBtn'),chat=document.getElementById('nxChat'),
+      chips=document.getElementById('nxChips');
+  if(!form)return;
+  var history=[],busy=false;
+  var FALLBACK='I could not reach the assistant right now. You can email maleekskies@gmail.com and Malik will reply.';
+  function add(role,text){
+    chat.hidden=false;
+    var d=document.createElement('div');d.className='nx-msg '+(role==='user'?'u':'a');
+    if(text===null){d.innerHTML='<span class="nx-dots"><i></i><i></i><i></i></span>';}else d.textContent=text;
+    chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;
+  }
+  function ask(q){
+    q=(q||'').trim();if(!q||busy)return;
+    busy=true;btn.disabled=true;input.value='';
+    add('user',q);history.push({role:'user',content:q});
+    var wait=add('assistant',null);
+    var ctl=('AbortController' in window)?new AbortController():null;
+    var t=setTimeout(function(){if(ctl)ctl.abort();},25000);
+    fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:history.slice(-8)}),signal:ctl?ctl.signal:undefined})
+    .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
+    .then(function(x){
+      if(!x.ok||!x.j.reply)throw new Error('bad');
+      wait.textContent=x.j.reply;history.push({role:'assistant',content:x.j.reply});
+    })
+    .catch(function(){
+      wait.textContent=FALLBACK;history.pop();
+    })
+    .then(function(){clearTimeout(t);busy=false;btn.disabled=false;chat.scrollTop=chat.scrollHeight;});
+  }
+  form.addEventListener('submit',function(e){e.preventDefault();ask(input.value);});
+  chips.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(b)ask(b.textContent);
+  });
 })();
 </script>
 </body>

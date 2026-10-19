@@ -51,11 +51,11 @@ Each project is written once, as a hidden card inside the `projectStore` block n
 
 ## Adding pictures to a project's gallery
 
-Screenshots live in the `images` folder. In the same script, find the `GALLERY` list: each project has lines like `['images/huntboard-inbox.jpg', 'Caption shown under the picture']`. Add a line for each new picture (the word `cover` means the project's existing card image). A project with no entry just shows its card image, with no arrows. For fast loading, keep screenshots around 800px wide and save them as JPEG.
+Screenshots live in the project root, next to `index.html`. In the same script, find the `GALLERY` list: each project has lines like `['huntboard-inbox.jpg', 'Caption shown under the picture']`. Add a line for each new picture (the word `cover` means the project's existing card image). A project with no entry just shows its card image, with no arrows. For fast loading, keep screenshots around 800px wide and save them as JPEG.
 
 ## Adding screenshots to the automation case studies
 
-Find the `SCREENSHOTS` comments inside the two case studies (the AI Automation page) in `index.html`. The MK case study already has its n8n workflow picture (`images/mk-n8n-workflow.png`). Each comment contains a ready-made block for any further pictures: add your images to the `images` folder, uncomment the block, and point each `src` at your file. Blur or replace any real names, phone numbers, or emails first.
+Find the `SCREENSHOTS` comments inside the two case studies (the AI Automation page) in `index.html`. The MK case study already has its n8n workflow picture (`mk-n8n-workflow.png`). Each comment contains a ready-made block for any further pictures: add your images next to `index.html`, uncomment the block, and point each `src` at your file. Blur or replace any real names, phone numbers, or emails first.
 
 ## Case studies
 
@@ -75,13 +75,13 @@ After deploying, submit `https://maleekskies.vercel.app/sitemap.xml` in Google S
 - `cv.pdf`: linked from the CV button in the nav
 - `favicon.ico`, `favicon-32.png`, `favicon-192.png`: browser tab icon, multiple sizes
 - `preview.jpg`: the image shown when the site link is shared on social platforms or messaging apps
-- `images/`: screenshots shown in the project details panel
+- the `.jpg` and `.png` files in the root: screenshots shown in the project details panel
 - `robots.txt`, `sitemap.xml`: search engine files
 - `README.md`: this file
 
 ## Deployment
 
-This is a static site, so it can be deployed anywhere that serves static files. Upload all the files above together, in the same folder (including the `images` folder), since `index.html` links to several of them by relative path and they'll break if separated.
+This is a static site, so it can be deployed anywhere that serves static files. Upload all the files above together, in the same folder, since `index.html` links to several of them by relative path and they'll break if separated.
 
 - **Netlify Drop**: drag and drop the folder at [app.netlify.com/drop](https://app.netlify.com/drop)
 - **Vercel**: create a project and upload the folder
@@ -99,3 +99,13 @@ Open `index.html` directly in any browser. No server required.
 - X: [@maleekskies](https://x.com/maleekskies)
 - Telegram: [@maleekskies](https://t.me/maleekskies)
 - LinkedIn: [maleekskies](https://www.linkedin.com/in/maleekskies/)
+
+## Ask me anything (AI assistant)
+
+The "Ask me anything" box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Anthropic API. The key stays on the server.
+
+1. In Vercel: Project, Settings, Environment Variables, add `ANTHROPIC_API_KEY` (all environments), then redeploy.
+2. Optional: `ANTHROPIC_MODEL` (default `claude-haiku-5-5`) and `ALLOWED_ORIGINS` (comma-separated, add a custom domain).
+3. Edit what the assistant knows by changing the `SYSTEM` text at the top of `api/ask.js`.
+
+If the key is missing, the box shows a message pointing visitors to your email. The function limits message length, conversation length and requests per visitor.
