@@ -102,10 +102,11 @@ Open `index.html` directly in any browser. No server required.
 
 ## Ask me anything (AI assistant)
 
-The "Ask me anything" box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Anthropic API. The key stays on the server.
+The "Ask me anything" box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Gemini API. The key stays on the server. It runs on the Gemini free tier, so you pay nothing. The free tier does use your visitors' questions to improve Google's products, so do not put anything private in the assistant's facts.
 
-1. In Vercel: Project, Settings, Environment Variables, add `ANTHROPIC_API_KEY` (all environments), then redeploy.
-2. Optional: `ANTHROPIC_MODEL` (default `claude-haiku-5-5`) and `ALLOWED_ORIGINS` (comma-separated, add a custom domain).
-3. Edit what the assistant knows by changing the `SYSTEM` text at the top of `api/ask.js`.
+1. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). No card needed.
+2. In Vercel: Project, Settings, Environment Variables, add `GEMINI_API_KEY` (all environments), then redeploy.
+3. Optional: `GEMINI_MODEL` (default `gemini-3.5-flash-lite`) and `ALLOWED_ORIGINS` (comma-separated, add a custom domain).
+4. Edit what the assistant knows by changing the `SYSTEM` text at the top of `api/ask.js`.
 
-If the key is missing, the box shows a message pointing visitors to your email. The function limits message length, conversation length and requests per visitor.
+If the key is missing, the box tells the visitor to email you instead. The function limits message length, conversation length and requests per visitor.
