@@ -106,7 +106,7 @@ The "Ask me anything" box at the bottom of the page talks to `api/ask.js`, a Ver
 
 1. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). No card needed.
 2. In Vercel: Project, Settings, Environment Variables, add `GEMINI_API_KEY` (all environments), then redeploy.
-3. Optional: `GEMINI_MODEL` (default `gemini-3.5-flash-lite`) and `ALLOWED_ORIGINS` (comma-separated, add a custom domain).
+3. Optional: `GEMINI_MODEL` (default `gemini-3.5-flash`) and `ALLOWED_ORIGINS` (comma-separated, add a custom domain).
 4. Edit what the assistant knows by changing the `SYSTEM` text at the top of `api/ask.js`.
 
 If the key is missing, the box tells the visitor to email you instead. The function limits message length, conversation length and requests per visitor.
