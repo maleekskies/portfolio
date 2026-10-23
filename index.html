@@ -234,27 +234,13 @@
   /* PROJECTS I'VE BUILT (tabbed single-project view, with 3D tilt) */
   .built-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
 
-  /* WHAT I DO (tabbed single-view, matches Projects tab style) */
-  .skill-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
-  .skill-tab{
-    font-family:'IBM Plex Mono',monospace;font-size:0.86rem;color:var(--text-dim);
-    border:1px solid var(--line);background:var(--bg-alt);
-    padding:9px 18px;border-radius:20px;cursor:pointer;transition:all .2s;
-  }
-  .skill-tab:hover{border-color:var(--copper);color:var(--text);}
-  .skill-tab.active{border-color:var(--copper);background:var(--copper);color:#0b1120;font-weight:600;}
-  .skill-pager{
-    font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--text-dimmer);
-    margin-bottom:20px;letter-spacing:0.04em;
-    display:flex;align-items:center;gap:12px;
-  }
-  .skill-pager #skillPagerCurrent{color:var(--copper-bright);font-weight:600;}
-  .skill-showcase{position:relative;}
+  /* WHAT I DO (card grid, presented like the featured project cards) */
+  .skill-showcase{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
   .skill-card{
-    display:none;border:1px solid var(--line);background:var(--bg-alt);border-radius:14px;
-    padding:40px 38px;transform-style:preserve-3d;will-change:transform;
+    display:flex;flex-direction:column;border:1px solid var(--line);background:var(--bg-alt);border-radius:16px;
+    padding:34px 32px;box-shadow:0 30px 60px -34px rgba(0,0,0,.6);
+    transform-style:preserve-3d;will-change:transform;
   }
-  .skill-card.active{display:block;}
   .skill-card .skill-idx-big{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:var(--copper-bright);margin-bottom:16px;}
   .skill-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;color:var(--text);}
   .skill-card .desc{color:var(--text-dim);font-size:1rem;margin-top:18px;max-width:560px;}
@@ -433,12 +419,7 @@
     display:flex;align-items:center;justify-content:center;flex-shrink:0;
   }
   .tool-icon-wrap img{width:16px;height:16px;object-fit:contain;}
-  .tool-featured{grid-column:1/-1;display:flex;align-items:center;gap:20px;border:1px solid var(--copper);background:linear-gradient(135deg,rgba(216,132,90,0.1),transparent 55%),var(--bg-alt);border-radius:14px;padding:22px 26px;}
-  .tool-featured .tool-icon-wrap{width:62px;height:62px;border-radius:14px;}
-  .tool-featured .tool-icon-wrap img,.tool-featured .tool-icon-wrap svg{width:38px;height:38px;}
-  .tool-featured h3{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;color:var(--text);margin-bottom:2px;}
-  .tool-featured p{color:var(--text-dim);font-size:0.9rem;margin:0;}
-  .tool-featured-tag{display:block;font-family:'IBM Plex Mono',monospace;font-size:0.64rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--copper-bright);margin-bottom:4px;}
+  .tool-pill-major{font-weight:700;font-size:0.96rem;border-color:var(--copper);padding:9px 16px 9px 9px;}
 
   /* WHAT DRIVES ME */
   .drives-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
@@ -514,6 +495,7 @@
     .project-grid{grid-template-columns:1fr;}
     .hub-grid{grid-template-columns:1fr;}
     .built-card.active{grid-template-columns:1fr;}
+    .skill-showcase{grid-template-columns:1fr;}
     .skill-card{padding:28px 24px;}
     .built-card .built-img{min-height:200px;}
     .tools-grid{grid-template-columns:1fr;}
@@ -1169,23 +1151,13 @@
       <p>From building the product to automating the repetitive parts around it.</p>
     </div>
 
-    <div class="skill-tabs card-stagger">
-      <button class="skill-tab active" data-target="fullstack">Full Stack Development</button>
-      <button class="skill-tab" data-target="aiautomation">AI Automation</button>
-    </div>
-    <div class="skill-pager">
-      <button class="pager-arrow" id="skillPrev" aria-label="Previous skill">&#8249;</button>
-      <span id="skillPagerCurrent">01</span> / <span id="skillPagerTotal">02</span>
-      <button class="pager-arrow" id="skillNext" aria-label="Next skill">&#8250;</button>
-    </div>
-
-    <div class="skill-showcase">
-      <div class="skill-card active" data-tilt data-skill="fullstack">
+    <div class="skill-showcase card-stagger">
+      <div class="skill-card" data-tilt>
         <div class="skill-idx-big">01</div>
         <h3>Full Stack Development</h3>
         <div class="desc">Web development from the database and backend to the interface, using AI-assisted tools to prototype, test, and ship working products quickly.</div>
       </div>
-      <div class="skill-card" data-tilt data-skill="aiautomation">
+      <div class="skill-card" data-tilt>
         <div class="skill-idx-big">02</div>
         <h3>AI Automation</h3>
         <div class="desc">Workflows that connect forms, spreadsheets, messaging, and AI so routine steps run on their own: capturing leads, scoring them, summarizing what people wrote, replying, and alerting the right person. Where privacy and cost matter, I run local models, so customer data never goes to a third-party AI service and there are no per-token fees.</div>
@@ -1288,39 +1260,24 @@
       <p>Technologies and tools I use in building products.</p>
     </div>
     <div class="tools-grid card-stagger">
-      <div class="tool-featured">
-        <span class="tool-icon-wrap"><svg viewBox="0 0 24 24" fill="#111" aria-hidden="true"><path d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632"/></svg></span>
-        <div>
-          <span class="tool-featured-tag">Most used</span>
-          <h3>n8n</h3>
-          <p>Automation and AI workflows.</p>
-        </div>
-      </div>
       <div class="tool-category" data-tilt>
         <h3>Frontend Development</h3>
         <p>Building responsive and interactive user interfaces.</p>
         <div class="tool-pills">
-          <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>HTML5</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>CSS3</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>JavaScript</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>TypeScript</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>React</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Next.js</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Vite</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Tailwind CSS</span>
+          <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>HTML5</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>CSS3</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>JavaScript</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>TypeScript</span> <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>React</span> <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Next.js</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Vite</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Tailwind CSS</span>
         </div>
       </div>
       <div class="tool-category" data-tilt>
         <h3>AI Automation</h3>
         <p>Connecting forms, spreadsheets, messaging, and AI into workflows that run on their own.</p>
         <div class="tool-pills">
-          <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/n8n.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>n8n</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/ollama.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Ollama</span> <span class="tool-pill">Webhooks</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/googlesheets.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Google Sheets API</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/googleforms.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Google Forms</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/telegram.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Telegram Bot API</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/gmail.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Gmail SMTP</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/zapier.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Zapier</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/airtable.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Airtable</span> <span class="tool-pill">REST APIs</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/docker.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Docker</span>         </div>
+          <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/n8n.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>n8n</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/ollama.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Ollama</span> <span class="tool-pill">Webhooks</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/docker.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Docker</span>         </div>
       </div>
       <div class="tool-category" data-tilt>
         <h3>Backend &amp; Database</h3>
         <p>Building APIs and working with databases and server-side logic.</p>
         <div class="tool-pills">
-          <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Node.js</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Python</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>FastAPI</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/supabase.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Supabase</span>
-        </div>
-      </div>
-      <div class="tool-category" data-tilt>
-        <h3>AI &amp; Integrations</h3>
-        <p>Workflow automation, local and hosted AI models, and third-party integrations.</p>
-        <div class="tool-pills">
-          <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/groq.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Groq</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/resend.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Resend</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/n8n.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>n8n</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/ollama.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Ollama</span> <span class="tool-pill">Stockfish.js</span> <span class="tool-pill">chess.js</span>
+          <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Node.js</span> <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Python</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>FastAPI</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/supabase.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Supabase</span>
         </div>
       </div>
       <div class="tool-category" data-tilt>
@@ -2435,39 +2392,6 @@
         card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateY(0)';
       });
     });
-  })();
-
-  // What I Do: tab switching + arrows + swipe
-  (function(){
-    const tabs = document.querySelectorAll('.skill-tab');
-    const cards = document.querySelectorAll('.skill-card');
-    const pagerCurrent = document.getElementById('skillPagerCurrent');
-    const order = Array.from(tabs).map(t => t.dataset.target);
-    let current = 0;
-
-    function goTo(idx){
-      current = (idx + order.length) % order.length;
-      const key = order[current];
-      tabs.forEach((t, i) => t.classList.toggle('active', i === current));
-      cards.forEach(c => c.classList.toggle('active', c.dataset.skill === key));
-      if(pagerCurrent){ pagerCurrent.textContent = String(current + 1).padStart(2, '0'); }
-    }
-
-    tabs.forEach((tab, i) => tab.addEventListener('click', () => goTo(i)));
-    const prevBtn = document.getElementById('skillPrev');
-    const nextBtn = document.getElementById('skillNext');
-    if(prevBtn){ prevBtn.addEventListener('click', () => goTo(current - 1)); }
-    if(nextBtn){ nextBtn.addEventListener('click', () => goTo(current + 1)); }
-
-    const showcase = document.querySelector('.skill-showcase');
-    if(showcase){
-      let touchStartX = 0;
-      showcase.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive:true});
-      showcase.addEventListener('touchend', (e) => {
-        const dx = e.changedTouches[0].screenX - touchStartX;
-        if(Math.abs(dx) > 50){ dx < 0 ? goTo(current + 1) : goTo(current - 1); }
-      }, {passive:true});
-    }
   })();
 
   // Featured projects: compact cards, 3D ring carousel, details panel with gallery.
