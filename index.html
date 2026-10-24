@@ -1016,6 +1016,14 @@
   .nx-end-foot .nx-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#9fff00;box-shadow:0 0 0 2px rgba(26,26,26,.85);margin-right:8px;}
   @media (max-width:560px){.nx-end-foot{justify-content:center;text-align:center;}}
   @media (prefers-reduced-motion: reduce){.nx-rise,.nx-scroll svg,.nx-dots i{animation:none;}}
+
+  /* 3D BEE: fixed overlay that flies between sections as the page scrolls */
+  #bee{position:fixed;inset:0;z-index:5;width:100%;height:100%;display:block;pointer-events:none;opacity:0;transition:opacity .9s ease;}
+  #bee.ready{opacity:1;}
+  html.bee-paused #bee,html.dlg-open #bee{opacity:0;transition-duration:.25s;}
+  @media (prefers-reduced-motion: reduce){
+    #bee{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -1028,6 +1036,7 @@
 </script>
 
 <canvas id="bgCanvas" aria-hidden="true"></canvas>
+<canvas id="bee" aria-hidden="true"></canvas>
 
 <header>
   <nav class="wrap">
@@ -1953,29 +1962,6 @@
           </div>
         </div>
       </div>
-      <div class="built-card" data-tilt data-project="melli">
-        <div class="built-img">
-          <div class="img-main">
-            <img class="carousel-slide active" src="./melli-cover.jpg" alt="Melli landing page hero with a 3D bee over a lavender background">
-          </div>
-          <div class="img-thumbs">
-            <img class="thumb active" src="./melli-cover.jpg" alt="">
-          </div>
-        </div>
-        <div class="built-body">
-          <div class="site-card-head" style="margin-bottom:0;">
-            <h3>Melli</h3>
-            <span class="site-status">Live demo</span>
-          </div>
-          <div class="b-tag">3D Motion Landing Page</div>
-          <p>A scroll-driven landing page for a motion design academy. A 3D bee flies between five sections while lavender gradients, oversized type, and a Three.js scene follow the scroll.</p>
-          <div class="built-tags"><span>HTML5</span><span>CSS3</span><span>Three.js</span><span>GLTF</span><span>Vercel</span></div>
-          <div class="built-links">
-            <a class="b-live" href="/melli/" target="_blank" rel="noopener">Live Demo &#8599;</a>
-            <span class="b-gh" style="opacity:.55;pointer-events:none;">Single-file build</span>
-          </div>
-        </div>
-      </div>
 </div>
 
 <script>
@@ -2103,6 +2089,7 @@
   const allViews = document.querySelectorAll('.page-view');
 
   function showView(viewId){
+    document.documentElement.classList.add('bee-paused');
     mainContent.style.display = 'none';
     allViews.forEach(v => v.classList.remove('active'));
     const target = document.getElementById(viewId);
@@ -2112,6 +2099,8 @@
   function showMain(){
     allViews.forEach(v => v.classList.remove('active'));
     mainContent.style.display = '';
+    document.documentElement.classList.remove('bee-paused');
+    if(window.__beeRefresh){ window.__beeRefresh(); }
   }
 
   // Every internal link on the site (nav, hero buttons, hub cards, back links)
@@ -2453,12 +2442,6 @@
       vault01: [
         ['./vault01-mint.jpg', 'Genesis Collection mint page'],
         ['./vault01-previews.jpg', 'Watch previews: Onyx, Rose, Green, Steel']
-      ],
-      melli: [
-        ['cover', 'Hero: the scroll-driven 3D bee'],
-        ['./melli-s1.jpg', 'Section 01: a class that runs on making'],
-        ['./melli-s2.jpg', 'Section 02: early access'],
-        ['./melli-s3.jpg', 'Section 03: study and build']
       ]
     };
 
@@ -2907,6 +2890,408 @@
   chips.addEventListener('click',function(e){
     var b=e.target.closest('button');if(b)ask(b.textContent);
   });
+})();
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+(async () => {
+  const canvas = document.getElementById('bee');
+  if(!canvas){ return; }
+
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    canvas.remove();
+    return;
+  }
+
+  let THREE, GLTFLoader, RoomEnvironment, MeshoptDecoder;
+  try {
+    THREE = await import('three');
+    ({ GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js'));
+    ({ RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js'));
+    ({ MeshoptDecoder } = await import('three/addons/libs/meshopt_decoder.module.js'));
+  } catch (error) {
+    canvas.remove();
+    return;
+  }
+
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  } catch (error) {
+    canvas.remove();
+    return;
+  }
+
+  const BEE_GLB = './bee.glb';
+  const WING_TEX = './bee-wing.webp';
+  const root = document.documentElement;
+  const mainContent = document.getElementById('main-content');
+  let stopped = false;
+
+  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 760 ? 1.5 : 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  renderer.setSize(innerWidth, innerHeight, false);
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+
+  const camera = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, .1, 100);
+  camera.position.set(0, 0, 10);
+
+  scene.add(new THREE.HemisphereLight(0xfff1dc, 0x3a2f22, 1.35));
+  const keyLight = new THREE.DirectionalLight(0xffe0b2, 2.8);
+  keyLight.position.set(3, 5, 6);
+  scene.add(keyLight);
+  const rimLight = new THREE.DirectionalLight(0x8fb6a0, 1.9);
+  rimLight.position.set(-5, 2, -4);
+  scene.add(rimLight);
+
+  const flight = new THREE.Group();
+  const beeRoot = new THREE.Group();
+  flight.add(beeRoot);
+  scene.add(flight);
+
+  // One position per section. The bee interpolates between them as the page scrolls.
+  const FRAMES = [
+    { el: '.nx-hero',  x: .60, y: -.26, s: 1.00, yaw: 148, pitch: 6, roll: -4 },
+    { el: '.hero',     x: .55, y: -.18, s: .98, yaw: 120, pitch: 8, roll: 5 },
+    { el: '#about',    x: -.55, y: .12, s: .96, yaw: 55, pitch: -4, roll: -6 },
+    { el: '#skills',   x: .55, y: -.18, s: .98, yaw: 150, pitch: 7, roll: 4 },
+    { el: '#built',    x: -.55, y: .18, s: 1.00, yaw: 40, pitch: -6, roll: -8 },
+    { el: '#benefits', x: .55, y: -.18, s: .96, yaw: 160, pitch: 8, roll: 4 },
+    { el: '#writing',  x: -.55, y: .18, s: .98, yaw: 65, pitch: -5, roll: -5 },
+    { el: '#tools',    x: .55, y: -.15, s: .96, yaw: 145, pitch: 6, roll: 6 },
+    { el: '#drives',   x: -.55, y: .18, s: .98, yaw: 50, pitch: -6, roll: -6 },
+    { el: '#contact',  x: .55, y: -.16, s: .97, yaw: 155, pitch: 8, roll: 3 },
+    { el: '#ask',      x: -.53, y: -.18, s: .94, yaw: 75, pitch: -4, roll: -4 }
+  ];
+
+  const MOBILE = FRAMES.map(frame => ({
+    ...frame,
+    x: frame.x > 0 ? .58 : -.58,
+    y: frame.y * .92,
+    s: frame.s * .9
+  }));
+
+  let K = innerWidth < 760 ? MOBILE : FRAMES;
+  let anchors = [];
+
+  function clamp(value, min, max){
+    return Math.max(min, Math.min(max, value));
+  }
+  function ease(t){
+    return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+  function lerpAngle(a, b, t){
+    const d = ((b - a + 540) % 360) - 180;
+    return a + d * t;
+  }
+  function targetAt(p){
+    if(!Number.isFinite(p)){ p = 0; }
+    p = clamp(p, 0, K.length - 1);
+    const i = Math.min(K.length - 2, Math.floor(p));
+    const f = p - i;
+    const t = ease(clamp((f - .12) / .76, 0, 1));
+    const dive = Math.sin(t * Math.PI) * -.22;
+    const a = K[i];
+    const b = K[i + 1];
+    return {
+      x: a.x + (b.x - a.x) * t,
+      y: a.y + (b.y - a.y) * t + dive,
+      s: (a.s + (b.s - a.s) * t) * (1 + Math.sin(t * Math.PI) * .12),
+      yaw: lerpAngle(a.yaw, b.yaw, t),
+      pitch: a.pitch + (b.pitch - a.pitch) * t,
+      roll: a.roll + (b.roll - a.roll) * t,
+      moving: Math.sin(t * Math.PI)
+    };
+  }
+
+  function measure(){
+    if(!mainContent || mainContent.style.display === 'none'){ return; }
+    const max = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    const next = [];
+    FRAMES.forEach(frame => {
+      const el = document.querySelector(frame.el);
+      if(!el){ return; }
+      const rect = el.getBoundingClientRect();
+      const top = rect.top + scrollY;
+      next.push(clamp(top + el.offsetHeight / 2 - innerHeight / 2, 0, max));
+    });
+    if(next.length < 2){ return; }
+    next[0] = 0;
+    next[next.length - 1] = max;
+    for(let i = 1; i < next.length; i++){
+      if(next[i] <= next[i - 1]){ next[i] = next[i - 1] + 1; }
+    }
+    anchors = next;
+  }
+
+  let measureFrame = 0;
+  function scheduleMeasure(){
+    if(measureFrame){ return; }
+    measureFrame = requestAnimationFrame(() => {
+      measureFrame = 0;
+      measure();
+    });
+  }
+
+  function progressAt(y){
+    if(anchors.length < 2){ return 0; }
+    if(y <= anchors[0]){ return 0; }
+    for(let i = 0; i < anchors.length - 1; i++){
+      if(y <= anchors[i + 1]){
+        const span = Math.max(1, anchors[i + 1] - anchors[i]);
+        return i + (y - anchors[i]) / span;
+      }
+    }
+    return anchors.length - 1;
+  }
+
+  const cur = {
+    x: K[0].x + .06,
+    y: K[0].y + .04,
+    s: K[0].s * .9,
+    yaw: K[0].yaw - 18,
+    pitch: K[0].pitch,
+    roll: K[0].roll
+  };
+  const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+  const clock = new THREE.Clock();
+  const flaps = [];
+  let modelLoaded = false;
+  let wingTexture = null;
+  let wingAnchor = null;
+  let wingsBuilt = false;
+  let vx = 0;
+  let vy = 0;
+
+  addEventListener('pointermove', event => {
+    if(event.pointerType === 'touch'){ return; }
+    mouse.x = (event.clientX / innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / innerHeight) * 2 + 1;
+  }, { passive: true });
+
+  function wingGeometry(span){
+    const geometry = new THREE.PlaneGeometry(span, span * 9 / 16);
+    geometry.translate(span / 2 - span * .03, 0, 0);
+    geometry.rotateX(-Math.PI / 2);
+    geometry.rotateY(-Math.PI / 2);
+    return geometry;
+  }
+
+  function buildWings(){
+    if(wingsBuilt || !wingAnchor || !wingTexture){ return; }
+    wingsBuilt = true;
+
+    const specs = [
+      { span: .72, sweep: -.42, phase: 0, lift: .02 },
+      { span: .52, sweep: -.95, phase: -.5, lift: -.01 }
+    ];
+
+    for(let sideIndex = 0; sideIndex < 2; sideIndex++){
+      const side = new THREE.Group();
+      side.position.copy(wingAnchor);
+      if(sideIndex === 1){ side.scale.z = -1; }
+      beeRoot.add(side);
+
+      specs.forEach(spec => {
+        const sweep = new THREE.Group();
+        sweep.rotation.y = spec.sweep;
+        sweep.position.y = spec.lift;
+        side.add(sweep);
+
+        const geometry = wingGeometry(spec.span);
+        [
+          { offset: 0, opacity: .95 },
+          { offset: .55, opacity: .28 },
+          { offset: -.55, opacity: .28 }
+        ].forEach(copy => {
+          const flap = new THREE.Group();
+          const material = new THREE.MeshBasicMaterial({
+            map: wingTexture,
+            transparent: true,
+            opacity: copy.opacity,
+            side: THREE.DoubleSide,
+            depthWrite: false,
+            color: 0xffffff,
+            blending: THREE.NormalBlending
+          });
+          flap.add(new THREE.Mesh(geometry, material));
+          sweep.add(flap);
+          flaps.push({ group: flap, phase: spec.phase + copy.offset });
+        });
+      });
+    }
+  }
+
+  const wingImage = new Image();
+  wingImage.crossOrigin = 'anonymous';
+  wingImage.onload = () => {
+    try {
+      const wingCanvas = document.createElement('canvas');
+      wingCanvas.width = 768;
+      wingCanvas.height = 432;
+      const ctx = wingCanvas.getContext('2d');
+      ctx.drawImage(wingImage, 0, 0, wingCanvas.width, wingCanvas.height);
+      const imageData = ctx.getImageData(0, 0, wingCanvas.width, wingCanvas.height);
+      const data = imageData.data;
+
+      for(let i = 0; i < data.length; i += 4){
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const l = (r * .3 + g * .59 + b * .11) / 255;
+        data[i] = Math.min(255, r * 1.5 + 30);
+        data[i + 1] = Math.min(255, g * 1.5 + 30);
+        data[i + 2] = Math.min(255, b * 1.5 + 40);
+        data[i + 3] = clamp((l - .035) * 4.2, 0, 1) * 255;
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+      wingTexture = new THREE.CanvasTexture(wingCanvas);
+      wingTexture.colorSpace = THREE.SRGBColorSpace;
+      wingTexture.needsUpdate = true;
+      if(modelLoaded){ buildWings(); }
+    } catch (error) {
+      // The body still loads if the wing image cannot be read.
+    }
+  };
+  wingImage.src = WING_TEX;
+
+  const gltfLoader = new GLTFLoader();
+  gltfLoader.setMeshoptDecoder(MeshoptDecoder);
+  gltfLoader.load(BEE_GLB, gltf => {
+    const model = gltf.scene;
+    model.traverse(child => {
+      if(!child.isMesh){ return; }
+      child.frustumCulled = false;
+      if(Array.isArray(child.material)){
+        child.material.forEach(material => { material.envMapIntensity = .7; });
+      } else if(child.material){
+        child.material.envMapIntensity = .7;
+      }
+    });
+
+    const holder = new THREE.Group();
+    holder.add(model);
+    model.rotation.set(0, Math.PI / 2, 0);
+
+    const box = new THREE.Box3().setFromObject(holder);
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const max = Math.max(size.x, size.y, size.z);
+    model.scale.setScalar(1 / max);
+
+    box.setFromObject(holder);
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+    model.position.sub(center);
+
+    box.setFromObject(holder);
+    wingAnchor = new THREE.Vector3(
+      box.min.x + (box.max.x - box.min.x) * .66,
+      box.max.y * .86,
+      (box.max.z - box.min.z) * .05
+    );
+
+    beeRoot.add(holder);
+    modelLoaded = true;
+    canvas.classList.add('ready');
+    if(wingTexture){ buildWings(); }
+  }, undefined, () => {
+    stopped = true;
+    canvas.remove();
+  });
+
+  function paused(){
+    return stopped || document.hidden ||
+      root.classList.contains('bee-paused') ||
+      root.classList.contains('dlg-open');
+  }
+
+  function animate(){
+    if(stopped){ return; }
+    requestAnimationFrame(animate);
+    const dt = Math.min(clock.getDelta(), .05);
+    const t = clock.elapsedTime;
+    if(!modelLoaded || paused()){ return; }
+
+    const target = targetAt(progressAt(scrollY));
+    const k = 1 - Math.exp(-dt * 3.2);
+    const ky = 1 - Math.exp(-dt * 2.6);
+    const lastX = cur.x;
+    const lastY = cur.y;
+
+    cur.x += (target.x - cur.x) * k;
+    cur.y += (target.y - cur.y) * k;
+    cur.s += (target.s - cur.s) * k;
+    cur.pitch += (target.pitch - cur.pitch) * k;
+    cur.roll += (target.roll - cur.roll) * k;
+    cur.yaw = lerpAngle(cur.yaw, target.yaw, ky);
+
+    vx = dt > 0 ? (cur.x - lastX) / dt : 0;
+    vy = dt > 0 ? (cur.y - lastY) / dt : 0;
+
+    const mk = 1 - Math.exp(-dt * 2);
+    mouse.sx += (mouse.x - mouse.sx) * mk;
+    mouse.sy += (mouse.y - mouse.sy) * mk;
+
+    const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+    const halfW = halfH * camera.aspect;
+    const hover = Math.sin(t * 2.1) * .045 + Math.sin(t * 3.7) * .015;
+    const size = innerWidth < 760 ? .15 : .18;
+
+    flight.position.set(
+      cur.x * halfW + Math.sin(t * 1.3) * .04 + mouse.sx * .12,
+      cur.y * halfH + hover * halfH * .5 + mouse.sy * .08,
+      Math.sin(t * .9) * .15
+    );
+    flight.scale.setScalar(halfH * 2 * size * cur.s);
+    flight.rotation.set(0, -(cur.yaw + mouse.sx * 12) * Math.PI / 180, 0);
+
+    const pitch = cur.pitch - clamp(vy * 22, -28, 28) + Math.sin(t * 2.1 + 1) * 3 + mouse.sy * 6;
+    const roll = cur.roll + clamp(vx * 18, -30, 30) + Math.sin(t * 1.7) * 4;
+    beeRoot.rotation.set(roll * Math.PI / 180, 0, pitch * Math.PI / 180, 'YZX');
+
+    const freq = Math.PI * 2 * (17 + target.moving * 5);
+    flaps.forEach(flap => {
+      const a = Math.sin(t * freq + flap.phase);
+      flap.group.rotation.x = -.25 + a * .95;
+      flap.group.rotation.y = a * .18;
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 760 ? 1.5 : 2));
+    renderer.setSize(innerWidth, innerHeight, false);
+    K = innerWidth < 760 ? MOBILE : FRAMES;
+    measure();
+  }, { passive: true });
+
+  if('ResizeObserver' in window && mainContent){
+    new ResizeObserver(scheduleMeasure).observe(mainContent);
+  }
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(scheduleMeasure); }
+  addEventListener('load', scheduleMeasure, { once: true });
+  window.__beeRefresh = measure;
+
+  measure();
+  animate();
 })();
 </script>
 </body>
