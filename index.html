@@ -1953,6 +1953,29 @@
           </div>
         </div>
       </div>
+      <div class="built-card" data-tilt data-project="melli">
+        <div class="built-img">
+          <div class="img-main">
+            <img class="carousel-slide active" src="./melli-cover.jpg" alt="Melli landing page hero with a 3D bee over a lavender background">
+          </div>
+          <div class="img-thumbs">
+            <img class="thumb active" src="./melli-cover.jpg" alt="">
+          </div>
+        </div>
+        <div class="built-body">
+          <div class="site-card-head" style="margin-bottom:0;">
+            <h3>Melli</h3>
+            <span class="site-status">Live demo</span>
+          </div>
+          <div class="b-tag">3D Motion Landing Page</div>
+          <p>A scroll-driven landing page for a motion design academy. A 3D bee flies between five sections while lavender gradients, oversized type, and a Three.js scene follow the scroll.</p>
+          <div class="built-tags"><span>HTML5</span><span>CSS3</span><span>Three.js</span><span>GLTF</span><span>Vercel</span></div>
+          <div class="built-links">
+            <a class="b-live" href="/melli/" target="_blank" rel="noopener">Live Demo &#8599;</a>
+            <span class="b-gh" style="opacity:.55;pointer-events:none;">Single-file build</span>
+          </div>
+        </div>
+      </div>
 </div>
 
 <script>
@@ -2395,7 +2418,7 @@
   })();
 
   // Featured projects: compact cards, 3D ring carousel, details panel with gallery.
-  // The nine project cards live once, in #projectStore. Every view is built from them.
+  // The ten project cards live once, in #projectStore. Every view is built from them.
   (function(){
     const store = document.querySelectorAll('#projectStore .built-card');
     const byKey = {};
@@ -2430,6 +2453,12 @@
       vault01: [
         ['./vault01-mint.jpg', 'Genesis Collection mint page'],
         ['./vault01-previews.jpg', 'Watch previews: Onyx, Rose, Green, Steel']
+      ],
+      melli: [
+        ['cover', 'Hero: the scroll-driven 3D bee'],
+        ['./melli-s1.jpg', 'Section 01: a class that runs on making'],
+        ['./melli-s2.jpg', 'Section 02: early access'],
+        ['./melli-s3.jpg', 'Section 03: study and build']
       ]
     };
 
