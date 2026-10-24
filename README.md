@@ -102,7 +102,7 @@ Open `index.html` directly in any browser. No server required.
 
 ## AI assistant
 
-The assistant box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Gemini API. It answers questions about the portfolio and gives practical business automation plans, preferring free or self-hosted tools. The key stays on the server. It runs on the Gemini free tier, so you pay nothing. The free tier does use your visitors' questions to improve Google's products, so do not put anything private in the assistant's facts.
+The assistant box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Gemini API. It answers questions about the portfolio and gives practical business automation plans, preferring free or self-hosted tools. It does not offer content writing or research services. The key stays on the server. It runs on the Gemini free tier, so you pay nothing. The free tier does use your visitors' questions to improve Google's products, so do not put anything private in the assistant's facts.
 
 1. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). No card needed.
 2. In Vercel: Project, Settings, Environment Variables, add `GEMINI_API_KEY` (all environments), then redeploy.
