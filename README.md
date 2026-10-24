@@ -1,6 +1,6 @@
 # maleekskies: Portfolio
 
-Personal portfolio site for **maleekskies**, a full stack developer building AI automation, with software testing & QA and content writing experience across Web3, AI, and practical software.
+Personal portfolio site for **maleekskies**, a full stack developer building AI automation across Web3, AI, and practical software.
 
 **Live site:** [maleekskies.vercel.app](https://maleekskies.vercel.app)
 
@@ -11,7 +11,7 @@ A static HTML portfolio with no build step or dependencies. Markup, styles, and 
 The site covers:
 
 - **About**: background, current focus, and core stats
-- **What I Do**: 4 core skill areas (Full Stack Development, AI Automation, Software Testing & QA, Content Writer) in a card grid
+- **What I Do**: 2 core service areas (Full Stack Development, AI Automation) in a card grid, with QA as a supporting skill
 - **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, Huntboard, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, and a swipeable gallery of screenshots
 - **My Work**: a hub with two in-page views:
   - **Full Stack Development**: all 9 projects with screenshots, descriptions, tech stacks, live links, and repo links
