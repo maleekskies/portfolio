@@ -102,7 +102,7 @@
 
   *{transition: background-color .3s ease, color .3s ease, border-color .3s ease;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;scroll-padding-top:86px;}
   body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;position:relative;z-index:0;}
 
   /* DYNAMIC BACKGROUND: one full-page canvas, draws particle network in light mode, a live scrolling terminal log in dark mode */
@@ -152,6 +152,27 @@
   .theme-toggle .icon-moon{display:none;}
   [data-theme="light"] .theme-toggle .icon-sun{display:none;}
   [data-theme="light"] .theme-toggle .icon-moon{display:block;}
+
+  .mobile-nav{display:none;}
+  @media (max-width:860px){
+    .mobile-nav{
+      position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:120;
+      display:flex;align-items:center;justify-content:space-between;gap:2px;
+      padding:8px;border:1px solid var(--line);border-radius:16px;
+      background:rgba(var(--bg-rgb),0.9);backdrop-filter:blur(16px);
+      box-shadow:0 18px 40px -18px rgba(0,0,0,0.65);
+      transition:opacity .2s ease,transform .2s ease;
+    }
+    .mobile-nav a{
+      flex:1;min-width:0;text-align:center;
+      font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.04em;
+      color:var(--text-dim);padding:8px 2px;border-radius:9px;
+      transition:color .2s,background .2s;
+    }
+    .mobile-nav a:hover,.mobile-nav a:focus-visible{color:var(--copper-bright);background:var(--bg-alt);}
+    body{padding-bottom:calc(76px + env(safe-area-inset-bottom));}
+    body.ask-focus .mobile-nav{opacity:0;pointer-events:none;transform:translateY(8px);}
+  }
 
   /* HERO */
   .hero{padding:158px 0 70px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:60px;align-items:center;}
@@ -419,7 +440,9 @@
     display:flex;align-items:center;justify-content:center;flex-shrink:0;
   }
   .tool-icon-wrap img{width:16px;height:16px;object-fit:contain;}
-  .tool-pill-major{font-weight:700;font-size:0.96rem;border-color:var(--copper);padding:9px 16px 9px 9px;}
+  .tool-pill-major{font-weight:700;font-size:1.08rem;border-color:var(--copper);padding:11px 20px 11px 11px;gap:11px;}
+  .tool-pill-major .tool-icon-wrap{width:30px;height:30px;border-radius:8px;}
+  .tool-pill-major .tool-icon-wrap img{width:20px;height:20px;}
 
   /* WHAT DRIVES ME */
   .drives-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
@@ -488,7 +511,8 @@
     .logo span{display:none;}
     .logo{white-space:nowrap;}
     .nav-cv{display:none;}
-    .hero{grid-template-columns:1fr;padding:130px 0 44px;}
+    .hero{grid-template-columns:1fr;gap:36px;padding:130px 0 44px;}
+    .hero .stat-col{gap:12px;}
     .portrait-wrap{order:-1;margin-bottom:26px;}
     .portrait-frame{width:220px;}
     .about-grid{grid-template-columns:1fr;gap:36px;}
@@ -1052,6 +1076,15 @@
   </nav>
 </header>
 
+<nav class="mobile-nav" aria-label="Section navigation">
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#work">Work</a>
+  <a href="#tools">Tools</a>
+  <a href="#contact">Contact</a>
+  <a href="#ask">Ask</a>
+</nav>
+
 <div id="main-content">
 <section class="nx-hero" aria-label="maleekskies">
   <video class="nx-video" autoplay loop muted playsinline preload="auto" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4" type="video/mp4"></video>
@@ -1080,13 +1113,37 @@
     <p class="lede hero-slide d4">I build full stack web apps, automate business workflows with AI, and test and write about what I build.</p>
     <div class="hero-ctas hero-slide d5">
       <a href="#contact" class="btn-primary">Work with me</a>
-      <a href="#writing" class="btn-secondary">See my work</a>
+      <a href="#work" class="btn-secondary">See my work</a>
     </div>
   </div>
-  <div class="portrait-wrap hero-curtain d6">
-    <div class="portrait-frame">
-      <div class="portrait-glow"></div>
-      <img src="./hero.jpg" alt="Portrait of maleekskies" fetchpriority="high">
+  <div class="stat-col hero-curtain d6">
+    <div class="stat">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="42" class="ring-bg"></circle><circle cx="50" cy="50" r="42" class="ring-fg" data-pct="80"></circle></svg>
+        <div class="ring-num" data-target="22" data-suffix="+">0+</div>
+      </div>
+      <div class="label">Ecosystems<br>contributed to</div>
+    </div>
+    <div class="stat">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="42" class="ring-bg"></circle><circle cx="50" cy="50" r="42" class="ring-fg" data-pct="90"></circle></svg>
+        <div class="ring-num" data-target="14.2" data-suffix="K+">0K+</div>
+      </div>
+      <div class="label">Followers<br>on X</div>
+    </div>
+    <div class="stat">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="42" class="ring-bg"></circle><circle cx="50" cy="50" r="42" class="ring-fg" data-pct="85"></circle></svg>
+        <div class="ring-num" data-target="15" data-suffix="+">0+</div>
+      </div>
+      <div class="label">Projects<br>built</div>
+    </div>
+    <div class="stat">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="42" class="ring-bg"></circle><circle cx="50" cy="50" r="42" class="ring-fg" data-pct="100"></circle></svg>
+        <div class="ring-num" data-target="4" data-suffix="">0</div>
+      </div>
+      <div class="label">Core service<br>lines</div>
     </div>
   </div>
 </section>
@@ -1118,34 +1175,10 @@
           <span class="learning-tag">Content Writer</span>
         </div>
       </div>
-      <div class="stat-col card-stagger">
-        <div class="stat">
-          <div class="ring-wrap">
-            <svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="42" class="ring-bg"></circle><circle cx="50" cy="50" r="42" class="ring-fg" data-pct="80"></circle></svg>
-            <div class="ring-num" data-target="22" data-suffix="+">0+</div>
-          </div>
-          <div class="label">Ecosystems<br>contributed to</div>
-        </div>
-        <div class="stat">
-          <div class="ring-wrap">
-            <svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="42" class="ring-bg"></circle><circle cx="50" cy="50" r="42" class="ring-fg" data-pct="90"></circle></svg>
-            <div class="ring-num" data-target="14.2" data-suffix="K+">0K+</div>
-          </div>
-          <div class="label">Followers<br>on X</div>
-        </div>
-        <div class="stat">
-          <div class="ring-wrap">
-            <svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="42" class="ring-bg"></circle><circle cx="50" cy="50" r="42" class="ring-fg" data-pct="85"></circle></svg>
-            <div class="ring-num" data-target="15" data-suffix="+">0+</div>
-          </div>
-          <div class="label">Projects<br>built</div>
-        </div>
-        <div class="stat">
-          <div class="ring-wrap">
-            <svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="42" class="ring-bg"></circle><circle cx="50" cy="50" r="42" class="ring-fg" data-pct="100"></circle></svg>
-            <div class="ring-num" data-target="4" data-suffix="">0</div>
-          </div>
-          <div class="label">Core service<br>lines</div>
+      <div class="portrait-wrap">
+        <div class="portrait-frame">
+          <div class="portrait-glow"></div>
+          <img src="./hero.jpg" alt="Maleek Adesiyan, full stack developer and automation builder" loading="lazy">
         </div>
       </div>
     </div>
@@ -1229,12 +1262,12 @@
   </div>
 </section>
 
-<section id="writing">
+<section id="work">
   <div class="wrap">
     <div class="section-head head-reveal">
       <span class="eyebrow">My Work</span>
-      <h2>Projects, automations, writing, and research.</h2>
-      <p>Everything I've written, built, and automated, in one place. Tap a card to open the full list.</p>
+      <h2>Projects and automations.</h2>
+      <p>Projects and automation systems I've built, with live links and case studies.</p>
     </div>
     <div class="hub-grid card-stagger">
       <a class="project-card hub-card" href="#fullstack-view" data-view="fullstack-view">
@@ -1246,16 +1279,6 @@
         <div><div class="p-title">AI Automation</div><div class="p-role">Workflows &amp; Case Studies</div></div>
         <ul><li>Two automation case studies: a customer support and follow-up system, and a lead pipeline for real estate</li></ul>
         <div class="card-link">View the case studies ↗</div>
-      </a>
-      <a class="project-card hub-card" href="#writing-view" data-view="writing-view">
-        <div><div class="p-title">Content Writing</div><div class="p-role">Threads &amp; Articles</div></div>
-        <ul><li>Threads, articles, and educational breakdowns written for VIZO Exchange, Ozak AI, XORA Finance, and more</li></ul>
-        <div class="card-link">View all pieces ↗</div>
-      </a>
-      <a class="project-card hub-card" href="#docs-view" data-view="docs-view">
-        <div><div class="p-title">Research &amp; Docs</div><div class="p-role">PDFs &amp; Reports</div></div>
-        <ul><li>Sourced research and documentation I've built, from on-chain proof pieces to recovery playbooks</li></ul>
-        <div class="card-link">View all docs ↗</div>
       </a>
     </div>
   </div>
@@ -1273,7 +1296,7 @@
         <h3>Frontend Development</h3>
         <p>Building responsive and interactive user interfaces.</p>
         <div class="tool-pills">
-          <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>HTML5</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>CSS3</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>JavaScript</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>TypeScript</span> <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>React</span> <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Next.js</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Vite</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Tailwind CSS</span>
+          <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>React</span> <span class="tool-pill tool-pill-major"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Next.js</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>HTML5</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>CSS3</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>JavaScript</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>TypeScript</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Vite</span> <span class="tool-pill"><span class="tool-icon-wrap"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" alt="" loading="lazy" onerror="this.closest('.tool-icon-wrap').style.display='none'"></span>Tailwind CSS</span>
         </div>
       </div>
       <div class="tool-category" data-tilt>
@@ -1359,15 +1382,16 @@
   </div>
 </section>
 
-<section class="nx-end" id="ask" aria-label="Ask me anything">
+<section class="nx-end" id="ask" aria-label="Ask my assistant">
   <div class="nx-end-inner">
-    <h2><b>Got a project in mind?</b> Ask my assistant anything about my work, or tell me about your <span class="nx-eye" aria-hidden="true"><i></i></span> idea.</h2>
+    <h2><b>Got a project in mind?</b> Ask my assistant about my work, or tell it what you want to <span class="nx-eye" aria-hidden="true"><i></i></span> automate.</h2>
     <form class="nx-ask" id="nxAsk" autocomplete="off">
-      <input type="text" id="nxAskInput" maxlength="400" placeholder="Ask me anything..." aria-label="Ask me anything">
+      <input type="text" id="nxAskInput" maxlength="400" placeholder="Ask about my work or a process..." aria-label="Ask my assistant">
       <button type="submit" id="nxAskBtn" aria-label="Send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </form>
     <div class="nx-chips" id="nxChips">
       <button type="button">What do you build?</button>
+      <button type="button">How would I automate a food business?</button>
       <button type="button">Are you available for work?</button>
       <button type="button">Which project should I look at first?</button>
     </div>
@@ -1381,80 +1405,6 @@
   </div>
 </section>
 </div>
-<div class="page-view" id="writing-view">
-  <div class="wrap">
-    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
-    <div class="section-head">
-      <span class="eyebrow">My Work</span>
-      <h2>Content Writing</h2>
-      <p>Threads and articles written for Web3 projects. Tap any to open it.</p>
-    </div>
-    <div class="modal-list subpage-list">
-      <a href="https://medium.com/@maleekskies/kyc-and-wallet-activation-guide-19cef8b2f974?sharedUserId=maleekskies" target="_blank" rel="noopener">
-        <span><span class="m-title">KYC and Wallet Activation Guide</span><span class="m-tag">Article &middot; Medium</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://en.rattibha.com/thread/2082109020425343108" target="_blank" rel="noopener">
-        <span><span class="m-title">Fast Markets Just Dropped on VIZO</span><span class="m-tag">X Thread &middot; VIZO Exchange</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://en.rattibha.com/thread/2082876724896026747" target="_blank" rel="noopener">
-        <span><span class="m-title">XORA Finance: Earn Just By Showing Up</span><span class="m-tag">X Thread &middot; XORA Finance</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://en.rattibha.com/thread/2081028592796827905" target="_blank" rel="noopener">
-        <span><span class="m-title">VIZO Is Now Live on Binance Wallet</span><span class="m-tag">Article &middot; VIZO Exchange</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://en.rattibha.com/thread/2077470845975347284" target="_blank" rel="noopener">
-        <span><span class="m-title">Beginner's Guide to Prediction Markets</span><span class="m-tag">Article &middot; VIZO Exchange</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://en.rattibha.com/thread/2080281669278281768" target="_blank" rel="noopener">
-        <span><span class="m-title">GM Ozak Squad, Building Predictive AI</span><span class="m-tag">X Post &middot; Ozak AI</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://en.rattibha.com/thread/2079505396834685191" target="_blank" rel="noopener">
-        <span><span class="m-title">VIZO's World Cup Tradathon &amp; XP Leaderboard</span><span class="m-tag">X Thread &middot; VIZO Exchange</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://en.rattibha.com/thread/2078005660134883739" target="_blank" rel="noopener">
-        <span><span class="m-title">How Ozak AI's Prediction Agents Work</span><span class="m-tag">Article &middot; Ozak AI</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://x.com/maleekskies/highlights" target="_blank" rel="noopener">
-        <span><span class="m-title">More From @maleekskies</span><span class="m-tag">X Highlights</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-    </div>
-  </div>
-</div>
-
-<div class="page-view" id="docs-view">
-  <div class="wrap">
-    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
-    <div class="section-head">
-      <span class="eyebrow">My Work</span>
-      <h2>Research &amp; Docs</h2>
-      <p>Sourced research and documentation. Tap any to open the PDF.</p>
-    </div>
-    <div class="modal-list subpage-list">
-      <a href="https://drive.google.com/file/d/1KAxpGRE5zqDK3rS9rSfkbmjUQXtcDMJR/view?usp=drive_link" target="_blank" rel="noopener">
-        <span><span class="m-title">Unstick Your RBNT</span><span class="m-tag">Cross-Chain Recovery Playbook</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://drive.google.com/file/d/1Zp1E2oX2lHWnenRbYXG4ahjsK9B0zGAc/view?usp=drive_link" target="_blank" rel="noopener">
-        <span><span class="m-title">Real World Assets on Redbelly Mainnet</span><span class="m-tag">Proof Piece</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-      <a href="https://drive.google.com/file/d/1KVSlNZv_q396RGwuK_i2zpQbqdmoA3w5/view?usp=drive_link" target="_blank" rel="noopener">
-        <span><span class="m-title">RBNT Staking and Voting Power</span><span class="m-tag">Technical Documentation</span></span>
-        <span class="m-arrow">&#8599;</span>
-      </a>
-    </div>
-  </div>
-</div>
-
 <div class="page-view" id="automation-view">
   <div class="wrap">
     <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
@@ -2146,7 +2096,7 @@
     }
   });
 
-  // Deep link on load, e.g. opening the file directly at #writing-view
+  // Deep link on load, e.g. opening the file directly at #fullstack-view
   (function(){
     const hash = window.location.hash.replace('#', '');
     if(hash && document.getElementById(hash) && document.getElementById(hash).classList.contains('page-view')){
@@ -2854,18 +2804,21 @@
     },3200);
   }
 
-  /* Ask me anything: chat with the assistant at /api/ask */
+  /* Ask my assistant: chat with the assistant at /api/ask */
   var form=document.getElementById('nxAsk'),input=document.getElementById('nxAskInput'),
       btn=document.getElementById('nxAskBtn'),chat=document.getElementById('nxChat'),
       chips=document.getElementById('nxChips');
   if(!form)return;
   var history=[],busy=false;
-  var FALLBACK='I could not reach the assistant right now. You can email maleekskies@gmail.com and Malik will reply.';
+  var FALLBACK='The assistant did not respond. Email maleekskies@gmail.com and Malik will reply.';
   function add(role,text){
     chat.hidden=false;
     var d=document.createElement('div');d.className='nx-msg '+(role==='user'?'u':'a');
     if(text===null){d.innerHTML='<span class="nx-dots"><i></i><i></i><i></i></span>';}else d.textContent=text;
     chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;
+  }
+  function showStart(node){
+    chat.scrollTop=Math.max(0,node.offsetTop-chat.offsetTop-8);
   }
   function ask(q){
     q=(q||'').trim();if(!q||busy)return;
@@ -2878,15 +2831,25 @@
       body:JSON.stringify({messages:history.slice(-12)}),signal:ctl?ctl.signal:undefined})
     .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
     .then(function(x){
-      if(!x.ok||!x.j.reply)throw new Error('bad');
-      wait.textContent=x.j.reply;history.push({role:'assistant',content:x.j.reply});
+      if(!x.ok||!x.j.reply){
+        var err=new Error('ask_failed');
+        err.reply=x.j&&x.j.reply;
+        throw err;
+      }
+      wait.textContent=x.j.reply;
+      showStart(wait);
+      history.push({role:'assistant',content:x.j.reply});
     })
-    .catch(function(){
-      wait.textContent=FALLBACK;history.pop();
+    .catch(function(e){
+      wait.textContent=(e&&e.reply)||FALLBACK;
+      showStart(wait);
+      history.pop();
     })
-    .then(function(){clearTimeout(t);busy=false;btn.disabled=false;chat.scrollTop=chat.scrollHeight;});
+    .then(function(){clearTimeout(t);busy=false;btn.disabled=false;});
   }
   form.addEventListener('submit',function(e){e.preventDefault();ask(input.value);});
+  input.addEventListener('focus',function(){document.body.classList.add('ask-focus');});
+  input.addEventListener('blur',function(){document.body.classList.remove('ask-focus');});
   chips.addEventListener('click',function(e){
     var b=e.target.closest('button');if(b)ask(b.textContent);
   });
@@ -2970,7 +2933,7 @@
     { el: '#skills',   x: .55, y: -.18, s: .98, yaw: 150, pitch: 7, roll: 4 },
     { el: '#built',    x: -.55, y: .18, s: 1.00, yaw: 40, pitch: -6, roll: -8 },
     { el: '#benefits', x: .55, y: -.18, s: .96, yaw: 160, pitch: 8, roll: 4 },
-    { el: '#writing',  x: -.55, y: .18, s: .98, yaw: 65, pitch: -5, roll: -5 },
+    { el: '#work',     x: -.55, y: .18, s: .98, yaw: 65, pitch: -5, roll: -5 },
     { el: '#tools',    x: .55, y: -.15, s: .96, yaw: 145, pitch: 6, roll: 6 },
     { el: '#drives',   x: -.55, y: .18, s: .98, yaw: 50, pitch: -6, roll: -6 },
     { el: '#contact',  x: .55, y: -.16, s: .97, yaw: 155, pitch: 8, roll: 3 },

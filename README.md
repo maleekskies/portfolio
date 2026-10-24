@@ -11,16 +11,16 @@ A static HTML portfolio with no build step or dependencies. Markup, styles, and 
 The site covers:
 
 - **About**: background, current focus, and core stats
-- **What I Do**: 4 core skill areas (Full Stack Development, AI Automation, Software Testing & QA, Content Writer), shown as a tabbed single-view, one at a time
+- **What I Do**: 4 core skill areas (Full Stack Development, AI Automation, Software Testing & QA, Content Writer) in a card grid
 - **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, Huntboard, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, and a swipeable gallery of screenshots
-- **My Work**: a hub with four in-page views, with Full Stack Development and AI Automation first:
+- **My Work**: a hub with two in-page views:
   - **Full Stack Development**: all 9 projects with screenshots, descriptions, tech stacks, live links, and repo links
   - **AI Automation**: two case studies with pipeline diagrams: the MK customer support and lead follow-up system, and the Skies Realty AI lead-management pipeline
-  - **Content Writing**: published threads and articles
-  - **Research & Docs**: sourced research documents
-- **Tools I Use**: tech stack organized by category (frontend, AI automation, backend, AI & integrations, tools & design), each with its logo
+- **Tools I Use**: tech stack organized by category (frontend, AI automation, backend, tools & design), with logos where available. The main tools are shown first and larger.
 - **What Drives Me**: 4 short values behind the work
 - **Contact**: an "Email me" button with a copy-email button and a CV link, plus email, X, Telegram, and LinkedIn in a terminal-style card
+
+Writing and research samples now live in a separate writing portfolio, outside this repository.
 
 ## Features
 
@@ -31,10 +31,10 @@ The site covers:
 - 3D tilt effect on skill and tool cards, following the mouse
 - Two AI automation case studies, each with a pipeline diagram: MK (form, sheet, validation, local AI reply, Gmail and Telegram, follow-up) and Skies Realty (form, n8n, scoring, local AI summary, CRM, Telegram alert)
 - Mobile header auto-hides on scroll down, reappears on scroll up
+- Fixed bottom section nav on screens 860px and below, with About, Skills, Work, Tools, Contact, and Ask. It hides while the assistant input is focused.
 - In-page navigation between sections and views without full page reloads
-- CV download link, in the header on desktop and in the mobile menu on smaller screens
+- CV download link in the header on desktop and in the contact section on all screens
 - Custom favicon and social link preview image
-- Responsive layout with a mobile menu
 - Scroll-triggered animations; the 3D motion and orbit animation respect the "reduce motion" accessibility setting
 
 ## Tech Stack
@@ -100,9 +100,9 @@ Open `index.html` directly in any browser. No server required.
 - Telegram: [@maleekskies](https://t.me/maleekskies)
 - LinkedIn: [maleekskies](https://www.linkedin.com/in/maleekskies/)
 
-## Ask me anything (AI assistant)
+## AI assistant
 
-The "Ask me anything" box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Gemini API. The key stays on the server. It runs on the Gemini free tier, so you pay nothing. The free tier does use your visitors' questions to improve Google's products, so do not put anything private in the assistant's facts.
+The assistant box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Gemini API. It answers questions about the portfolio and gives practical business automation plans, preferring free or self-hosted tools. The key stays on the server. It runs on the Gemini free tier, so you pay nothing. The free tier does use your visitors' questions to improve Google's products, so do not put anything private in the assistant's facts.
 
 1. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). No card needed.
 2. In Vercel: Project, Settings, Environment Variables, add `GEMINI_API_KEY` (all environments), then redeploy.
