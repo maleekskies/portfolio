@@ -11,16 +11,14 @@ A static HTML portfolio with no build step or dependencies. Markup, styles, and 
 The site covers:
 
 - **About**: background, current focus, and core stats
-- **What I Do**: 2 core service areas (Full Stack Development, AI Automation) in a card grid, with QA as a supporting skill
-- **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, Huntboard, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, and a swipeable gallery of screenshots
+- **What I Do**: 2 core service areas (Full Stack Development, AI Automation) in a card grid
+- **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, Rolesearch HQ, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, and a swipeable gallery of screenshots
 - **My Work**: a hub with two in-page views:
   - **Full Stack Development**: all 9 projects with screenshots, descriptions, tech stacks, live links, and repo links
   - **AI Automation**: two case studies with pipeline diagrams: the MK customer support and lead follow-up system, and the Skies Realty AI lead-management pipeline
 - **Tools I Use**: tech stack organized by category (frontend, AI automation, backend, tools & design), with logos where available. The main tools are shown first and larger.
 - **What Drives Me**: 4 short values behind the work
 - **Contact**: an "Email me" button with a copy-email button and a CV link, plus email, X, Telegram, and LinkedIn in a terminal-style card
-
-Writing and research samples now live in a separate writing portfolio, outside this repository.
 
 ## Features
 
@@ -31,7 +29,7 @@ Writing and research samples now live in a separate writing portfolio, outside t
 - 3D tilt effect on skill and tool cards, following the mouse
 - Two AI automation case studies, each with a pipeline diagram: MK (form, sheet, validation, local AI reply, Gmail and Telegram, follow-up) and Skies Realty (form, n8n, scoring, local AI summary, CRM, Telegram alert)
 - Mobile header auto-hides on scroll down, reappears on scroll up
-- Fixed bottom section nav on screens 860px and below, with About, Skills, Work, Tools, Contact, and Ask. It hides while the assistant input is focused.
+- Hamburger menu on screens 860px and below, with About, Skills, Work, Tools, Contact, and Ask. It closes on a link tap, Escape, or a click outside.
 - In-page navigation between sections and views without full page reloads
 - CV download link in the header on desktop and in the contact section on all screens
 - Custom favicon and social link preview image
@@ -59,7 +57,7 @@ Find the `SCREENSHOTS` comments inside the two case studies (the AI Automation p
 
 ## Case studies
 
-The Huntboard and ChessHatch case studies are the `huntboard-case` and `chesshatch-case` blocks in `index.html`. Each opens from the "Read case study" button in the project's details panel.
+The Rolesearch HQ and ChessHatch case studies are the `rolesearchhq-case` and `chesshatch-case` blocks in `index.html`. Each opens from the "Read case study" button in the project's details panel.
 
 ## Visitor stats
 
@@ -102,7 +100,7 @@ Open `index.html` directly in any browser. No server required.
 
 ## AI assistant
 
-The assistant box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Gemini API. It answers questions about the portfolio and gives practical business automation plans, preferring free or self-hosted tools. It does not offer content writing or research services. The key stays on the server. It runs on the Gemini free tier, so you pay nothing. The free tier does use your visitors' questions to improve Google's products, so do not put anything private in the assistant's facts.
+The assistant box at the bottom of the page talks to `api/ask.js`, a Vercel serverless function that calls the Gemini API. It answers questions about the portfolio and gives practical business automation plans, preferring free or self-hosted tools. The key stays on the server. It runs on the Gemini free tier, so you pay nothing. The free tier does use your visitors' questions to improve Google's products, so do not put anything private in the assistant's facts.
 
 1. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). No card needed.
 2. In Vercel: Project, Settings, Environment Variables, add `GEMINI_API_KEY` (all environments), then redeploy.
