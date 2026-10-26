@@ -15,7 +15,7 @@ The site covers:
 - **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, Rolesearch HQ, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, and a swipeable gallery of screenshots
 - **My Work**: a hub with two in-page views:
   - **Full Stack Development**: all 9 projects with screenshots, descriptions, tech stacks, live links, and repo links
-  - **AI Automation**: two case studies with pipeline diagrams: the MK customer support and lead follow-up system, and the Skies Realty AI lead-management pipeline
+  - **AI Automation**: three case studies with pipeline diagrams: the MK customer support and lead follow-up system, the Skies Realty AI lead-management pipeline, and the Engineering Sites YouTube lead research pipeline
 - **Tools I Use**: tech stack organized by category (frontend, AI automation, backend, tools & design), with logos where available. The main tools are shown first and larger.
 - **What Drives Me**: 4 short values behind the work
 - **Contact**: an "Email me" button with a copy-email button and a CV link, plus email, X, Telegram, and LinkedIn in a terminal-style card
@@ -27,7 +27,7 @@ The site covers:
 - 3D ring carousel for featured projects: drag, swipe, arrow buttons, or arrow keys to rotate; the front card tilts and catches a light glare following the mouse; clicking a side card brings it forward
 - Project details panel: a bottom sheet on mobile and a centered window on desktop, with a screenshot gallery (swipe, arrows, or arrow keys), closing with the X, the Escape key, or a tap outside
 - 3D tilt effect on skill and tool cards, following the mouse
-- Two AI automation case studies, each with a pipeline diagram: MK (form, sheet, validation, local AI reply, Gmail and Telegram, follow-up) and Skies Realty (form, n8n, scoring, local AI summary, CRM, Telegram alert)
+- Three AI automation case studies, each with a pipeline diagram: MK (form, sheet, validation, local AI reply, Gmail and Telegram, follow-up), Skies Realty (form, n8n, scoring, local AI summary, CRM, Telegram alert), and Engineering Sites (hourly YouTube research, Gemini scoring, 15-field CRM)
 - Mobile header auto-hides on scroll down, reappears on scroll up
 - Hamburger menu on screens 860px and below, with About, Skills, Work, Tools, Contact, and Ask. It closes on a link tap, Escape, or a click outside.
 - In-page navigation between sections and views without full page reloads
@@ -53,7 +53,7 @@ Screenshots live in the project root, next to `index.html`. In the same script, 
 
 ## Adding screenshots to the automation case studies
 
-Find the `SCREENSHOTS` comments inside the two case studies (the AI Automation page) in `index.html`. The MK case study already has its n8n workflow picture (`mk-n8n-workflow.png`). Each comment contains a ready-made block for any further pictures: add your images next to `index.html`, uncomment the block, and point each `src` at your file. Blur or replace any real names, phone numbers, or emails first.
+Find the `SCREENSHOTS` comments inside the three case studies (the AI Automation page) in `index.html`. The MK case study already has its n8n workflow picture (`mk-n8n-workflow.png`). Each comment contains a ready-made block for any further pictures: add your images next to `index.html`, uncomment the block, and point each `src` at your file. Blur or replace any real names, phone numbers, or emails first.
 
 ## Case studies
 

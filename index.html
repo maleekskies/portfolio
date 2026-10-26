@@ -1270,7 +1270,7 @@
       </a>
       <a class="project-card hub-card" href="#automation-view" data-view="automation-view">
         <div><div class="p-title">AI Automation</div><div class="p-role">Workflows &amp; Case Studies</div></div>
-        <ul><li>Two automation case studies: a customer support and follow-up system, and a lead pipeline for real estate</li></ul>
+        <ul><li>Three automation case studies: a customer support and follow-up system, a real estate lead pipeline, and a YouTube lead research workflow</li></ul>
         <div class="card-link">View the case studies ↗</div>
       </a>
     </div>
@@ -1483,18 +1483,19 @@
       <div class="cs-head">
         <div class="b-tag">Real Estate Operations &amp; Sales Automation</div>
         <h3>Skies Realty: Automated AI Lead Management &amp; CRM Pipeline</h3>
-        <p class="cs-summary">When a property inquiry comes in, the system scores it, summarizes the buyer's notes with a locally hosted AI model, logs it to a CRM sheet, and alerts the sales team on Telegram within moments. Scoring and budget logic run in plain code, and no customer data is sent to a third-party AI service.</p>
+        <p class="cs-summary">When a property inquiry comes in, the system scores it, summarizes the buyer's notes with a locally hosted AI model, logs it to a 19-field CRM sheet, alerts the sales team on Telegram within moments, and sends the buyer a Gmail acknowledgment. Scoring and budget logic run in deterministic n8n expressions, and no customer data is sent to a third-party AI service.</p>
       </div>
 
-      <ol class="flow" aria-label="Pipeline overview">
+      <ol class="flow flow-7" aria-label="Pipeline overview">
         <li class="n-io"><b>Google Form</b><span>Inquiry submitted</span></li>
-        <li class="n-io"><b>n8n</b><span>Webhook &amp; JSON mapping</span></li>
-        <li class="n-code"><b>Priority score</b><span>Deterministic code</span></li>
+        <li class="n-io"><b>Google Sheets</b><span>Response row added</span></li>
+        <li class="n-io"><b>Sheets Trigger</b><span>n8n starts</span></li>
+        <li class="n-code"><b>Lead scoring</b><span>Budget rules</span></li>
         <li class="n-ai"><b>Ollama</b><span>One-line intent summary</span></li>
-        <li class="n-io"><b>Google Sheets</b><span>CRM row, 11 fields</span></li>
-        <li class="n-io"><b>Telegram</b><span>Priority alert</span></li>
+        <li class="n-io"><b>Google Sheets</b><span>CRM row, 19 fields</span></li>
+        <li class="n-io"><b>Telegram + Gmail</b><span>Alert and acknowledgment</span></li>
       </ol>
-      <div class="flow-legend"><span class="lg-code">Code decides the numbers</span><span class="lg-ai">Local AI only reads the language</span></div>
+      <div class="flow-legend"><span class="lg-code">Rules decide the numbers</span><span class="lg-ai">Local AI only reads the language</span></div>
 
       <!-- SCREENSHOTS: when you have them, add the files to the images folder, then drop them in here, for example:
       <div class="cs-shots">
@@ -1512,29 +1513,29 @@
         </div>
         <div>
           <h4>The solution</h4>
-          <p>An n8n workflow takes each inquiry from form submission to a scored, logged lead and a Telegram alert, with nobody in the loop.</p>
-          <p>Code decides everything numerical, and a local LLM only reads and summarizes the text. Because the model runs locally, customer data is never sent to a third-party AI service, and there are no per-token fees.</p>
+          <p>An n8n workflow takes each inquiry from the Google Form response to a scored, logged lead, a Telegram alert, and a Gmail acknowledgment, with nobody in the loop.</p>
+          <p>Deterministic expressions decide everything numerical, and a local LLM only reads and summarizes the text. Because the model runs locally, customer data is never sent to a third-party AI service, and there are no per-token fees.</p>
         </div>
       </div>
 
       <h4 class="cs-h">How it works</h4>
       <ol class="cs-steps">
-        <li><b>Capture.</b> A prospect submits the Google Form, which triggers the n8n workflow.</li>
-        <li><b>Normalize.</b> Dynamic JSON expressions map the payload into one clean, consistent object.</li>
-        <li><b>Score.</b> A deterministic code node computes the lead's priority score from the structured fields.</li>
+        <li><b>Capture.</b> A prospect submits the Google Form. The response lands in a Google Sheet, and the Google Sheets Trigger starts the workflow when a new row appears.</li>
+        <li><b>Normalize.</b> A Set node maps the form fields into one clean, consistent object with internal names.</li>
+        <li><b>Score.</b> A deterministic Set node computes the lead score and priority from the budget range. The model never touches a number.</li>
         <li><b>Summarize.</b> The free-text "Tell us what you're looking for" field goes to the local Ollama model, which returns a single-sentence summary of intent.</li>
-        <li><b>Log.</b> The lead is written to the Google Sheets CRM with every value mapped to an exact header: Timestamp, Full Name, Email Address, Phone Number, Property Type, Preferred Location, Purpose, Budget Range, Preferred Move-in Date, the buyer's own words, and the AI Summary.</li>
-        <li><b>Alert.</b> The Telegram Bot API pushes a priority-routed alert to the sales team, summary and score included.</li>
-        <li><b>Notify.</b> Email notifications go out through Gmail SMTP.</li>
+        <li><b>Log.</b> The lead is written to the Google Sheets CRM with all 19 columns: lead ID, received time, name, email, phone, property type, location, purpose, budget, move-in date, the buyer's message, the model response, AI summary, lead score, priority, status, assigned owner, follow-up date, and lead source.</li>
+        <li><b>Alert.</b> The Telegram Bot API sends the sales team a priority alert with the lead's details, summary, and score.</li>
+        <li><b>Notify.</b> Gmail sends the buyer an acknowledgment with their reference ID and inquiry details.</li>
       </ol>
 
       <h4 class="cs-h">Engineering highlights</h4>
       <div class="cs-feats">
-        <div class="cs-feat"><b>Hybrid by design</b><p>Scoring and budget logic live in strict code nodes, so the same lead always gets the same score. The LLM never touches a number.</p></div>
+        <div class="cs-feat"><b>Hybrid by design</b><p>Scoring and budget logic live in deterministic n8n expressions, so the same lead always gets the same score. The LLM never touches a number.</p></div>
         <div class="cs-feat"><b>Local AI inference</b><p>The model runs locally, so customer details are never sent to a third-party AI vendor.</p></div>
         <div class="cs-feat"><b>No per-token costs</b><p>Self-hosted summarization keeps the AI bill flat as lead volume grows.</p></div>
-        <div class="cs-feat"><b>Schema-exact mapping</b><p>Dynamic JSON mapping matches all 11 CRM headers, so every row lands clean.</p></div>
-        <div class="cs-feat"><b>Batching-safe execution</b><p>Fallback array-referencing logic prevents mismatched data when a run handles multiple items.</p></div>
+        <div class="cs-feat"><b>Schema-exact mapping</b><p>Explicit field mapping matches all 19 CRM headers, so every row lands clean.</p></div>
+        <div class="cs-feat"><b>Batching-safe execution</b><p>Each field references the matching item from the scoring step, so multiple leads in one run do not get mixed up.</p></div>
         <div class="cs-feat"><b>Quick to read</b><p>A one-sentence summary and a priority alert let a rep understand a lead at a glance.</p></div>
       </div>
 
@@ -1544,11 +1545,76 @@
         <li>Every lead lands in the CRM in the same structure, with a score attached.</li>
         <li>Reps read one sentence instead of a paragraph of raw notes.</li>
         <li>No per-token AI fees, and customer data is never sent to a third-party AI service.</li>
+        <li>If a run fails, a separate error workflow sends a Telegram alert with the workflow name, the failed node when n8n reports it, and the actual error message.</li>
       </ul>
 
       <h4 class="cs-h">Built with</h4>
       <div class="tech-stack">
-        <span class="tech-badge">n8n</span><span class="tech-badge">Ollama (local LLM)</span><span class="tech-badge">Google Sheets API</span><span class="tech-badge">Google Forms</span><span class="tech-badge">Telegram Bot API</span><span class="tech-badge">Gmail SMTP</span><span class="tech-badge">Webhooks</span><span class="tech-badge">JSON expression mapping</span>
+        <span class="tech-badge">n8n</span><span class="tech-badge">Ollama (local LLM)</span><span class="tech-badge">Google Sheets Trigger</span><span class="tech-badge">Google Sheets API</span><span class="tech-badge">Google Forms</span><span class="tech-badge">Telegram Bot API</span><span class="tech-badge">Gmail OAuth</span><span class="tech-badge">n8n expressions</span><span class="tech-badge">Docker</span>
+      </div>
+    </article>
+
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">AI Automation · Lead Research · YouTube Data</div>
+        <h3>Engineering Sites: YouTube Lead Research &amp; Qualification</h3>
+        <p class="cs-summary">An hourly n8n workflow that searches YouTube for engineering and industrial videos, reads the comments, checks each commenter's channel, and scores the lead with Google Gemini. Leads that clear the score threshold are appended to a Google Sheets CRM with the evidence, the score, and a specific opening line.</p>
+      </div>
+
+      <ol class="flow flow-7" aria-label="Lead research pipeline">
+        <li class="n-io"><b>Schedule</b><span>Runs every hour</span></li>
+        <li class="n-io"><b>YouTube Search</b><span>Videos for one query</span></li>
+        <li class="n-code"><b>Comments</b><span>Keyword screen</span></li>
+        <li class="n-io"><b>Channel details</b><span>Bio and business clues</span></li>
+        <li class="n-ai"><b>Gemini</b><span>Scores the lead</span></li>
+        <li class="n-code"><b>Score and filter</b><span>40 or higher</span></li>
+        <li class="n-io"><b>Google Sheets</b><span>15-field CRM row</span></li>
+      </ol>
+      <div class="flow-legend"><span class="lg-code">Code combines the signals</span><span class="lg-ai">Gemini reads the comment and channel</span></div>
+
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>Engineering Sites builds websites for small engineering and industrial businesses. The people who fit are often in YouTube comments, but reading hundreds of comments to find one useful person does not scale. A keyword search alone is too blunt: it catches consumers and hobbyists along with workshop owners.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>An n8n workflow rotates through 40 engineering searches, one per hour, and pulls the newest comments for each video. It checks the commenter's channel, then asks Google Gemini for a technical signal, a business signal, and the evidence behind both. Code combines those into a lead score, and only leads at 40 or higher reach the sheet.</p>
+        </div>
+      </div>
+
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Search.</b> A schedule trigger runs every hour and picks the next query from a list of 40 engineering topics. The YouTube Data API returns up to 10 matching videos, and the workflow pulls the comment threads for each one.</li>
+        <li><b>Screen.</b> Code nodes flatten the results, remove duplicate videos and commenters, and keep comments that mention commercial or workshop language: quotes, repairs, installation, machining, maintenance, suppliers, and similar words.</li>
+        <li><b>Enrich.</b> For each remaining commenter, the workflow fetches the channel title, description, and custom URL. That context often separates a hobbyist from a business owner.</li>
+        <li><b>Score.</b> Google Gemini reads the comment and channel together and returns the engineering area, the evidence, a professional signal, a business signal, a confidence score, and a specific opening line.</li>
+        <li><b>Combine.</b> The workflow calculates a final score: 45% professional signal, 35% business signal, and 20% confidence. A score of 60 or more is QUALIFIED, 40 to 59 is REVIEW, and below 40 is DISCARD.</li>
+        <li><b>Filter.</b> Only leads scoring 40 or higher pass the filter. The rest are dropped before the sheet, so the CRM does not fill with obvious misses.</li>
+        <li><b>Log.</b> The lead is appended to Google Sheets with all 15 columns: comment ID, author, channel name, channel ID, channel URL, comment URL, comment text, engineering area, evidence, professional signal, business signal, confidence, lead score, recommendation, and a personalized pitch.</li>
+      </ol>
+
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>Separate signals</b><p>The model scores hands-on experience and business ownership separately, so a skilled hobbyist does not outrank a workshop owner by accident.</p></div>
+        <div class="cs-feat"><b>Quota-aware schedule</b><p>One search per hour, rotating through 40 queries, keeps the YouTube Data API usage inside the free daily quota instead of burning it in a burst.</p></div>
+        <div class="cs-feat"><b>Item-safe batching</b><p>The normalizer indexes the comment and channel lists instead of pairing them, which prevents one comment from being attached to every row when several leads run together.</p></div>
+        <div class="cs-feat"><b>Portable parser</b><p>The scoring parser accepts Gemini, OpenAI-style, and plain text responses, so the AI step can change without rewriting the rest of the workflow.</p></div>
+        <div class="cs-feat"><b>Exact sheet mapping</b><p>The append step maps all 15 CRM columns by name. The tested run wrote a complete row with no object dumps or shifted columns.</p></div>
+      </div>
+
+      <h4 class="cs-h">Impact</h4>
+      <ul class="cs-impact">
+        <li>Lead research runs every hour without someone opening YouTube.</li>
+        <li>The keyword screen removes most of the noise before the AI call, which keeps the free Gemini quota for comments that have a chance.</li>
+        <li>The score separates technical experience from business ownership, so a skilled hobbyist and a workshop owner are not treated the same.</li>
+        <li>Each new row includes the evidence and a specific opening line, so the follow-up starts with context instead of a generic pitch.</li>
+        <li>In live tests, a consumer comment that passed the keyword screen scored 23 and was discarded. A working industrial gearbox specialist scored 72 and was appended with all 15 fields.</li>
+      </ul>
+
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack">
+        <span class="tech-badge">n8n</span><span class="tech-badge">YouTube Data API</span><span class="tech-badge">Google Gemini</span><span class="tech-badge">Google Sheets API</span><span class="tech-badge">JavaScript</span><span class="tech-badge">Docker</span>
       </div>
     </article>
   </div>
