@@ -881,7 +881,14 @@
   }
 
   /* Workflow cards and their full case study panel */
-  .pcard-img.auto-workflow img{object-position:center;}
+  .pcard-img.auto-workflow img{object-fit:contain;object-position:center;background:var(--bg-card);}
+  .ring-item .pcard-img.auto-workflow img{object-fit:cover;}
+  @media (max-width:860px){
+    .pcard-img.auto-workflow{height:auto;min-height:0;}
+    .pcard-img.auto-workflow img{width:100%;height:auto;}
+    .ring-item .pcard-img.auto-workflow{height:150px;}
+    .ring-item .pcard-img.auto-workflow img{height:100%;object-fit:cover;}
+  }
   .dlg-workflow .dlg-scroll{display:block;overflow-y:auto;}
   .dlg-workflow .workflow-info{padding:26px 24px calc(30px + env(safe-area-inset-bottom,0px));}
   .dlg-workflow .workflow-info .cs{background:transparent;border:0;border-radius:0;padding:0;}
@@ -889,6 +896,12 @@
   @media (min-width:861px){
     .dlg-workflow .workflow-info{padding:44px 48px 48px;}
     .dlg-workflow .workflow-info .cs-head{padding-right:0;}
+  }
+  @media (max-width:860px){
+    .dlg-workflow .workflow-info .cs{display:flex;flex-direction:column;}
+    .dlg-workflow .workflow-info .cs > *{order:2;}
+    .dlg-workflow .workflow-info .cs > .cs-head{order:0;}
+    .dlg-workflow .workflow-info .cs > .cs-shot{order:1;}
   }
 
 
@@ -960,6 +973,8 @@
   .cs-shot-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#111;-webkit-overflow-scrolling:touch;}
   .cs-shot-scroll img{display:block;width:100%;min-width:760px;height:auto;border:0;border-radius:0;}
   .cs-shot-hint{display:none;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--text-dimmer);margin-top:8px;}
+  .cs-shot-open{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--copper-bright);border-bottom:1px solid var(--copper);padding-bottom:2px;}
+  .cs-shot-open:hover,.cs-shot-open:focus-visible{color:var(--text);outline:none;}
   @media (max-width:860px){ .cs-shot-hint{display:block;} }
 
 
@@ -1296,8 +1311,8 @@
       </a>
       <a class="project-card hub-card" href="#automation-view" data-view="automation-view">
         <div><div class="p-title">AI Automation</div><div class="p-role">Workflows &amp; Case Studies</div></div>
-        <ul><li>Five automation case studies: a customer support and follow-up system, a real estate lead pipeline and its error handler, a YouTube lead research workflow, and a chess lesson publishing workflow</li></ul>
-        <div class="card-link">View the case studies ↗</div>
+        <ul><li>Five automation workflows: a customer support and follow-up system, a real estate lead pipeline and its error handler, a YouTube lead research workflow, and a chess lesson publishing workflow</li></ul>
+        <div class="card-link">View the workflows ↗</div>
       </a>
     </div>
   </div>
@@ -1424,7 +1439,7 @@
   </div>
 </section>
 </div>
-<div class="page-view" id="automation-view" data-title="AI Automation case studies &middot; maleekskies">
+<div class="page-view" id="automation-view" data-title="AI Automation workflows &middot; maleekskies">
   <div class="wrap">
     <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
     <div class="section-head">
@@ -1434,7 +1449,7 @@
     </div>
     <div class="pgrid" id="automationGrid"></div>
     <div id="automationStore" hidden>
-    <article class="cs cs-mk">
+    <article class="cs cs-mk" data-workflow="mk">
       <div class="cs-head">
         <div class="b-tag">Workflow 01 · AI Automation · Customer Support · Lead Management</div>
         <h3>MK: Automated Customer Support &amp; Lead Follow-Up System</h3>
@@ -1507,7 +1522,7 @@
       </div>
     </article>
 
-    <article class="cs">
+    <article class="cs" data-workflow="skies">
       <div class="cs-head">
         <div class="b-tag">Workflow 02 · Real Estate Operations &amp; Sales Automation</div>
         <h3>Skies Realty: Automated AI Lead Management &amp; CRM Pipeline</h3>
@@ -1580,7 +1595,7 @@
       </div>
     </article>
 
-    <article class="cs">
+    <article class="cs" data-workflow="skies-error">
       <div class="cs-head">
         <div class="b-tag">Workflow 03 · AI Automation · Reliability · Error Handling</div>
         <h3>Skies Realty: Workflow Error Alerts</h3>
@@ -1641,7 +1656,7 @@
       </div>
     </article>
 
-    <article class="cs">
+    <article class="cs" data-workflow="engineering-sites">
       <div class="cs-head">
         <div class="b-tag">Workflow 04 · AI Automation · Lead Research · YouTube Data</div>
         <h3>Engineering Sites: YouTube Lead Research &amp; Qualification</h3>
@@ -1711,7 +1726,7 @@
       </div>
     </article>
 
-    <article class="cs">
+    <article class="cs" data-workflow="chesshatch">
       <div class="cs-head">
         <div class="b-tag">Workflow 05 · AI Automation · Social Publishing · Content</div>
         <h3>ChessHatch: Beginner Lesson Reels on a 20-Hour Loop</h3>
@@ -2577,6 +2592,38 @@
           </div>
         </div>
       </div>
+      <div class="built-card" data-project="engineering-sites" data-workflow="engineering-sites">
+        <div class="built-img">
+          <div class="img-main">
+            <img class="carousel-slide active" src="./engineering-sites-n8n-workflow.png" alt="The Engineering Sites YouTube lead research n8n workflow">
+          </div>
+        </div>
+        <div class="built-body">
+          <div class="site-card-head" style="margin-bottom:0;">
+            <h3>Engineering Sites Lead Finder</h3>
+            <span class="site-status">Completed</span>
+          </div>
+          <div class="b-tag">AI Automation · Lead Research</div>
+          <p>An hourly n8n workflow that searches YouTube for engineering and industrial videos, screens the comments, checks each commenter's channel, and scores the lead with Google Gemini. Qualified leads go into a 15-field Google Sheets CRM with the evidence and a specific opening line.</p>
+          <div class="built-tags"><span>n8n</span><span>YouTube Data API</span><span>Google Gemini</span><span>Google Sheets</span></div>
+        </div>
+      </div>
+      <div class="built-card" data-project="chesshatch-workflow" data-workflow="chesshatch">
+        <div class="built-img">
+          <div class="img-main">
+            <img class="carousel-slide active" src="./chesshatch-n8n-workflow.png" alt="The ChessHatch lesson publishing n8n workflow">
+          </div>
+        </div>
+        <div class="built-body">
+          <div class="site-card-head" style="margin-bottom:0;">
+            <h3>ChessHatch Lesson Reels</h3>
+            <span class="site-status">Completed</span>
+          </div>
+          <div class="b-tag">AI Automation · Social Publishing</div>
+          <p>An n8n workflow that publishes a beginner chess lesson Reel every 20 hours. It picks from a shuffled no-repeat deck, applies one of five designs, renders the board and voiceover, posts to Instagram, and sends a copy to Telegram.</p>
+          <div class="built-tags"><span>n8n</span><span>Instagram Graph API</span><span>FFmpeg</span><span>Telegram Bot API</span></div>
+        </div>
+      </div>
 </div>
 
 <script>
@@ -3059,7 +3106,7 @@
     const store = document.querySelectorAll('#projectStore .built-card');
     const byKey = {};
     store.forEach(c => { byKey[c.dataset.project] = c; });
-    const featured = ['vault01', 'chesshatch', 'rolesearchhq', 'oz'].filter(k => byKey[k]);
+    const featured = ['vault01', 'engineering-sites', 'rolesearchhq', 'oz', 'chesshatch', 'chesshatch-workflow'].filter(k => byKey[k]);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Gallery pictures per project. 'cover' means the project's existing card image.
@@ -3109,12 +3156,14 @@
       const el = document.createElement('article');
       el.className = 'pcard' + (variant ? ' ' + variant : '');
       el.dataset.key = src.dataset.project;
+      el.dataset.workflow = src.dataset.workflow || '';
 
       const tilt = document.createElement('div');
       tilt.className = 'pcard-tilt';
 
       const imgWrap = document.createElement('div');
       imgWrap.className = 'pcard-img';
+      if(src.dataset.workflow){ imgWrap.classList.add('auto-workflow'); }
       const srcImg = src.querySelector('.carousel-slide');
       if(srcImg){
         const im = document.createElement('img');
@@ -3134,7 +3183,7 @@
       const more = document.createElement('button');
       more.type = 'button';
       more.className = 'pcard-more';
-      more.innerHTML = 'View details <span aria-hidden="true">&#8599;</span>';
+      more.innerHTML = (src.dataset.workflow ? 'View workflow' : 'View details') + ' <span aria-hidden="true">&#8599;</span>';
       body.appendChild(more);
 
       const glare = document.createElement('span');
@@ -3295,7 +3344,8 @@
     // ---------- all-projects page ----------
     const grid = document.getElementById('projectGrid');
     if(grid){
-      featured.concat(Object.keys(byKey).filter(k => featured.indexOf(k) === -1)).forEach(k => {
+      const fullstackKeys = Object.keys(byKey).filter(k => !byKey[k].dataset.workflow);
+      featured.filter(k => fullstackKeys.indexOf(k) > -1).concat(fullstackKeys.filter(k => featured.indexOf(k) === -1)).forEach(k => {
         const card = makeCard(byKey[k], '');
         card.addEventListener('click', () => openDetails(k, card.querySelector('.pcard-more')));
         grid.appendChild(card);
@@ -3480,6 +3530,10 @@
       el.addEventListener('click', (e) => {
         if(justDragged){ return; }
         if(i === activeIdx()){
+          if(el.dataset.workflow && window.openWorkflowByKey){
+            window.openWorkflowByKey(el.dataset.workflow, el.querySelector('.pcard-more'));
+            return;
+          }
           openDetails(el.dataset.key, el.querySelector('.pcard-more'));
           return;
         }
@@ -3500,6 +3554,10 @@
     const closeBtn = document.getElementById('workflowClose');
     if(!info || !closeBtn){ return; }
     const articles = [...store.querySelectorAll('.cs')];
+    const byWorkflow = {};
+    articles.forEach((article) => {
+      if(article.dataset.workflow){ byWorkflow[article.dataset.workflow] = article; }
+    });
     let opener = null, isOpen = false;
 
     function openWorkflow(article, from){
@@ -3507,6 +3565,21 @@
       info.innerHTML = '';
       const clone = article.cloneNode(true);
       info.appendChild(clone);
+
+      clone.querySelectorAll('.cs-shot-scroll').forEach((scroll) => {
+        const img = scroll.querySelector('img');
+        const figure = scroll.closest('.cs-shot');
+        if(!img || !figure){ return; }
+        img.loading = 'eager';
+        const link = document.createElement('a');
+        link.className = 'cs-shot-open';
+        link.href = img.getAttribute('src');
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.innerHTML = 'Open full image <span aria-hidden="true">&#8599;</span>';
+        link.setAttribute('aria-label', 'Open full workflow image in a new tab');
+        figure.appendChild(link);
+      });
 
       opener = from || document.activeElement;
       isOpen = true;
@@ -3518,6 +3591,11 @@
       setTimeout(() => closeBtn.focus(), 30);
       if(window.track){ window.track('Workflow open', {workflow: title ? title.textContent : ''}); }
     }
+
+    window.openWorkflowByKey = function(key, from){
+      const article = byWorkflow[key];
+      if(article){ openWorkflow(article, from); }
+    };
 
     function closeWorkflow(){
       if(!isOpen){ return; }
@@ -3531,6 +3609,7 @@
     articles.forEach((article) => {
       const card = document.createElement('article');
       card.className = 'pcard';
+      card.dataset.workflow = article.dataset.workflow || '';
       const tilt = document.createElement('div');
       tilt.className = 'pcard-tilt';
 

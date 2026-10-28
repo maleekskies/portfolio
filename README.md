@@ -12,10 +12,10 @@ The site covers:
 
 - **About**: background, current focus, and core stats
 - **What I Do**: 2 core service areas (Full Stack Development, AI Automation) in a card grid
-- **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, RoleSearchHQ, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, a swipeable gallery of screenshots, and a case study link
+- **Featured projects**: 6 highlighted projects (VAULT 01, Engineering Sites Lead Finder, RoleSearchHQ, OZ Handcrafted Footwear, ChessHatch, ChessHatch Lesson Reels) on an interactive 3D ring carousel of compact cards; tapping a full stack card opens a details panel with the full description, tech stack, links, a swipeable gallery of screenshots, and a case study link. The two automation cards open their full workflow case study directly.
 - **My Work**: a hub with two in-page views:
   - **Full Stack Development**: all 9 projects with screenshots, descriptions, tech stacks, live links, repo links, and a case study
-  - **AI Automation**: five workflow cards, each with a short summary and an n8n screenshot; opening a card shows the full case study in a details panel. The workflows are the MK customer support and lead follow-up system, the Skies Realty AI lead-management pipeline, the Skies Realty error handler, the Engineering Sites YouTube lead research pipeline, and the ChessHatch lesson publishing workflow
+  - **AI Automation**: five workflow cards, each with a short summary and an n8n screenshot; opening a card shows the full case study in a details panel. Each workflow image has an Open full image link so it can be viewed and zoomed on its own. The workflows are the MK customer support and lead follow-up system, the Skies Realty AI lead-management pipeline, the Skies Realty error handler, the Engineering Sites YouTube lead research pipeline, and the ChessHatch lesson publishing workflow
 - **Tools I Use**: tech stack organized by category (frontend, AI automation, backend, tools & design), with logos where available. The main tools are shown first and larger.
 - **What Drives Me**: 4 short values behind the work
 - **Contact**: an "Email me" button with a copy-email button and a CV link, plus email, X, Telegram, and LinkedIn in a terminal-style card
@@ -45,7 +45,7 @@ The site covers:
 
 ## Editing the projects
 
-Each project is written once, as a hidden card inside the `projectStore` block near the bottom of `index.html`. The home-page ring, the details panel, and the full projects list are all built from those cards, so editing a project there updates every place it appears. The four ring projects and their order are set by the `featured` list at the top of the "Featured projects" script.
+Each project is written once, as a hidden card inside the `projectStore` block near the bottom of `index.html`. The home-page ring, the details panel, and the full projects list are all built from those cards, so editing a project there updates every place it appears. The six ring projects and their order are set by the `featured` list at the top of the "Featured projects" script. The two automation entries in that list use `data-workflow` to open the matching workflow case study, and they are left out of the full stack project grid.
 
 ## Adding pictures to a project's gallery
 
