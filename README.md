@@ -15,7 +15,7 @@ The site covers:
 - **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, RoleSearchHQ, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, a swipeable gallery of screenshots, and a case study link
 - **My Work**: a hub with two in-page views:
   - **Full Stack Development**: all 9 projects with screenshots, descriptions, tech stacks, live links, repo links, and a case study
-  - **AI Automation**: five case studies with pipeline diagrams: the MK customer support and lead follow-up system, the Skies Realty AI lead-management pipeline, the Skies Realty error handler, the Engineering Sites YouTube lead research pipeline, and the ChessHatch lesson publishing workflow
+  - **AI Automation**: five workflow cards, each with a short summary and an n8n screenshot; opening a card shows the full case study in a details panel. The workflows are the MK customer support and lead follow-up system, the Skies Realty AI lead-management pipeline, the Skies Realty error handler, the Engineering Sites YouTube lead research pipeline, and the ChessHatch lesson publishing workflow
 - **Tools I Use**: tech stack organized by category (frontend, AI automation, backend, tools & design), with logos where available. The main tools are shown first and larger.
 - **What Drives Me**: 4 short values behind the work
 - **Contact**: an "Email me" button with a copy-email button and a CV link, plus email, X, Telegram, and LinkedIn in a terminal-style card
@@ -25,9 +25,9 @@ The site covers:
 - Light/dark theme toggle (preference saved locally)
 - Dynamic background: a multi-column scrolling code effect in dark mode (brass/forest palette, glow, depth layering), an interactive particle network in light mode that particles gently drift toward the cursor
 - 3D ring carousel for featured projects: drag, swipe, arrow buttons, or arrow keys to rotate; the front card tilts and catches a light glare following the mouse; clicking a side card brings it forward
-- Project details panel: a bottom sheet on mobile and a centered window on desktop, with a screenshot gallery (swipe, arrows, or arrow keys), closing with the X, the Escape key, or a tap outside
+- Project details panel: a bottom sheet on mobile and a centered window on desktop, with a screenshot gallery (swipe, arrows, or arrow keys), closing with the X, the Escape key, or a tap outside. The automation cards open a similar panel with the full workflow case study.
 - 3D tilt effect on skill and tool cards, following the mouse
-- Five AI automation case studies, each with a pipeline diagram: MK (form, sheet, validation, local AI reply, Gmail and Telegram, follow-up), Skies Realty (form, n8n, scoring, local AI summary, CRM, Telegram alert), the Skies Realty error handler (Error Trigger to a Telegram alert with the workflow, node, time, and error), Engineering Sites (hourly YouTube research, Gemini scoring, 15-field CRM), and ChessHatch (no-repeat lesson deck, five designs, board render, voiceover, Instagram and Telegram)
+- Five AI automation workflows, each with a card, an n8n screenshot, and a pipeline diagram: MK (form, sheet, validation, local AI reply, Gmail and Telegram, follow-up), Skies Realty (form, n8n, scoring, local AI summary, CRM, Telegram alert), the Skies Realty error handler (Error Trigger to a Telegram alert with the workflow, node, time, and error), Engineering Sites (hourly YouTube research, Gemini scoring, 15-field CRM), and ChessHatch (no-repeat lesson deck, five designs, board render, voiceover, Instagram and Telegram)
 - Mobile header auto-hides on scroll down, reappears on scroll up
 - Hamburger menu on screens 860px and below, with About, Skills, Work, Tools, Contact, and Ask. It closes on a link tap, Escape, or a click outside.
 - In-page navigation between sections and views without full page reloads
@@ -53,7 +53,7 @@ Screenshots live in the project root, next to `index.html`. In the same script, 
 
 ## Adding screenshots to the automation case studies
 
-Find the `SCREENSHOTS` comments inside the five case studies (the AI Automation page) in `index.html`. The MK, ChessHatch, and Skies error handler case studies already have their n8n workflow pictures (`mk-n8n-workflow.png`, `chesshatch-n8n-workflow.png`, and `skies-error-handler-n8n.png`). Each comment contains a ready-made block for any further pictures: add your images next to `index.html`, uncomment the block, and point each `src` at your file. Blur or replace any real names, phone numbers, or emails first.
+Find the five case studies on the AI Automation page in `index.html`. Each one already has its n8n workflow picture: `mk-n8n-workflow.png`, `skies-n8n-canvas.png`, `skies-error-handler-n8n.png`, `engineering-sites-n8n-workflow.png`, and `chesshatch-n8n-workflow.png`. To add more pictures, add a `cs-shots` block with `figure.cs-shot` entries, or use the `SCREENSHOTS` comment in the MK case as a template. Blur or replace any real names, phone numbers, or emails first.
 
 ## Case studies
 

@@ -880,6 +880,17 @@
     .dlg-backdrop,.dlg,.dlg-stage img{transition:none;}
   }
 
+  /* Workflow cards and their full case study panel */
+  .pcard-img.auto-workflow img{object-position:center;}
+  .dlg-workflow .dlg-scroll{display:block;overflow-y:auto;}
+  .dlg-workflow .workflow-info{padding:26px 24px calc(30px + env(safe-area-inset-bottom,0px));}
+  .dlg-workflow .workflow-info .cs{background:transparent;border:0;border-radius:0;padding:0;}
+  .dlg-workflow .workflow-info .cs-head{padding-right:44px;}
+  @media (min-width:861px){
+    .dlg-workflow .workflow-info{padding:44px 48px 48px;}
+    .dlg-workflow .workflow-info .cs-head{padding-right:0;}
+  }
+
 
   /* ============ ROUND 5: second case study, 7-step flow, tools grid ============ */
   .cs + .cs{margin-top:44px;}
@@ -1177,7 +1188,7 @@
     <div class="about-grid card-stagger">
       <div>
         <p>I'm Malik Adesiyan, and I build for the web. I take an idea from a blank page to a working product: the interface, the backend, the database, and the small details that make it feel finished. I've shipped more than 15 sites and PWAs for clients in different countries, and I still like the part where something finally works.</p>
-        <p>I also build AI automation. I use n8n to connect the forms, spreadsheets, inboxes, and chat apps a business already uses, so routine work like lead capture, replies, alerts, and follow-ups happens without someone remembering to do it. When privacy matters, I can run the whole workflow on your own server with a local model. Your data stays with you, and there are no per-token fees.</p>
+        <p>I also build AI automation. I use n8n to connect the forms, spreadsheets, inboxes, and chat apps a business already uses, so routine work like lead capture, replies, alerts, and follow-ups happens without someone remembering to do it. The stack follows the tools you already use and the AI setup you prefer, including cloud models, local models, or no AI at all.</p>
         <div class="tag-row">
           <span class="learning-tag">Full Stack Development</span>
           <span class="learning-tag">AI Automation</span>
@@ -1210,7 +1221,7 @@
       <div class="skill-card" data-tilt>
         <div class="skill-idx-big">02</div>
         <h3>AI Automation</h3>
-        <div class="desc">Workflows that connect forms, spreadsheets, messaging, and AI so routine steps run on their own: capturing leads, scoring them, summarizing what people wrote, replying, and alerting the right person. Where privacy and cost matter, I run local models, so customer data never goes to a third-party AI service and there are no per-token fees.</div>
+        <div class="desc">Workflows that connect forms, spreadsheets, messaging, and AI so routine steps run on their own: capturing leads, scoring them, summarizing what people wrote, replying, and alerting the right person. I build with the tools you already use and the AI setup you prefer, including cloud models, local models, or no AI at all.</div>
       </div>
     </div>
   </div>
@@ -1421,9 +1432,11 @@
       <h2>AI Automation</h2>
       <p>Automations that keep running without me.</p>
     </div>
+    <div class="pgrid" id="automationGrid"></div>
+    <div id="automationStore" hidden>
     <article class="cs cs-mk">
       <div class="cs-head">
-        <div class="b-tag">AI Automation · Customer Support · Lead Management</div>
+        <div class="b-tag">Workflow 01 · AI Automation · Customer Support · Lead Management</div>
         <h3>MK: Automated Customer Support &amp; Lead Follow-Up System</h3>
         <p class="cs-summary">A complete support and follow-up workflow built in n8n. When a customer submits an inquiry, the system checks it, writes a short reply with a locally hosted AI model, emails it through Gmail, alerts the business on Telegram, and follows up automatically if the customer doesn't respond.</p>
       </div>
@@ -1496,7 +1509,7 @@
 
     <article class="cs">
       <div class="cs-head">
-        <div class="b-tag">Real Estate Operations &amp; Sales Automation</div>
+        <div class="b-tag">Workflow 02 · Real Estate Operations &amp; Sales Automation</div>
         <h3>Skies Realty: Automated AI Lead Management &amp; CRM Pipeline</h3>
         <p class="cs-summary">When a property inquiry comes in, the system scores it, summarizes the buyer's notes with a locally hosted AI model, logs it to a 19-field CRM sheet, alerts the sales team on Telegram within moments, and sends the buyer a Gmail acknowledgment. Scoring and budget logic run in deterministic n8n expressions, and no customer data is sent to a third-party AI service.</p>
       </div>
@@ -1512,13 +1525,11 @@
       </ol>
       <div class="flow-legend"><span class="lg-code">Rules decide the numbers</span><span class="lg-ai">Local AI only reads the language</span></div>
 
-      <!-- SCREENSHOTS: when you have them, add the files to the images folder, then drop them in here, for example:
-      <div class="cs-shots">
-        <figure class="cs-shot"><img src="./skies-n8n-canvas.png" alt="n8n workflow canvas for the Skies Realty pipeline"><figcaption>The full n8n workflow</figcaption></figure>
-        <figure class="cs-shot"><img src="./skies-telegram-alert.png" alt="Telegram priority alert for a new lead"><figcaption>Priority alert in Telegram</figcaption></figure>
-        <figure class="cs-shot"><img src="./skies-crm-sheet.png" alt="Google Sheets CRM with the AI Summary column"><figcaption>The CRM view with AI summaries</figcaption></figure>
-      </div>
-      Blur or replace any real names, phone numbers, or emails first. -->
+      <figure class="cs-shot cs-shot-wide">
+        <div class="cs-shot-scroll"><img src="./skies-n8n-canvas.png" width="1666" height="204" loading="lazy" alt="The Skies Realty n8n workflow, from the Google Sheets trigger through lead scoring, the Ollama summary, the CRM row, and the Telegram and Gmail steps"></div>
+        <p class="cs-shot-hint">Swipe sideways to see the whole workflow.</p>
+        <figcaption>The full Skies Realty workflow</figcaption>
+      </figure>
 
       <div class="cs-cols">
         <div>
@@ -1571,7 +1582,7 @@
 
     <article class="cs">
       <div class="cs-head">
-        <div class="b-tag">AI Automation · Reliability · Error Handling</div>
+        <div class="b-tag">Workflow 03 · AI Automation · Reliability · Error Handling</div>
         <h3>Skies Realty: Workflow Error Alerts</h3>
         <p class="cs-summary">A companion n8n workflow that catches failures in the Skies Realty lead pipeline and sends the details to Telegram. The alert names the workflow, the failed node when n8n reports it, the time in Lagos, and the actual error message, so a broken run does not fail silently.</p>
       </div>
@@ -1632,7 +1643,7 @@
 
     <article class="cs">
       <div class="cs-head">
-        <div class="b-tag">AI Automation · Lead Research · YouTube Data</div>
+        <div class="b-tag">Workflow 04 · AI Automation · Lead Research · YouTube Data</div>
         <h3>Engineering Sites: YouTube Lead Research &amp; Qualification</h3>
         <p class="cs-summary">An hourly n8n workflow that searches YouTube for engineering and industrial videos, reads the comments, checks each commenter's channel, and scores the lead with Google Gemini. Leads that clear the score threshold are appended to a Google Sheets CRM with the evidence, the score, and a specific opening line.</p>
       </div>
@@ -1647,6 +1658,12 @@
         <li class="n-io"><b>Google Sheets</b><span>15-field CRM row</span></li>
       </ol>
       <div class="flow-legend"><span class="lg-code">Code combines the signals</span><span class="lg-ai">Gemini reads the comment and channel</span></div>
+
+      <figure class="cs-shot cs-shot-wide">
+        <div class="cs-shot-scroll"><img src="./engineering-sites-n8n-workflow.png" width="2380" height="162" loading="lazy" alt="The Engineering Sites YouTube lead research n8n workflow, from the hourly schedule and YouTube search through comment screening, channel details, Gemini scoring, and the Google Sheets append"></div>
+        <p class="cs-shot-hint">Swipe sideways to see the whole workflow.</p>
+        <figcaption>The full Engineering Sites workflow</figcaption>
+      </figure>
 
       <div class="cs-cols">
         <div>
@@ -1696,7 +1713,7 @@
 
     <article class="cs">
       <div class="cs-head">
-        <div class="b-tag">AI Automation · Social Publishing · Content</div>
+        <div class="b-tag">Workflow 05 · AI Automation · Social Publishing · Content</div>
         <h3>ChessHatch: Beginner Lesson Reels on a 20-Hour Loop</h3>
         <p class="cs-summary">An n8n workflow that builds and publishes a beginner chess lesson Reel every 20 hours. It picks a lesson from a shuffled deck without repeating one until the deck is empty, applies one of five visual designs, renders the board and voiceover, posts to Instagram, and sends the file to Telegram.</p>
       </div>
@@ -1709,7 +1726,7 @@
         <li class="n-io"><b>Telegram</b><span>Copy of the video</span></li>
       </ol>
       <figure class="cs-shot cs-shot-wide">
-        <div class="cs-shot-scroll"><img src="./chesshatch-n8n-workflow.png" width="1179" height="762" loading="lazy" alt="The ChessHatch Daily Lessons n8n workflow, from the schedule trigger and lesson picker through board rendering, video rendering, Telegram, and Instagram publishing"></div>
+        <div class="cs-shot-scroll"><img src="./chesshatch-n8n-workflow.png" width="2380" height="338" loading="lazy" alt="The ChessHatch Daily Lessons n8n workflow, from the schedule trigger and lesson picker through board rendering, video rendering, Telegram, and Instagram publishing"></div>
         <p class="cs-shot-hint">Swipe sideways to see the whole workflow.</p>
         <figcaption>The published n8n workflow</figcaption>
       </figure>
@@ -1752,6 +1769,7 @@
         <span class="tech-badge">n8n</span><span class="tech-badge">Lichess board renderer</span><span class="tech-badge">Node TTS</span><span class="tech-badge">FFmpeg</span><span class="tech-badge">ASS subtitles</span><span class="tech-badge">Instagram Graph API</span><span class="tech-badge">Telegram Bot API</span>
       </div>
     </article>
+    </div>
   </div>
 </div>
 
@@ -2260,7 +2278,7 @@
     </div>
     <article class="cs">
       <div class="cs-head">
-        <div class="b-tag">Full Stack · Opportunity Tracker · In Progress</div>
+        <div class="b-tag">Full Stack · Opportunity Tracker · Completed</div>
         <h3>TravelSleek: A Tracker That Reads the Deadline for You</h3>
         <p class="cs-summary">TravelSleek is a scholarship and work visa tracker. It pulls listings from GOV.UK and IRCC Open Data, parses PDFs, and adds curated programs like DAAD, Chevening, Fulbright, Erasmus Mundus, Commonwealth, and Gates Cambridge. Each listing gets a score, tags, and a countdown to its deadline.</p>
       </div>
@@ -2338,6 +2356,15 @@
         <div class="dlg-dots" id="dlgDots"></div>
       </div>
       <div class="dlg-info" id="dlgInfo"></div>
+    </div>
+  </div>
+</div>
+
+<div class="dlg-backdrop" id="workflowBackdrop" aria-hidden="true">
+  <div class="dlg dlg-workflow" role="dialog" aria-modal="true" aria-label="Workflow details">
+    <button type="button" class="dlg-close" id="workflowClose" aria-label="Close workflow details">&times;</button>
+    <div class="dlg-scroll">
+      <div class="workflow-info" id="workflowInfo"></div>
     </div>
   </div>
 </div>
@@ -2493,7 +2520,7 @@
         <div class="built-body">
           <div class="site-card-head" style="margin-bottom:0;">
             <h3>ChessHatch</h3>
-            <span class="site-status in-progress">In Progress</span>
+            <span class="site-status">Completed</span>
           </div>
           <div class="b-tag">Chess Learning Platform</div>
           <p>A learning-first chess platform for beginners through advanced players: lessons that start from zero and build to 50 tactics lessons, a rule-based live coach, real-time multiplayer with Glicko-2 ratings, and offline computer play via Stockfish with nine bot levels that unlock as you win.</p>
@@ -2539,7 +2566,7 @@
         <div class="built-body">
           <div class="site-card-head" style="margin-bottom:0;">
             <h3>TravelSleek</h3>
-            <span class="site-status in-progress">In Progress</span>
+            <span class="site-status">Completed</span>
           </div>
           <div class="b-tag">Scholarship &amp; Visa Tracker</div>
           <p>A scholarship and work visa opportunity tracker that pulls from live sources (GOV.UK, IRCC Open Data) and curated programs (DAAD, Chevening, Fulbright, Erasmus Mundus, Commonwealth, Gates Cambridge), scoring and tagging each listing with a countdown before it closes.</p>
@@ -3460,6 +3487,103 @@
         go(Math.round(target) + norm(i - Math.round(target)));
       });
     });
+  })();
+
+  // AI automation: build the cards from the full case studies in #automationStore.
+  (function(){
+    const store = document.getElementById('automationStore');
+    const grid = document.getElementById('automationGrid');
+    const backdrop = document.getElementById('workflowBackdrop');
+    if(!store || !grid || !backdrop){ return; }
+
+    const info = document.getElementById('workflowInfo');
+    const closeBtn = document.getElementById('workflowClose');
+    if(!info || !closeBtn){ return; }
+    const articles = [...store.querySelectorAll('.cs')];
+    let opener = null, isOpen = false;
+
+    function openWorkflow(article, from){
+      const title = article.querySelector('h3');
+      info.innerHTML = '';
+      const clone = article.cloneNode(true);
+      info.appendChild(clone);
+
+      opener = from || document.activeElement;
+      isOpen = true;
+      backdrop.classList.add('open');
+      backdrop.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('dlg-open');
+      backdrop.querySelector('.dlg').setAttribute('aria-label', (title ? title.textContent : 'Workflow') + ' details');
+      backdrop.querySelector('.dlg-scroll').scrollTop = 0;
+      setTimeout(() => closeBtn.focus(), 30);
+      if(window.track){ window.track('Workflow open', {workflow: title ? title.textContent : ''}); }
+    }
+
+    function closeWorkflow(){
+      if(!isOpen){ return; }
+      isOpen = false;
+      backdrop.classList.remove('open');
+      backdrop.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('dlg-open');
+      if(opener && opener.focus){ try{ opener.focus({preventScroll: true}); }catch(e){} }
+    }
+
+    articles.forEach((article) => {
+      const card = document.createElement('article');
+      card.className = 'pcard';
+      const tilt = document.createElement('div');
+      tilt.className = 'pcard-tilt';
+
+      const media = document.createElement('div');
+      media.className = 'pcard-img auto-workflow';
+      const img = article.querySelector('img');
+      if(img){
+        const im = document.createElement('img');
+        im.src = img.getAttribute('src');
+        im.alt = img.getAttribute('alt') || '';
+        im.loading = 'lazy';
+        im.draggable = false;
+        media.appendChild(im);
+      }
+
+      const body = document.createElement('div');
+      body.className = 'pcard-body';
+      const tag = article.querySelector('.b-tag');
+      if(tag){ body.appendChild(tag.cloneNode(true)); }
+      const title = article.querySelector('h3');
+      if(title){ body.appendChild(title.cloneNode(true)); }
+      const summary = article.querySelector('.cs-summary');
+      if(summary){ body.appendChild(summary.cloneNode(true)); }
+
+      const more = document.createElement('button');
+      more.type = 'button';
+      more.className = 'pcard-more';
+      more.innerHTML = 'View workflow <span aria-hidden="true">&#8599;</span>';
+      if(title){ more.setAttribute('aria-label', 'View workflow: ' + title.textContent); }
+      body.appendChild(more);
+
+      tilt.appendChild(media);
+      tilt.appendChild(body);
+      card.appendChild(tilt);
+      card.addEventListener('click', () => openWorkflow(article, more));
+      grid.appendChild(card);
+    });
+
+    closeBtn.addEventListener('click', closeWorkflow);
+    backdrop.addEventListener('click', (e) => { if(e.target === backdrop){ closeWorkflow(); } });
+    document.addEventListener('keydown', (e) => {
+      if(!isOpen){ return; }
+      if(e.key === 'Escape'){ e.preventDefault(); closeWorkflow(); }
+      else if(e.key === 'Tab'){
+        const f = [...backdrop.querySelectorAll('a[href], button:not([hidden])')].filter(n => n.offsetParent !== null);
+        if(!f.length){ return; }
+        const first = f[0], last = f[f.length - 1];
+        if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    });
+    window.addEventListener('hashchange', closeWorkflow);
+    window.addEventListener('popstate', closeWorkflow);
   })();
 
 </script>
