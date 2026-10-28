@@ -12,10 +12,10 @@ The site covers:
 
 - **About**: background, current focus, and core stats
 - **What I Do**: 2 core service areas (Full Stack Development, AI Automation) in a card grid
-- **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, Rolesearch HQ, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, and a swipeable gallery of screenshots
+- **Featured projects**: 4 highlighted projects (VAULT 01, ChessHatch, RoleSearchHQ, OZ Handcrafted Footwear) on an interactive 3D ring carousel of compact cards; tapping a card opens a details panel with the full description, tech stack, links, a swipeable gallery of screenshots, and a case study link
 - **My Work**: a hub with two in-page views:
-  - **Full Stack Development**: all 9 projects with screenshots, descriptions, tech stacks, live links, and repo links
-  - **AI Automation**: three case studies with pipeline diagrams: the MK customer support and lead follow-up system, the Skies Realty AI lead-management pipeline, and the Engineering Sites YouTube lead research pipeline
+  - **Full Stack Development**: all 9 projects with screenshots, descriptions, tech stacks, live links, repo links, and a case study
+  - **AI Automation**: five case studies with pipeline diagrams: the MK customer support and lead follow-up system, the Skies Realty AI lead-management pipeline, the Skies Realty error handler, the Engineering Sites YouTube lead research pipeline, and the ChessHatch lesson publishing workflow
 - **Tools I Use**: tech stack organized by category (frontend, AI automation, backend, tools & design), with logos where available. The main tools are shown first and larger.
 - **What Drives Me**: 4 short values behind the work
 - **Contact**: an "Email me" button with a copy-email button and a CV link, plus email, X, Telegram, and LinkedIn in a terminal-style card
@@ -27,7 +27,7 @@ The site covers:
 - 3D ring carousel for featured projects: drag, swipe, arrow buttons, or arrow keys to rotate; the front card tilts and catches a light glare following the mouse; clicking a side card brings it forward
 - Project details panel: a bottom sheet on mobile and a centered window on desktop, with a screenshot gallery (swipe, arrows, or arrow keys), closing with the X, the Escape key, or a tap outside
 - 3D tilt effect on skill and tool cards, following the mouse
-- Three AI automation case studies, each with a pipeline diagram: MK (form, sheet, validation, local AI reply, Gmail and Telegram, follow-up), Skies Realty (form, n8n, scoring, local AI summary, CRM, Telegram alert), and Engineering Sites (hourly YouTube research, Gemini scoring, 15-field CRM)
+- Five AI automation case studies, each with a pipeline diagram: MK (form, sheet, validation, local AI reply, Gmail and Telegram, follow-up), Skies Realty (form, n8n, scoring, local AI summary, CRM, Telegram alert), the Skies Realty error handler (Error Trigger to a Telegram alert with the workflow, node, time, and error), Engineering Sites (hourly YouTube research, Gemini scoring, 15-field CRM), and ChessHatch (no-repeat lesson deck, five designs, board render, voiceover, Instagram and Telegram)
 - Mobile header auto-hides on scroll down, reappears on scroll up
 - Hamburger menu on screens 860px and below, with About, Skills, Work, Tools, Contact, and Ask. It closes on a link tap, Escape, or a click outside.
 - In-page navigation between sections and views without full page reloads
@@ -49,15 +49,17 @@ Each project is written once, as a hidden card inside the `projectStore` block n
 
 ## Adding pictures to a project's gallery
 
-Screenshots live in the project root, next to `index.html`. In the same script, find the `GALLERY` list: each project has lines like `['huntboard-inbox.jpg', 'Caption shown under the picture']`. Add a line for each new picture (the word `cover` means the project's existing card image). A project with no entry just shows its card image, with no arrows. For fast loading, keep screenshots around 800px wide and save them as JPEG.
+Screenshots live in the project root, next to `index.html`. In the same script, find the `GALLERY` list: each project has lines like `['./rolesearchhq-board.jpg', 'Caption shown under the picture']`. Add a line for each new picture (the word `cover` means the project's existing card image). A project with no entry just shows its card image, with no arrows. For fast loading, keep screenshots around 800px wide and save them as JPEG.
 
 ## Adding screenshots to the automation case studies
 
-Find the `SCREENSHOTS` comments inside the three case studies (the AI Automation page) in `index.html`. The MK case study already has its n8n workflow picture (`mk-n8n-workflow.png`). Each comment contains a ready-made block for any further pictures: add your images next to `index.html`, uncomment the block, and point each `src` at your file. Blur or replace any real names, phone numbers, or emails first.
+Find the `SCREENSHOTS` comments inside the five case studies (the AI Automation page) in `index.html`. The MK, ChessHatch, and Skies error handler case studies already have their n8n workflow pictures (`mk-n8n-workflow.png`, `chesshatch-n8n-workflow.png`, and `skies-error-handler-n8n.png`). Each comment contains a ready-made block for any further pictures: add your images next to `index.html`, uncomment the block, and point each `src` at your file. Blur or replace any real names, phone numbers, or emails first.
 
 ## Case studies
 
-The Rolesearch HQ and ChessHatch case studies are the `rolesearchhq-case` and `chesshatch-case` blocks in `index.html`. Each opens from the "Read case study" button in the project's details panel.
+Every full stack project has a case study. They are the `.page-view` blocks in `index.html` with these IDs: `rolesearchhq-case`, `vault01-case`, `oz-case`, `redbelly-case`, `redbelly-v2-case`, `auditlynx-case`, `chesshatch-case`, `urpassport-case`, and `travelsleek-case`. The `CASES` map in the project script connects each project key to its case study, and that link opens from the "Read case study" button in the project's details panel.
+
+Each case study uses the same mobile-first structure: a summary, a flow, screenshots, the problem and solution, numbered steps, engineering highlights, the tech stack, and links. The images stack on small screens, and the text is written to be readable at 390px wide.
 
 ## Visitor stats
 

@@ -373,7 +373,7 @@
 
   /* In-page views shown instead of separate pages */
   .page-view{display:none;padding:150px 0 90px;}
-  .page-view.active{display:block;}
+  .page-view.active{display:block;min-height:100vh;background:var(--bg);}
   .back-link{display:inline-flex;align-items:center;gap:8px;color:var(--text-dim);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;margin-bottom:32px;transition:color .2s;}
   .back-link:hover{color:var(--copper-bright);}
 
@@ -744,8 +744,23 @@
     .flow{grid-template-columns:1fr;gap:20px;}
     .flow li + li::before{left:50%;top:-20px;width:1px;height:20px;}
     .flow li + li::after{left:calc(50% - 3.5px);top:-7px;border-left:3.5px solid transparent;border-right:3.5px solid transparent;border-top:5px solid var(--copper);border-bottom:0;}
-    .cs-cols{grid-template-columns:1fr;gap:6px;}
-    .cs-feats{grid-template-columns:1fr;}
+    .cs-cols{grid-template-columns:1fr;gap:22px;}
+    .cs-cols > div + div{padding-top:22px;border-top:1px solid var(--line);}
+    .cs-feats{grid-template-columns:1fr;gap:12px;}
+    .cs-shots-cap .cs-shot img{height:auto;object-fit:contain;}
+    .cs p,.cs-steps li,.cs-impact li{overflow-wrap:anywhere;}
+  }
+  @media (max-width:480px){
+    .cs{padding:24px 16px;border-radius:14px;}
+    .cs-head h3{font-size:1.32rem;}
+    .cs-summary{font-size:0.95rem;}
+    .flow li{padding:14px 10px;font-size:0.78rem;}
+    .cs h4.cs-h{margin-top:34px;}
+    .cs-steps{gap:16px;}
+    .cs-steps li{padding-left:38px;font-size:0.93rem;}
+    .cs-steps li::before{width:26px;height:26px;font-size:0.72rem;}
+    .cs-feat{padding:18px 16px 6px;}
+    .cs-shot figcaption{font-size:0.68rem;}
   }
   @media (min-width:861px) and (max-width:1100px){
     .flow{grid-template-columns:repeat(3,1fr);row-gap:26px;}
@@ -1061,7 +1076,7 @@
     <div class="logo">maleekskies<span>DEV · AUTOMATION</span></div>
     <div class="nav-actions">
       <a href="#ask" class="nav-cta"><span class="nav-cta-long">Ask my assistant</span><span class="nav-cta-short">Ask</span></a>
-      <a href="cv.pdf?v=2" class="nav-cv" target="_blank" rel="noopener">CV</a>
+      <a href="cv.pdf?v=3" class="nav-cv" target="_blank" rel="noopener">CV</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme">
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7" stroke-linecap="round"/></svg>
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z" stroke-linejoin="round"/></svg>
@@ -1265,12 +1280,12 @@
     <div class="hub-grid card-stagger">
       <a class="project-card hub-card" href="#fullstack-view" data-view="fullstack-view">
         <div><div class="p-title">Full Stack Development</div><div class="p-role">Projects &amp; Client Sites</div></div>
-        <ul><li>Every project I've built, from client websites to full products, with live links and repos</li></ul>
+        <ul><li>Every project I've built, from client websites to full products, with live links, repos, and a case study</li></ul>
         <div class="card-link">View all projects ↗</div>
       </a>
       <a class="project-card hub-card" href="#automation-view" data-view="automation-view">
         <div><div class="p-title">AI Automation</div><div class="p-role">Workflows &amp; Case Studies</div></div>
-        <ul><li>Three automation case studies: a customer support and follow-up system, a real estate lead pipeline, and a YouTube lead research workflow</li></ul>
+        <ul><li>Five automation case studies: a customer support and follow-up system, a real estate lead pipeline and its error handler, a YouTube lead research workflow, and a chess lesson publishing workflow</li></ul>
         <div class="card-link">View the case studies ↗</div>
       </a>
     </div>
@@ -1357,7 +1372,7 @@
         <div class="contact-cta">
           <a class="btn-primary" href="mailto:maleekskies@gmail.com?subject=Project%20inquiry">Email me</a>
           <button type="button" class="btn-secondary" id="copyEmail" aria-live="polite">Copy email</button>
-          <a class="btn-secondary" href="cv.pdf?v=2" target="_blank" rel="noopener">View CV</a>
+          <a class="btn-secondary" href="cv.pdf?v=3" target="_blank" rel="noopener">View CV</a>
         </div>
         <p class="contact-meta">Based in Nigeria. Working remotely with clients worldwide.</p>
       </div>
@@ -1398,7 +1413,7 @@
   </div>
 </section>
 </div>
-<div class="page-view" id="automation-view">
+<div class="page-view" id="automation-view" data-title="AI Automation case studies &middot; maleekskies">
   <div class="wrap">
     <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
     <div class="section-head">
@@ -1556,6 +1571,67 @@
 
     <article class="cs">
       <div class="cs-head">
+        <div class="b-tag">AI Automation · Reliability · Error Handling</div>
+        <h3>Skies Realty: Workflow Error Alerts</h3>
+        <p class="cs-summary">A companion n8n workflow that catches failures in the Skies Realty lead pipeline and sends the details to Telegram. The alert names the workflow, the failed node when n8n reports it, the time in Lagos, and the actual error message, so a broken run does not fail silently.</p>
+      </div>
+
+      <ol class="flow" aria-label="Error alert flow">
+        <li class="n-io"><b>Error Trigger</b><span>A run fails</span></li>
+        <li class="n-code"><b>Workflow</b><span>Name and ID</span></li>
+        <li class="n-code"><b>Failed node</b><span>When n8n reports it</span></li>
+        <li class="n-io"><b>Lagos time</b><span>When it happened</span></li>
+        <li class="n-code"><b>Error message</b><span>What actually broke</span></li>
+        <li class="n-io"><b>Telegram</b><span>Alert to the team</span></li>
+      </ol>
+      <div class="flow-legend"><span class="lg-code">n8n reads the failure data, Telegram sends the alert</span></div>
+
+      <figure class="cs-shot cs-shot-wide">
+        <div class="cs-shot-scroll"><img src="./skies-error-handler-n8n.png" width="1440" height="1000" loading="lazy" alt="The Skies Realtor Error Handler n8n workflow, from the Error Trigger to the Telegram alert"></div>
+        <p class="cs-shot-hint">Swipe sideways to see the whole workflow.</p>
+        <figcaption>The error handler workflow</figcaption>
+      </figure>
+
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>The lead pipeline runs without anyone watching it. If a node fails, a new inquiry can sit in the sheet without a score, a CRM row, or an alert. The first sign is usually a missed lead, not an error message.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>The Skies Realty workflow points to this error workflow in its settings. When a run fails, n8n passes the workflow, execution, and error data to the Error Trigger. A Telegram node formats a short alert with the workflow name, workflow ID, failed node, Lagos time, and the actual error message. Missing fields fall back to "Not reported" or "Unknown" instead of breaking the alert.</p>
+        </div>
+      </div>
+
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Trigger.</b> n8n calls the error workflow when the Skies Realty workflow fails. The Error Trigger receives the failed workflow, execution, and error data.</li>
+        <li><b>Format.</b> The Telegram node pulls the workflow name and ID, the failed node when n8n reports it, the time in Africa/Lagos, and the error message. If n8n includes a cause, the alert adds it.</li>
+        <li><b>Alert.</b> The message goes to the same Telegram chat as the lead alerts, so the failure shows up where the team already looks.</li>
+      </ol>
+
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>Separate error path</b><p>The handler stays out of the lead workflow, so successful runs do not pay for extra steps.</p></div>
+        <div class="cs-feat"><b>Useful context</b><p>The alert names the workflow, node, time, and error, so the fix starts in the right place.</p></div>
+        <div class="cs-feat"><b>Fallbacks</b><p>Missing fields become "Not reported" or "Unknown" instead of an empty message or a failed alert.</p></div>
+      </div>
+
+      <h4 class="cs-h">Impact</h4>
+      <ul class="cs-impact">
+        <li>A failed lead run reaches the team on Telegram.</li>
+        <li>The alert includes the workflow, node, time, and actual error, not a generic notice.</li>
+        <li>The error workflow is active and attached to the Skies Realty workflow through n8n's error workflow setting.</li>
+      </ul>
+
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack">
+        <span class="tech-badge">n8n</span><span class="tech-badge">Error Trigger</span><span class="tech-badge">Telegram Bot API</span><span class="tech-badge">n8n expressions</span>
+      </div>
+    </article>
+
+    <article class="cs">
+      <div class="cs-head">
         <div class="b-tag">AI Automation · Lead Research · YouTube Data</div>
         <h3>Engineering Sites: YouTube Lead Research &amp; Qualification</h3>
         <p class="cs-summary">An hourly n8n workflow that searches YouTube for engineering and industrial videos, reads the comments, checks each commenter's channel, and scores the lead with Google Gemini. Leads that clear the score threshold are appended to a Google Sheets CRM with the evidence, the score, and a specific opening line.</p>
@@ -1617,66 +1693,133 @@
         <span class="tech-badge">n8n</span><span class="tech-badge">YouTube Data API</span><span class="tech-badge">Google Gemini</span><span class="tech-badge">Google Sheets API</span><span class="tech-badge">JavaScript</span><span class="tech-badge">Docker</span>
       </div>
     </article>
-  </div>
-</div>
 
-<div class="page-view" id="rolesearchhq-case">
-  <div class="wrap">
-    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
-    <div class="section-head">
-      <span class="eyebrow">Case study</span>
-      <h2>Rolesearch HQ</h2>
-      <p>A job search platform that finds roles, scores them against your CV, and builds the application for you.</p>
-    </div>
     <article class="cs">
       <div class="cs-head">
-        <div class="b-tag">Full Stack · AI-Powered Job Search</div>
-        <h3>Rolesearch HQ: Scan, Score and Apply From One Place</h3>
-        <p class="cs-summary">Rolesearch HQ scans multiple job boards, scores each role against a user's CV with a hybrid keyword and LLM engine, and generates a tailored CV and cover letter per role through its kit system.</p>
+        <div class="b-tag">AI Automation · Social Publishing · Content</div>
+        <h3>ChessHatch: Beginner Lesson Reels on a 20-Hour Loop</h3>
+        <p class="cs-summary">An n8n workflow that builds and publishes a beginner chess lesson Reel every 20 hours. It picks a lesson from a shuffled deck without repeating one until the deck is empty, applies one of five visual designs, renders the board and voiceover, posts to Instagram, and sends the file to Telegram.</p>
       </div>
-      <ol class="flow" aria-label="Rolesearch HQ flow">
-        <li class="n-io"><b>Job boards</b><span>Roles scanned</span></li>
-        <li class="n-code"><b>Keyword engine</b><span>Fast first pass</span></li>
-        <li class="n-ai"><b>LLM (Groq)</b><span>Deeper match check</span></li>
-        <li class="n-io"><b>Inbox</b><span>Scored roles</span></li>
-        <li class="n-io"><b>Kit</b><span>CV and cover letter</span></li>
+      <ol class="flow" aria-label="ChessHatch lesson publishing workflow">
+        <li class="n-io"><b>Every 20 hours</b><span>Schedule trigger</span></li>
+        <li class="n-code"><b>Next lesson</b><span>Shuffled deck</span></li>
+        <li class="n-io"><b>Board frames</b><span>Before and after</span></li>
+        <li class="n-code"><b>Render</b><span>Voice and subtitles</span></li>
+        <li class="n-io"><b>Instagram</b><span>Upload and publish</span></li>
+        <li class="n-io"><b>Telegram</b><span>Copy of the video</span></li>
       </ol>
-      <div class="flow-legend"><span class="lg-code">Keywords narrow it down</span><span class="lg-ai">The LLM judges the fit</span></div>
-      <div class="cs-shots cs-shots-cap"><figure class="cs-shot"><img src="./huntboard-inbox.jpg" alt="Inbox: roles scored against your CV and preferences" loading="lazy"><figcaption>Inbox: roles scored against your CV and preferences</figcaption></figure><figure class="cs-shot"><img src="./huntboard-kit.jpg" alt="Kit overview: why it matches and gaps to address" loading="lazy"><figcaption>Kit overview: why it matches and gaps to address</figcaption></figure></div>
+      <figure class="cs-shot cs-shot-wide">
+        <div class="cs-shot-scroll"><img src="./chesshatch-n8n-workflow.png" width="1179" height="762" loading="lazy" alt="The ChessHatch Daily Lessons n8n workflow, from the schedule trigger and lesson picker through board rendering, video rendering, Telegram, and Instagram publishing"></div>
+        <p class="cs-shot-hint">Swipe sideways to see the whole workflow.</p>
+        <figcaption>The published n8n workflow</figcaption>
+      </figure>
       <div class="cs-cols">
         <div>
           <h4>The problem</h4>
-          <p>Searching for a job means checking several boards, reading long descriptions, and guessing which roles actually fit. Then each application needs its own tailored CV and cover letter.</p>
+          <p>A lesson series needs a new post every day. Writing the lesson, choosing a board, recording the voice, rendering the video, and publishing it is a repeatable process, but it still takes time, and the visual style can drift from post to post.</p>
         </div>
         <div>
           <h4>The solution</h4>
-          <p>One workspace that gathers roles, ranks them against the user's CV and preferences, and explains each match. For the roles worth pursuing, the kit system drafts the CV and cover letter.</p>
+          <p>One n8n workflow runs the whole chain on a schedule. It picks the next lesson from a shuffled deck, applies that lesson's design, renders the board and voiceover, and publishes the result. The lesson list lives in the workflow, so adding a lesson is a code edit, not a new manual process.</p>
         </div>
       </div>
       <h4 class="cs-h">How it works</h4>
       <ol class="cs-steps">
-        <li><b>Scan.</b> Roles are collected from multiple job boards into one list.</li>
-        <li><b>Score.</b> A hybrid engine combines keyword matching with an LLM, so the score reflects both exact skills and overall fit.</li>
-        <li><b>Review.</b> The inbox shows every role scored against the CV and preferences. Each job opens with a match breakdown.</li>
-        <li><b>Prepare.</b> The kit shows why a role matches and which gaps to address, then generates a tailored CV and cover letter for that role.</li>
+        <li><b>Pick.</b> Every 20 hours, the workflow takes the next lesson from a shuffled deck. It remembers the last lesson, so a new cycle does not open with the same one that closed the old cycle.</li>
+        <li><b>Design.</b> Each lesson has a fixed design. The deck mixes five looks: noir, paper, midnight, sage, and plum. The board theme, piece set, background, and accent color change with the design.</li>
+        <li><b>Board.</b> The workflow renders the before and after positions as board images. The first board has no arrow, so the learner has to find the move. The after board shows the direction arrow. The pin lesson has no arrow because the piece does not move.</li>
+        <li><b>Render.</b> A local Node TTS script records the voiceover. FFmpeg combines the board images, voiceover, and ASS subtitles into the Reel.</li>
+        <li><b>Publish.</b> The video is uploaded to Instagram through the Graph API, then published as a Reel. A copy goes to Telegram.</li>
+        <li><b>Repeat.</b> The deck continues without repeats until it is empty, then reshuffles with a guard against an immediate repeat.</li>
+      </ol>
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>No-repeat random deck</b><p>A shuffled queue gives every lesson a turn before any lesson comes back. The last lesson is held back so two cycles do not join on the same post.</p></div>
+        <div class="cs-feat"><b>Five fixed designs</b><p>Each lesson keeps its own look, and the random deck mixes the designs across the feed instead of repeating one template.</p></div>
+        <div class="cs-feat"><b>Arrow logic</b><p>The first board stays arrow-free so the learner can find the move. The after board shows the direction, except for the pin lesson.</p></div>
+        <div class="cs-feat"><b>Local render chain</b><p>Node TTS, FFmpeg, and ASS subtitles run on the host. There is no paid video API in the render path.</p></div>
+        <div class="cs-feat"><b>One workflow, two outputs</b><p>The same run publishes the Reel to Instagram and sends a copy to Telegram for a quick review.</p></div>
+      </div>
+      <h4 class="cs-h">What it produces</h4>
+      <ul class="cs-impact">
+        <li>One beginner idea per Reel, with short lines and a takeaway.</li>
+        <li>A board that changes from the before position to the after position, with the direction arrow on the move.</li>
+        <li>A caption and beginner hashtags for @chesshatch.</li>
+        <li>A full cycle of 15 lessons, about 12.5 days at one post every 20 hours.</li>
+      </ul>
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack">
+        <span class="tech-badge">n8n</span><span class="tech-badge">Lichess board renderer</span><span class="tech-badge">Node TTS</span><span class="tech-badge">FFmpeg</span><span class="tech-badge">ASS subtitles</span><span class="tech-badge">Instagram Graph API</span><span class="tech-badge">Telegram Bot API</span>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="page-view" id="rolesearchhq-case" data-title="RoleSearchHQ case study &middot; maleekskies">
+  <div class="wrap">
+    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
+    <div class="section-head">
+      <span class="eyebrow">Case study</span>
+      <h2>RoleSearchHQ</h2>
+      <p>A job search workspace that finds roles, scores them against your CV, and builds the application kit.</p>
+    </div>
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">Full Stack · AI-Powered Job Search</div>
+        <h3>RoleSearchHQ: Scan, Score and Prepare From One Place</h3>
+        <p class="cs-summary">RoleSearchHQ scans multiple job boards, scores each role against a user's CV with a hybrid keyword and LLM engine, and turns the roles worth pursuing into tailored kits. Each kit can include a CV, cover letter, form packet, talking points, and notes on the gaps to address.</p>
+      </div>
+      <ol class="flow" aria-label="RoleSearchHQ flow">
+        <li class="n-io"><b>Job boards</b><span>Roles scanned</span></li>
+        <li class="n-code"><b>Keyword engine</b><span>Fast first pass</span></li>
+        <li class="n-ai"><b>LLM (Groq)</b><span>Deeper match check</span></li>
+        <li class="n-io"><b>Today</b><span>Roles above the bar</span></li>
+        <li class="n-io"><b>Pipeline</b><span>Saved roles and stages</span></li>
+        <li class="n-io"><b>Kit Studio</b><span>One kit per role</span></li>
+      </ol>
+      <div class="flow-legend"><span class="lg-code">Keywords narrow it down</span><span class="lg-ai">The LLM judges the fit</span></div>
+      <div class="cs-shots cs-shots-cap">
+        <figure class="cs-shot"><img src="./rolesearchhq-board.jpg" width="1000" height="700" alt="RoleSearchHQ pipeline with saved roles, ready kits, and a score on each card" loading="lazy"><figcaption>Pipeline: saved roles, ready kits, and conversations in motion</figcaption></figure>
+        <figure class="cs-shot"><img src="./rolesearchhq-kit-crop.jpg" width="780" height="1040" alt="RoleSearchHQ Kit Studio with a list of tailored kits ready for review" loading="lazy"><figcaption>Kit Studio: one tailored kit per role, waiting for review</figcaption></figure>
+      </div>
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>Job hunting means checking several boards, reading long descriptions, and guessing which roles actually fit. Then each application needs its own CV, cover letter, and answers, which is a second job on its own.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>One workspace gathers roles, ranks them against the user's CV and preferences, and explains each match. The roles that clear the bar move into a pipeline, and Kit Studio drafts the application material from the user's own CV, voice guide, and proof points.</p>
+        </div>
+      </div>
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Scan.</b> Roles are collected from multiple job boards into one pool.</li>
+        <li><b>Score.</b> A hybrid engine combines keyword matching with an LLM, so the score reflects exact skills and overall fit.</li>
+        <li><b>Review.</b> Today shows the roles above the score threshold. Each job opens with a match breakdown and the gaps to address.</li>
+        <li><b>Track.</b> Saved roles move through Pipeline stages, from saved and ready to send, to applied, to interview.</li>
+        <li><b>Prepare.</b> Kit Studio drafts a CV, cover letter, form packet, talking points, and gap notes for one role. The user can edit the kit and approve it. Nothing is sent from RoleSearchHQ; approval means the kit is ready for the final send.</li>
       </ol>
       <h4 class="cs-h">Engineering highlights</h4>
       <div class="cs-feats">
         <div class="cs-feat"><b>Hybrid scoring</b><p>Keywords give a fast first pass and the LLM adds judgement, so results are not just word counts.</p></div>
         <div class="cs-feat"><b>Explained matches</b><p>Each score comes with a breakdown and a list of gaps, so the user knows what to fix.</p></div>
         <div class="cs-feat"><b>Per-role kits</b><p>Every application gets its own CV and cover letter instead of one generic copy.</p></div>
+        <div class="cs-feat"><b>One source of truth</b><p>Kits are pulled from the saved CV, voice guide, and proof points, not rebuilt from scratch each time.</p></div>
+        <div class="cs-feat"><b>Approval gate</b><p>Drafts stay in the workspace until the user approves them. The app does not send applications on its own.</p></div>
+        <div class="cs-feat"><b>Pipeline view</b><p>Every saved role keeps its stage, kit status, follow-up date, and interview notes in one place.</p></div>
       </div>
       <h4 class="cs-h">Built with</h4>
-      <div class="tech-stack"><span class="tech-badge">Next.js</span><span class="tech-badge">Supabase</span><span class="tech-badge">Groq</span><span class="tech-badge">Resend</span><span class="tech-badge">Vercel</span></div>
+      <div class="tech-stack"><span class="tech-badge">Next.js</span><span class="tech-badge">Supabase</span><span class="tech-badge">Groq</span><span class="tech-badge">@react-pdf/renderer</span><span class="tech-badge">pdf-parse</span><span class="tech-badge">Resend</span><span class="tech-badge">Vercel</span></div>
       <div class="built-links" style="margin-top:28px;">
-        <a class="b-live" href="https://rolesearchhq.vercel.app/" target="_blank" rel="noopener" data-track="Rolesearch HQ live">Live Project &#8599;</a>
-        <a class="b-gh" href="https://github.com/maleekskies/rolesearchhq" target="_blank" rel="noopener" data-track="Rolesearch HQ github">GitHub</a>
+        <a class="b-live" href="https://rolesearchhq.vercel.app/" target="_blank" rel="noopener" data-track="RoleSearchHQ live">Live Project &#8599;</a>
+        <a class="b-gh" href="https://github.com/maleekskies/rolesearchhq" target="_blank" rel="noopener" data-track="RoleSearchHQ github">GitHub</a>
       </div>
     </article>
   </div>
 </div>
 
-<div class="page-view" id="chesshatch-case">
+<div class="page-view" id="chesshatch-case" data-title="ChessHatch case study &middot; maleekskies">
   <div class="wrap">
     <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
     <div class="section-head">
@@ -1733,7 +1876,443 @@
   </div>
 </div>
 
-<div class="page-view" id="fullstack-view">
+<div class="page-view" id="vault01-case" data-title="VAULT 01 case study &middot; maleekskies">
+  <div class="wrap">
+    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
+    <div class="section-head">
+      <span class="eyebrow">Case study</span>
+      <h2>VAULT 01</h2>
+      <p>A Genesis Collection mint where the identity rule lives in the contract.</p>
+    </div>
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">Full Stack · Web3 · NFT Mint</div>
+        <h3>VAULT 01: A Mint With the Identity Check in the Contract</h3>
+        <p class="cs-summary">VAULT 01 is the mint site for the Genesis Collection on Redbelly Network Mainnet. The contract enforces wallet identity verification, and 50 of the 500 tokens are tied to limited-edition mechanical watches that the holder can claim on-chain.</p>
+      </div>
+      <ol class="flow" aria-label="VAULT 01 mint flow">
+        <li class="n-io"><b>Wallet</b><span>Connect to the site</span></li>
+        <li class="n-code"><b>Contract check</b><span>Identity rule</span></li>
+        <li class="n-io"><b>Mint</b><span>One of 500</span></li>
+        <li class="n-io"><b>Redbelly</b><span>Mainnet</span></li>
+        <li class="n-io"><b>Watch tokens</b><span>50 of 500</span></li>
+        <li class="n-io"><b>Claim</b><span>On-chain</span></li>
+      </ol>
+      <div class="cs-shots cs-shots-cap">
+        <figure class="cs-shot"><img src="./vault01-mint.jpg" alt="VAULT 01 Genesis Collection mint page" loading="lazy"><figcaption>Genesis Collection mint page</figcaption></figure>
+        <figure class="cs-shot"><img src="./vault01-previews.jpg" alt="Watch previews for Onyx, Rose, Green, and Steel" loading="lazy"><figcaption>Watch previews: Onyx, Rose, Green, Steel</figcaption></figure>
+      </div>
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>A mint page can hide the button when a wallet does not qualify, but that does not stop someone from calling the contract directly. VAULT 01 needed the identity rule to live in the contract, not only in the interface.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>The contract checks wallet identity before it allows a mint. The collection is capped at 500 tokens, and 50 of them are bound to physical watches that the holder claims on-chain. The site handles the wallet connection and shows the collection.</p>
+        </div>
+      </div>
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Connect.</b> A wallet connects to the mint site on Redbelly Network Mainnet.</li>
+        <li><b>Verify.</b> The contract checks the wallet's identity status before it allows a mint.</li>
+        <li><b>Mint.</b> A qualifying wallet mints from the 500-token Genesis Collection.</li>
+        <li><b>Claim.</b> Fifty tokens are bound to limited-edition mechanical watches. The holder claims the watch on-chain.</li>
+        <li><b>View.</b> The site shows the collection and the watch previews before the wallet connects.</li>
+      </ol>
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>Contract-level gate</b><p>The identity check runs in Solidity, so the browser is not the only thing standing between a wallet and the mint.</p></div>
+        <div class="cs-feat"><b>Fixed supply</b><p>The Genesis Collection is capped at 500 tokens.</p></div>
+        <div class="cs-feat"><b>Physical claim</b><p>Fifty tokens carry a watch claim that is settled on-chain.</p></div>
+        <div class="cs-feat"><b>Typed frontend</b><p>Next.js and TypeScript handle the page, with wagmi for wallet state.</p></div>
+        <div class="cs-feat"><b>Foundry build</b><p>The Solidity contracts are built with Foundry.</p></div>
+      </div>
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack"><span class="tech-badge">Next.js</span><span class="tech-badge">TypeScript</span><span class="tech-badge">Solidity</span><span class="tech-badge">Foundry</span><span class="tech-badge">wagmi</span><span class="tech-badge">Tailwind CSS</span><span class="tech-badge">Vercel</span></div>
+      <div class="built-links" style="margin-top:28px;">
+        <a class="b-live" href="https://redbelly-nft-mint.vercel.app" target="_blank" rel="noopener" data-track="VAULT 01 live">Live Project &#8599;</a>
+        <a class="b-gh" href="https://github.com/Cyon0x/redbelly-nft-mint" target="_blank" rel="noopener" data-track="VAULT 01 github">GitHub</a>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="page-view" id="oz-case" data-title="OZ Handcrafted Footwear case study &middot; maleekskies">
+  <div class="wrap">
+    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
+    <div class="section-head">
+      <span class="eyebrow">Case study</span>
+      <h2>OZ Handcrafted Footwear</h2>
+      <p>A storefront for a handmade footwear label, with WhatsApp as the checkout.</p>
+    </div>
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">Full Stack · Brand &amp; E-Commerce</div>
+        <h3>OZ Handcrafted Footwear: A Storefront Built Around WhatsApp</h3>
+        <p class="cs-summary">OZ Handcrafted Footwear is a brand storefront for a handmade footwear business. It has a product catalogue, photo galleries, search and filters, a cart, and a wishlist. Checkout hands the shopper to WhatsApp, so the site needs no backend, payment integration, or customer accounts.</p>
+      </div>
+      <ol class="flow" aria-label="OZ storefront flow">
+        <li class="n-io"><b>Home</b><span>Brand and featured pairs</span></li>
+        <li class="n-io"><b>Collection</b><span>Search and filters</span></li>
+        <li class="n-io"><b>Product</b><span>Colour, size, gallery</span></li>
+        <li class="n-io"><b>Cart</b><span>Pairs to order</span></li>
+        <li class="n-io"><b>Wishlist</b><span>Save for later</span></li>
+        <li class="n-io"><b>WhatsApp</b><span>Finish the order</span></li>
+      </ol>
+      <div class="cs-shots cs-shots-cap">
+        <figure class="cs-shot"><img src="./oz-home.jpg" alt="OZ Handcrafted Footwear home page" loading="lazy"><figcaption>Home page: handcrafted for a perfect fit</figcaption></figure>
+        <figure class="cs-shot"><img src="./oz-collection.jpg" alt="OZ featured collection with search and filters" loading="lazy"><figcaption>Featured collection with search and filters</figcaption></figure>
+        <figure class="cs-shot"><img src="./oz-product.jpg" alt="OZ product page with colour, size, and WhatsApp order" loading="lazy"><figcaption>Product page: colour, size, and WhatsApp order</figcaption></figure>
+      </div>
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>A small handmade brand needs a product catalogue that looks good on a phone, but a full ecommerce backend adds hosting, payments, and maintenance. The owner already takes orders in WhatsApp conversations.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>A static storefront that shows the collection and product details, lets shoppers save pairs, and then hands the order to WhatsApp. There is no database, no payment form, and no account to create.</p>
+        </div>
+      </div>
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Browse.</b> The home page introduces the brand and shows featured pairs.</li>
+        <li><b>Find.</b> The collection page uses search and filters to narrow the catalogue.</li>
+        <li><b>Choose.</b> The product page shows the colour, size, and photo gallery.</li>
+        <li><b>Save.</b> Shoppers add pairs to the cart or the wishlist.</li>
+        <li><b>Order.</b> Checkout hands the shopper to WhatsApp to finish the order.</li>
+      </ol>
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>No backend</b><p>The catalogue, cart, and wishlist run in the browser, so there is no server or database to maintain.</p></div>
+        <div class="cs-feat"><b>Product-first pages</b><p>Photo galleries and colour and size details sit above the order handoff.</p></div>
+        <div class="cs-feat"><b>Two ways to save</b><p>Shoppers can build a cart for a planned order or keep a wishlist for later.</p></div>
+        <div class="cs-feat"><b>WhatsApp checkout</b><p>The order leaves the site as a WhatsApp conversation, which is where the owner already works.</p></div>
+      </div>
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack"><span class="tech-badge">HTML5</span><span class="tech-badge">Tailwind CSS</span><span class="tech-badge">JavaScript</span><span class="tech-badge">Vercel</span></div>
+      <div class="built-links" style="margin-top:28px;">
+        <a class="b-live" href="https://ozhandcrafted.vercel.app/" target="_blank" rel="noopener" data-track="OZ live">Live Project &#8599;</a>
+        <a class="b-gh" href="https://github.com/maleekskies/OZhandcrafted" target="_blank" rel="noopener" data-track="OZ github">GitHub</a>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="page-view" id="redbelly-case" data-title="Redbelly Onboarding Hub case study &middot; maleekskies">
+  <div class="wrap">
+    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
+    <div class="section-head">
+      <span class="eyebrow">Case study</span>
+      <h2>Redbelly Onboarding Hub</h2>
+      <p>One page for the questions every new Redbelly Discord member asks.</p>
+    </div>
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">Full Stack · Community Onboarding</div>
+        <h3>Redbelly Onboarding Hub: One Link for New Members</h3>
+        <p class="cs-summary">A static reference page for new Redbelly Discord members. It answers the common questions about KYC, network setup, the "$0 balance" confusion, where to trade, staking, and the testnet faucet. A scam warning sits at the top.</p>
+      </div>
+      <ol class="flow" aria-label="Redbelly onboarding topics">
+        <li class="n-io"><b>New member</b><span>Opens the hub</span></li>
+        <li class="n-io"><b>Scam warning</b><span>Before anything else</span></li>
+        <li class="n-io"><b>KYC</b><span>What it is for</span></li>
+        <li class="n-io"><b>Network setup</b><span>Mainnet and testnet</span></li>
+        <li class="n-io"><b>Zero balance</b><span>Why it looks empty</span></li>
+        <li class="n-io"><b>Trade, stake, faucet</b><span>Next steps</span></li>
+      </ol>
+      <div class="cs-shots cs-shots-cap">
+        <figure class="cs-shot"><img src="./redbelly-cover.jpg" alt="Redbelly onboarding hub hero with the scam warning" loading="lazy"><figcaption>Hero and scam warning</figcaption></figure>
+      </div>
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>New members arrive in Discord with the same questions: what KYC is, how to set up the network, why the balance looks empty, where to trade, how staking works, and where the testnet faucet is. Repeating those answers in chat takes moderator time, and the answers get lost in the scroll.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>One static page with a section for each question and a scam warning at the top. Moderators can send the same link instead of retyping the answers, and new members can read at their own pace.</p>
+        </div>
+      </div>
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Open.</b> A new member opens the hub from a link in Discord.</li>
+        <li><b>Read the warning.</b> The top block says every DM is a scam and that staff, support, and giveaways never message first.</li>
+        <li><b>Find a section.</b> KYC, network setup, zero balance, buy and trade, staking, and the testnet faucet each have their own section.</li>
+        <li><b>Follow the steps.</b> Each section answers one question without sending the reader to another chat.</li>
+        <li><b>Share.</b> Moderators send the same link the next time the question comes up.</li>
+      </ol>
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>One URL</b><p>A single page covers the questions new members ask most.</p></div>
+        <div class="cs-feat"><b>Scam warning first</b><p>The page tells members that staff, support, and giveaways never DM first.</p></div>
+        <div class="cs-feat"><b>No backend</b><p>Static HTML and CSS, so the page loads fast and needs no database.</p></div>
+        <div class="cs-feat"><b>Simple to update</b><p>Content changes are text edits in the page.</p></div>
+      </div>
+      <h4 class="cs-h">What it changed</h4>
+      <ul class="cs-impact">
+        <li>New members get the same answers in one place.</li>
+        <li>Moderators can link to the page instead of retyping the same reply.</li>
+        <li>The scam warning is seen before any trading or wallet advice.</li>
+      </ul>
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack"><span class="tech-badge">HTML5</span><span class="tech-badge">CSS3</span><span class="tech-badge">Vercel</span></div>
+      <div class="built-links" style="margin-top:28px;">
+        <a class="b-live" href="https://redbellyonboardingsite.vercel.app/" target="_blank" rel="noopener" data-track="Redbelly onboarding live">Live Project &#8599;</a>
+        <span class="b-gh" style="opacity:.55;pointer-events:none;">Private Repository</span>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="page-view" id="redbelly-v2-case" data-title="Redbelly Onboarding Hub v2 case study &middot; maleekskies">
+  <div class="wrap">
+    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
+    <div class="section-head">
+      <span class="eyebrow">Case study</span>
+      <h2>Redbelly Onboarding Hub v2</h2>
+      <p>A rebuild of the onboarding hub, with quick links to the answers people need.</p>
+    </div>
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">Full Stack · Community Onboarding</div>
+        <h3>Redbelly Onboarding Hub v2: Quick Links for Faster Answers</h3>
+        <p class="cs-summary">A rebuild of the Redbelly onboarding hub with quick links under the scam warning. A new member can jump straight to KYC, network setup, zero balance, buy and trade, staking, or the testnet faucet.</p>
+      </div>
+      <ol class="flow" aria-label="Redbelly onboarding v2 topics">
+        <li class="n-io"><b>New member</b><span>Opens the hub</span></li>
+        <li class="n-io"><b>Scam warning</b><span>Before anything else</span></li>
+        <li class="n-code"><b>Quick links</b><span>Jump to a topic</span></li>
+        <li class="n-io"><b>KYC</b><span>What it is for</span></li>
+        <li class="n-io"><b>Network setup</b><span>Mainnet and testnet</span></li>
+        <li class="n-io"><b>Trade, stake, faucet</b><span>Next steps</span></li>
+      </ol>
+      <div class="cs-shots cs-shots-cap">
+        <figure class="cs-shot"><img src="./redbelly-v2-cover.jpg" alt="Redbelly onboarding hub v2 with the scam warning and quick links" loading="lazy"><figcaption>Hero, scam warning, and quick links</figcaption></figure>
+      </div>
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>The first hub answered the questions, but a new member still had to scroll through the page to find the one they needed. The answers were there, but there was no shortcut to each section.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>A rebuild with a row of quick links under the scam warning. KYC, network setup, zero balance, buy and trade, staking, and the testnet faucet each jump to their section, while the warning stays at the top.</p>
+        </div>
+      </div>
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Open.</b> A new member opens the hub from a link in Discord.</li>
+        <li><b>Read the warning.</b> The scam warning is still the first block after the hero.</li>
+        <li><b>Pick a shortcut.</b> The quick links jump to KYC, network setup, zero balance, buy and trade, staking, or the testnet faucet.</li>
+        <li><b>Read the answer.</b> Each section stays short and covers one question.</li>
+        <li><b>Share.</b> Moderators send the same link the next time the question comes up.</li>
+      </ol>
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>Quick navigation</b><p>One tap moves a new member from the top of the page to the section they need.</p></div>
+        <div class="cs-feat"><b>Same trusted answers</b><p>The rebuild keeps the KYC, network, balance, trading, staking, and faucet content from the first hub.</p></div>
+        <div class="cs-feat"><b>Scam warning stays visible</b><p>The warning sits above the quick links, so the safety message is not hidden behind a shortcut.</p></div>
+        <div class="cs-feat"><b>Still static</b><p>No backend or database, so the page stays fast and cheap to host.</p></div>
+      </div>
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack"><span class="tech-badge">HTML5</span><span class="tech-badge">CSS3</span><span class="tech-badge">Vercel</span></div>
+      <div class="built-links" style="margin-top:28px;">
+        <a class="b-live" href="https://redbellyonboardinghub.vercel.app/" target="_blank" rel="noopener" data-track="Redbelly onboarding v2 live">Live Project &#8599;</a>
+        <span class="b-gh" style="opacity:.55;pointer-events:none;">Private Repository</span>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="page-view" id="auditlynx-case" data-title="Auditlynx case study &middot; maleekskies">
+  <div class="wrap">
+    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
+    <div class="section-head">
+      <span class="eyebrow">Case study</span>
+      <h2>Auditlynx</h2>
+      <p>A defensive security dashboard with five checks for a fast first pass.</p>
+    </div>
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">Full Stack · Security Tooling</div>
+        <h3>Auditlynx: Five Security Checks in One Dashboard</h3>
+        <p class="cs-summary">Auditlynx is a defensive security toolkit with five modules: security header grading, a phishing analyzer, DNS and domain recon, a code security scanner, and a breach checker. It is built for heuristic triage, so a human analyst can decide what needs a closer look.</p>
+      </div>
+      <ol class="flow" aria-label="Auditlynx scan flow">
+        <li class="n-io"><b>Choose module</b><span>One of five checks</span></li>
+        <li class="n-io"><b>Enter target</b><span>Domain, email, or code</span></li>
+        <li class="n-code"><b>Run check</b><span>Heuristic scan</span></li>
+        <li class="n-io"><b>Read result</b><span>Grade or findings</span></li>
+        <li class="n-code"><b>Review</b><span>What stands out</span></li>
+        <li class="n-io"><b>Verify</b><span>Manual follow-up</span></li>
+      </ol>
+      <div class="cs-shots cs-shots-cap">
+        <figure class="cs-shot"><img src="./auditlynx-cover.jpg" alt="Auditlynx module 01, the security headers and config checker" loading="lazy"><figcaption>Module 01: Security Headers &amp; Config Checker</figcaption></figure>
+        <figure class="cs-shot"><img src="./auditlynx-modules.jpg" alt="The five Auditlynx analysis modules" loading="lazy"><figcaption>The five analysis modules</figcaption></figure>
+      </div>
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>A first security pass is spread across browser tools, DNS lookups, code scanners, and breach checks. An analyst needs a quick read on several signals without opening five different tools or writing the same notes twice.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>A dashboard with five modules in one place. Each module runs a focused check and returns a grade or a list of findings. The tool is for triage, not a replacement for a full audit, so the results point to what a human should verify.</p>
+        </div>
+      </div>
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Pick.</b> Choose one of the five modules from the sidebar.</li>
+        <li><b>Enter the target.</b> The module asks for a domain, email, URL, or code, depending on the check.</li>
+        <li><b>Run.</b> The backend runs the check and returns a grade or a set of findings.</li>
+        <li><b>Read.</b> The result shows what stands out, without mixing it with the other modules.</li>
+        <li><b>Verify.</b> The analyst checks the finding manually before acting on it.</li>
+      </ol>
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>Five focused modules</b><p>Headers, phishing, DNS and domain recon, code security, and breaches each have their own screen.</p></div>
+        <div class="cs-feat"><b>Stateless checks</b><p>The tool runs a check and returns a result. There is no account or scan history to manage.</p></div>
+        <div class="cs-feat"><b>Triage first</b><p>The results are heuristic. The interface says to verify findings manually, so the tool does not pretend to replace a full audit.</p></div>
+        <div class="cs-feat"><b>Clear input per module</b><p>Each module asks for the target it can actually use, so the user does not have to guess.</p></div>
+        <div class="cs-feat"><b>Fast frontend</b><p>React and Vite keep the module switching and results light.</p></div>
+      </div>
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack"><span class="tech-badge">Python</span><span class="tech-badge">FastAPI</span><span class="tech-badge">React</span><span class="tech-badge">Vite</span><span class="tech-badge">Tailwind CSS</span><span class="tech-badge">Vercel</span></div>
+      <div class="built-links" style="margin-top:28px;">
+        <a class="b-live" href="https://auditlynx.vercel.app/" target="_blank" rel="noopener" data-track="Auditlynx live">Live Project &#8599;</a>
+        <a class="b-gh" href="https://github.com/maleekskies/Auditlynx" target="_blank" rel="noopener" data-track="Auditlynx github">GitHub</a>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="page-view" id="urpassport-case" data-title="UrPassport NG case study &middot; maleekskies">
+  <div class="wrap">
+    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
+    <div class="section-head">
+      <span class="eyebrow">Case study</span>
+      <h2>UrPassport NG</h2>
+      <p>A travel dashboard for Nigerians, from passport application to boarding gate.</p>
+    </div>
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">Full Stack · Travel &amp; Immigration · In Progress</div>
+        <h3>UrPassport NG: One Dashboard From Application to Boarding</h3>
+        <p class="cs-summary">UrPassport NG is a full-stack dashboard for Nigerians planning a trip. It brings passport application tracking, visa document checklists for the UK, US, Canada, and UAE, an AI trip planner, Naira flight search, and encrypted document storage into one account.</p>
+      </div>
+      <ol class="flow" aria-label="UrPassport NG flow">
+        <li class="n-io"><b>Sign in</b><span>One account</span></li>
+        <li class="n-io"><b>Passport</b><span>Track the application</span></li>
+        <li class="n-code"><b>Visa checklists</b><span>UK, US, Canada, UAE</span></li>
+        <li class="n-ai"><b>Trip planner</b><span>Build the itinerary</span></li>
+        <li class="n-io"><b>Flights</b><span>Prices in Naira</span></li>
+        <li class="n-io"><b>Documents</b><span>Encrypted storage</span></li>
+      </ol>
+      <div class="cs-shots cs-shots-cap">
+        <figure class="cs-shot"><img src="./urpassport-cover.jpg" alt="UrPassport NG landing page for passport, visa, flight, and document tracking" loading="lazy"><figcaption>Landing page: one account for the whole trip</figcaption></figure>
+      </div>
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>A Nigerian traveler juggles a passport application, visa checklists for different countries, flight prices in another currency, and a folder of documents. The information is spread across government portals, tabs, and paper, so it is hard to see what is done and what is next.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>One dashboard that groups the trip: passport tracking, country-specific visa checklists, an AI trip planner, Naira flight search, and encrypted document storage behind real authentication. The build is in progress, with the core flow in place.</p>
+        </div>
+      </div>
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Sign in.</b> The user creates an account and signs in.</li>
+        <li><b>Track the passport.</b> The passport section keeps the application status and next steps in one place.</li>
+        <li><b>Prepare the visa.</b> Choose the UK, US, Canada, or UAE and work through that country's document checklist.</li>
+        <li><b>Plan the trip.</b> The AI trip planner turns the destination and dates into an itinerary.</li>
+        <li><b>Compare flights.</b> Flight search shows prices in Naira.</li>
+        <li><b>Store documents.</b> Travel documents are encrypted and kept behind authentication.</li>
+      </ol>
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>One account</b><p>Passport, visa, flights, and documents sit behind one login.</p></div>
+        <div class="cs-feat"><b>Country-specific checklists</b><p>The UK, US, Canada, and UAE each have their own visa document list.</p></div>
+        <div class="cs-feat"><b>Naira-first flight search</b><p>Flight prices are shown in Naira, not converted at the last step.</p></div>
+        <div class="cs-feat"><b>Encrypted documents</b><p>Travel documents are encrypted and kept behind authentication.</p></div>
+        <div class="cs-feat"><b>AI trip planner</b><p>The planner builds an itinerary from the trip details instead of starting from a blank page.</p></div>
+      </div>
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack"><span class="tech-badge">Next.js</span><span class="tech-badge">TypeScript</span><span class="tech-badge">Tailwind CSS</span><span class="tech-badge">Supabase</span><span class="tech-badge">Vercel</span></div>
+      <div class="built-links" style="margin-top:28px;">
+        <a class="b-live" href="https://urpassport.vercel.app/" target="_blank" rel="noopener" data-track="UrPassport live">Live Project &#8599;</a>
+        <a class="b-gh" href="https://github.com/maleekskies/urpassport" target="_blank" rel="noopener" data-track="UrPassport github">GitHub</a>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="page-view" id="travelsleek-case" data-title="TravelSleek case study &middot; maleekskies">
+  <div class="wrap">
+    <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
+    <div class="section-head">
+      <span class="eyebrow">Case study</span>
+      <h2>TravelSleek</h2>
+      <p>A scholarship and work visa tracker that reads the deadline for you.</p>
+    </div>
+    <article class="cs">
+      <div class="cs-head">
+        <div class="b-tag">Full Stack · Opportunity Tracker · In Progress</div>
+        <h3>TravelSleek: A Tracker That Reads the Deadline for You</h3>
+        <p class="cs-summary">TravelSleek is a scholarship and work visa tracker. It pulls listings from GOV.UK and IRCC Open Data, parses PDFs, and adds curated programs like DAAD, Chevening, Fulbright, Erasmus Mundus, Commonwealth, and Gates Cambridge. Each listing gets a score, tags, and a countdown to its deadline.</p>
+      </div>
+      <ol class="flow" aria-label="TravelSleek flow">
+        <li class="n-io"><b>Live sources</b><span>GOV.UK and IRCC</span></li>
+        <li class="n-code"><b>PDF parsing</b><span>Read the documents</span></li>
+        <li class="n-io"><b>Curated programs</b><span>Six major schemes</span></li>
+        <li class="n-code"><b>Score and tags</b><span>Sort the list</span></li>
+        <li class="n-io"><b>Inbox</b><span>Scholarships and visas</span></li>
+        <li class="n-io"><b>Countdown</b><span>Days left</span></li>
+      </ol>
+      <div class="cs-shots cs-shots-cap">
+        <figure class="cs-shot"><img src="./travelsleek-cover.jpg" alt="TravelSleek inbox with scholarship scores, tags, and deadline countdowns" loading="lazy"><figcaption>Inbox: scores, tags, and days left</figcaption></figure>
+      </div>
+      <div class="cs-cols">
+        <div>
+          <h4>The problem</h4>
+          <p>Scholarship and visa deadlines are spread across government pages, university PDFs, and program sites. A list that is not updated is worse than no list, because it hides expired opportunities and buries the ones that are still open.</p>
+        </div>
+        <div>
+          <h4>The solution</h4>
+          <p>The app pulls live sources, parses PDFs, and adds curated programs. It scores and tags each listing, shows the days left, and archives listings that have not been touched in 30 days. Nothing is submitted automatically; the app tracks, and the user applies.</p>
+        </div>
+      </div>
+      <h4 class="cs-h">How it works</h4>
+      <ol class="cs-steps">
+        <li><b>Sync.</b> The app pulls from GOV.UK and IRCC Open Data, and adds curated programs such as DAAD, Chevening, Fulbright, Erasmus Mundus, Commonwealth, and Gates Cambridge.</li>
+        <li><b>Parse.</b> PDFs are parsed into structured listings, so the deadline and eligibility details are not trapped in a document.</li>
+        <li><b>Score.</b> Each opportunity gets a score and tags such as fully funded or multi-country mobility.</li>
+        <li><b>Review.</b> The Inbox separates scholarships and work visas, and the list can be sorted by score.</li>
+        <li><b>Watch the clock.</b> Each row shows the days left before the deadline.</li>
+        <li><b>Archive.</b> Untouched listings auto-archive after 30 days. Nothing here submits itself.</li>
+      </ol>
+      <h4 class="cs-h">Engineering highlights</h4>
+      <div class="cs-feats">
+        <div class="cs-feat"><b>Live plus curated</b><p>Government sources and a hand-picked program list meet in one feed.</p></div>
+        <div class="cs-feat"><b>Deadline first</b><p>The days-left label makes urgency visible before the user opens a listing.</p></div>
+        <div class="cs-feat"><b>Scored and tagged</b><p>A score and tags give the list an order, and the Inbox can sort by score.</p></div>
+        <div class="cs-feat"><b>No auto-apply</b><p>The app tracks opportunities. It does not submit applications on the user's behalf.</p></div>
+        <div class="cs-feat"><b>Stale listings leave</b><p>Listings untouched for 30 days archive themselves, so the Inbox does not fill with dead links.</p></div>
+      </div>
+      <h4 class="cs-h">Built with</h4>
+      <div class="tech-stack"><span class="tech-badge">React</span><span class="tech-badge">Vite</span><span class="tech-badge">Supabase</span><span class="tech-badge">pdf-parse</span><span class="tech-badge">Vercel</span></div>
+      <div class="built-links" style="margin-top:28px;">
+        <a class="b-live" href="https://travelsleek.vercel.app/" target="_blank" rel="noopener" data-track="TravelSleek live">Live Project &#8599;</a>
+        <a class="b-gh" href="https://github.com/maleekskies/travelsleek" target="_blank" rel="noopener" data-track="TravelSleek github">GitHub</a>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="page-view" id="fullstack-view" data-title="Full Stack Development &middot; maleekskies">
   <div class="wrap">
     <a href="#" class="back-link" data-back="true">&larr; Back to portfolio</a>
     <div class="section-head">
@@ -1767,15 +2346,15 @@
       <div class="built-card active" data-tilt data-project="rolesearchhq">
         <div class="built-img">
           <div class="img-main">
-            <img class="carousel-slide active" src="data:image/jpeg;base64,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UjndK56a/b56sXYuXZZWJ1U0ILqlKbyfSh9YrnVVK173sWGRzHq3NEsmfLay7b7M3D17Sji+Jpi1S2qfDq53MRJno66SuTZmtbYtrJ+RRAmZkoABFAAAAAAAAAAAAAAAAAAA3n1q38juimeBqNjR3i7xMt14qajFFPVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqKoqLZUVF9YLj26xqovC6LwKZJilAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAButGoIpkxF00UL2w0qyo+WHWJGqPal7J6lUuSYRQV8MlbTMq2UeaeSKKOJqvytexLXW6rsdfbe1jUY2luZB1cWi9PRVtKqzSVeepRjUSDNE9udWq1y7kdsva/5eJgo9G462OmdK6qZrEhamrhTYr3vbt42yp6xpk1Q5sG1xXBo8No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" alt="Rolesearch HQ preview" data-index="0">
+            <img class="carousel-slide active" src="./rolesearchhq-cover.jpg" alt="RoleSearchHQ pipeline with saved roles and ready kits">
           </div>
           <div class="img-thumbs">
-            <img class="thumb active" src="data:image/jpeg;base64,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UjndK56a/b56sXYuXZZWJ1U0ILqlKbyfSh9YrnVVK173sWGRzHq3NEsmfLay7b7M3D17Sji+Jpi1S2qfDq53MRJno66SuTZmtbYtrJ+RRAmZkoABFAAAAAAAAAAAAAAAAAAA3n1q38juimeBqNjR3i7xMt14qajFFPVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqerfyO6KNW/kd0UuXXiouvFRpLU9W/kd0Uat/I7opcuvFRdeKjSWp6t/I7oo1b+R3RS5deKi68VGktT1b+R3RRq38juily68VF14qNJanq38juijVv5HdFLl14qLrxUaS1PVv5HdFGrfyO6KXLrxUXXio0lqKoqLZUVF9YLj26xqovC6LwKZJilAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAButGoIpkxF00UL2w0qyo+WHWJGqPal7J6lUuSYRQV8MlbTMq2UeaeSKKOJqvytexLXW6rsdfbe1jUY2luZB1cWi9PRVtKqzSVeepRjUSDNE9udWq1y7kdsva/5eJgo9G462OmdK6qZrEhamrhTYr3vbt42yp6xpk1Q5sG1xXBo8No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" alt="" data-index="0">
+            <img class="thumb active" src="./rolesearchhq-cover.jpg" alt="">
           </div>
         </div>
         <div class="built-body">
           <div class="site-card-head" style="margin-bottom:0;">
-            <h3>Rolesearch HQ</h3>
+            <h3>RoleSearchHQ</h3>
             <span class="site-status">Completed</span>
           </div>
           <div class="b-tag">AI-Powered Job Search Platform</div>
@@ -2125,6 +2704,7 @@
   // In-page view switching
   const mainContent = document.getElementById('main-content');
   const allViews = document.querySelectorAll('.page-view');
+  const baseTitle = document.title;
 
   function showView(viewId){
     document.documentElement.classList.add('bee-paused');
@@ -2132,12 +2712,14 @@
     allViews.forEach(v => v.classList.remove('active'));
     const target = document.getElementById(viewId);
     if(target){ target.classList.add('active'); }
+    document.title = (target && target.dataset.title) ? target.dataset.title : baseTitle;
     window.scrollTo(0, 0);
   }
   function showMain(){
     allViews.forEach(v => v.classList.remove('active'));
     mainContent.style.display = '';
     document.documentElement.classList.remove('bee-paused');
+    document.title = baseTitle;
     if(window.__beeRefresh){ window.__beeRefresh(); }
   }
 
@@ -2457,9 +3039,9 @@
     // Add more pictures by adding [file, caption] lines here (files live in the images folder).
     const GALLERY = {
       rolesearchhq: [
-        ['cover', 'Job detail with the match breakdown'],
-        ['./huntboard-inbox.jpg', 'Inbox: roles scored against your CV and preferences'],
-        ['./huntboard-kit.jpg', 'Kit overview: why it matches and gaps to address']
+        ['cover', 'Pipeline: saved roles, ready kits, and conversations in motion'],
+        ['./rolesearchhq-board.jpg', 'Pipeline board with a score on each saved role'],
+        ['./rolesearchhq-kit-crop.jpg', 'Kit Studio: one tailored kit per role']
       ],
       chesshatch: [
         ['cover', 'Landing page: choose where to start'],
@@ -2480,6 +3062,18 @@
       vault01: [
         ['./vault01-mint.jpg', 'Genesis Collection mint page'],
         ['./vault01-previews.jpg', 'Watch previews: Onyx, Rose, Green, Steel']
+      ],
+      redbelly: [
+        ['cover', 'Hero and scam warning']
+      ],
+      'redbelly-v2': [
+        ['cover', 'Quick links under the scam warning']
+      ],
+      urpassport: [
+        ['cover', 'Landing page: one account for the whole trip']
+      ],
+      travelsleek: [
+        ['cover', 'Inbox: scores, tags, and days left']
       ]
     };
 
@@ -2584,7 +3178,17 @@
         const node = src.querySelector(sel);
         if(node){ dInfo.appendChild(node.cloneNode(true)); }
       });
-      const CASES = {rolesearchhq:'rolesearchhq-case', chesshatch:'chesshatch-case'};
+      const CASES = {
+        rolesearchhq:'rolesearchhq-case',
+        chesshatch:'chesshatch-case',
+        vault01:'vault01-case',
+        oz:'oz-case',
+        redbelly:'redbelly-case',
+        'redbelly-v2':'redbelly-v2-case',
+        auditlynx:'auditlynx-case',
+        urpassport:'urpassport-case',
+        travelsleek:'travelsleek-case'
+      };
       if(CASES[key]){
         let links = dInfo.querySelector('.built-links');
         if(!links){ links = document.createElement('div'); links.className = 'built-links'; dInfo.appendChild(links); }
