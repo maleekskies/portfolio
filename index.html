@@ -1147,7 +1147,7 @@
     <div class="badge hero-slide d1"><span class="dot"></span> Open to Development &amp; Automation Roles</div>
     <div class="roles hero-slide d2">Full Stack Development · AI Automation</div>
     <h2 class="hero-wipe hero-line d3">Ideas become products. Products become <em>stories</em>.</h2>
-    <p class="lede hero-slide d4">I build full stack web apps and automate business workflows with AI.</p>
+    <p class="lede hero-slide d4">I build full stack web apps. I also automate business workflows with AI.</p>
     <div class="hero-ctas hero-slide d5">
       <a href="#contact" class="btn-primary">Work with me</a>
       <a href="#work" class="btn-secondary">See my work</a>
@@ -1203,7 +1203,7 @@
     <div class="about-grid card-stagger">
       <div>
         <p>I'm Malik Adesiyan, and I build for the web. I take an idea from a blank page to a working product: the interface, the backend, the database, and the small details that make it feel finished. I've shipped more than 15 sites and PWAs for clients in different countries, and I still like the part where something finally works.</p>
-        <p>I also build AI automation. I use n8n to connect the forms, spreadsheets, inboxes, and chat apps a business already uses, so routine work like lead capture, replies, alerts, and follow-ups happens without someone remembering to do it. The stack follows the tools you already use and the AI setup you prefer, including cloud models, local models, or no AI at all.</p>
+        <p>I also build AI automation. I use n8n to connect the forms, spreadsheets, inboxes, and chat apps a business already uses, so routine work like lead capture, replies, alerts, and follow-ups happens without someone remembering to do it. I can use a cloud model, a local model, or no AI at all, whichever you prefer.</p>
         <div class="tag-row">
           <span class="learning-tag">Full Stack Development</span>
           <span class="learning-tag">AI Automation</span>
@@ -1224,7 +1224,7 @@
     <div class="section-head head-reveal">
       <span class="eyebrow">What I Do</span>
       <h2>What's actually in the toolbox.</h2>
-      <p>From building the product to automating the repetitive parts around it.</p>
+      <p>I build the product, then automate the repetitive work around it.</p>
     </div>
 
     <div class="skill-showcase card-stagger">
@@ -1236,7 +1236,7 @@
       <div class="skill-card" data-tilt>
         <div class="skill-idx-big">02</div>
         <h3>AI Automation</h3>
-        <div class="desc">Workflows that connect forms, spreadsheets, messaging, and AI so routine steps run on their own: capturing leads, scoring them, summarizing what people wrote, replying, and alerting the right person. I build with the tools you already use and the AI setup you prefer, including cloud models, local models, or no AI at all.</div>
+        <div class="desc">Workflows that connect forms, spreadsheets, messaging, and AI so routine steps run on their own: capturing leads, scoring them, summarizing what people wrote, replying, and alerting the right person. I build with the tools you already use and the AI setup you prefer: cloud models, local models, or no AI at all.</div>
       </div>
     </div>
   </div>
@@ -1419,6 +1419,7 @@
 <section class="nx-end" id="ask" aria-label="Ask my assistant">
   <div class="nx-end-inner">
     <h2><b>Got a project in mind?</b> Ask my assistant about my work, or tell it what you want to <span class="nx-eye" aria-hidden="true"><i></i></span> automate.</h2>
+    <div class="nx-chat" id="nxChat" role="log" aria-live="polite" hidden></div>
     <form class="nx-ask" id="nxAsk" autocomplete="off">
       <input type="text" id="nxAskInput" maxlength="400" placeholder="Ask about my work or a process..." aria-label="Ask my assistant">
       <button type="submit" id="nxAskBtn" aria-label="Send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -1429,7 +1430,6 @@
       <button type="button">Are you available for work?</button>
       <button type="button">Which project should I look at first?</button>
     </div>
-    <div class="nx-chat" id="nxChat" role="log" aria-live="polite" hidden></div>
   </div>
   <div class="nx-end-media"><video class="nx-video" autoplay loop muted playsinline preload="none" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260603_132049_036591b8-6e92-4760-b94c-a7ea6eef315c.mp4" type="video/mp4"></video></div>
   <div class="nx-end-foot">
@@ -3715,10 +3715,22 @@
   function showStart(node){
     chat.scrollTop=Math.max(0,node.offsetTop-chat.offsetTop-8);
   }
+  function keepComposerInView(){
+    var c=chat.hidden?null:chat.getBoundingClientRect(),
+        f=form.getBoundingClientRect(),
+        top=c?Math.min(c.top,f.top):f.top,
+        bottom=c?Math.max(c.bottom,f.bottom):f.bottom;
+    if(bottom>window.innerHeight-16){
+      window.scrollBy(0,bottom-window.innerHeight+16);
+    }else if(top<16){
+      window.scrollBy(0,top-16);
+    }
+  }
   function ask(q){
     q=(q||'').trim();if(!q||busy)return;
     busy=true;btn.disabled=true;input.value='';
     add('user',q);history.push({role:'user',content:q});
+    keepComposerInView();
     var wait=add('assistant',null);
     var ctl=('AbortController' in window)?new AbortController():null;
     var t=setTimeout(function(){if(ctl)ctl.abort();},30000);
@@ -3740,7 +3752,7 @@
       showStart(wait);
       history.pop();
     })
-    .then(function(){clearTimeout(t);busy=false;btn.disabled=false;});
+    .then(function(){clearTimeout(t);busy=false;btn.disabled=false;keepComposerInView();});
   }
   form.addEventListener('submit',function(e){e.preventDefault();ask(input.value);});
   input.addEventListener('focus',function(){document.body.classList.add('ask-focus');});

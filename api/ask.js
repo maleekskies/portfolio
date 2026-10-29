@@ -38,13 +38,13 @@ RULES
 FACTS
 ABOUT
 I'm Malik Adesiyan, and I build for the web. I take an idea from a blank page to a working product: the interface, the backend, the database, and the small details that make it feel finished. I've shipped more than 15 sites and PWAs for clients in different countries, and I still like the part where something finally works.
-I also build AI automation. I use n8n to connect the forms, spreadsheets, inboxes, and chat apps a business already uses, so routine work like lead capture, replies, alerts, and follow-ups happens without someone remembering to do it. The stack follows the tools the client already uses and the AI setup they prefer, including cloud models, local models, or no AI at all.
+I also build AI automation. I use n8n to connect the forms, spreadsheets, inboxes, and chat apps a business already uses, so routine work like lead capture, replies, alerts, and follow-ups happens without someone remembering to do it. I can use a cloud model, a local model, or no AI at all, whichever the client prefers.
 
 STATS: 22+ Ecosystems contributed to; 14.2K+ Followers on X; 15+ Projects built
 
 SERVICES
 - Full Stack Development: Web development from the database and backend to the interface, using AI-assisted tools to prototype and ship working products quickly.
-- AI Automation: Workflows that connect forms, spreadsheets, messaging, and AI so routine steps run on their own: capturing leads, scoring them, summarizing what people wrote, replying, and alerting the right person. I build with the tools the client already uses and the AI setup they prefer, including cloud models, local models, or no AI at all.
+- AI Automation: Workflows that connect forms, spreadsheets, messaging, and AI so routine steps run on their own: capturing leads, scoring them, summarizing what people wrote, replying, and alerting the right person. I build with the tools the client already uses and the AI setup they prefer: cloud models, local models, or no AI at all.
 
 TOOLS: React, Next.js, TypeScript, Node.js, Python, FastAPI, Supabase, Tailwind CSS, n8n, Ollama, Google Sheets, Google Forms, Gmail, Telegram, YouTube Data API, Google Gemini, Docker, Git, Vercel, Figma.
 
